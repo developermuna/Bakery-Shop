@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import { Navigation } from './components/Navigation';
 import { HeroSequence } from './components/HeroSequence';
@@ -19,6 +19,26 @@ import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { ConfirmationPage } from './pages/ConfirmationPage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+
+const ScrollToHash = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
+  return null;
+};
 
 // Homepage Component
 const HomePage = () => (
@@ -66,6 +86,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToHash />
       <div className="font-sans antialiased text-espresso bg-cream flex flex-col min-h-screen">
         <Navigation />
         

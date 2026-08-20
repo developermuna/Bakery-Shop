@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   {
@@ -17,6 +18,8 @@ const categories = [
 ];
 
 export const Categories: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="categories" className="py-24 bg-cream">
       <div className="container mx-auto px-6">
@@ -35,6 +38,7 @@ export const Categories: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
+              onClick={() => navigate('/menu')}
               className="group cursor-pointer relative overflow-hidden rounded-2xl shadow-soft"
             >
               <div className="aspect-[4/5] overflow-hidden">

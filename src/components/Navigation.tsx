@@ -14,12 +14,12 @@ export const Navigation: React.FC = () => {
   const headerRef = useRef<HTMLElement>(null);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Cakes', href: '#categories' },
-    { name: 'Custom Cakes', href: '#custom' },
-    { name: 'About', href: '#story' },
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Contact', href: '#location' },
+    { name: 'Home', href: '/#home' },
+    { name: 'Cakes', href: '/#categories' },
+    { name: 'Custom Cakes', href: '/#custom' },
+    { name: 'About', href: '/#story' },
+    { name: 'How It Works', href: '/#how-it-works' },
+    { name: 'Contact', href: '/#location' },
   ];
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const Navigation: React.FC = () => {
       setIsScrolled(!isOverVideo && window.scrollY > 50);
 
       // Simple active section highlighting based on scroll position
-      const sections = navLinks.map(link => link.href.substring(1));
+      const sections = navLinks.map(link => link.href.substring(2)); // remove '/#'
       let current = 'home';
       
       for (const section of sections) {
@@ -88,7 +88,7 @@ export const Navigation: React.FC = () => {
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <a href="#home" className="text-xl md:text-2xl font-serif font-bold text-espresso z-50 relative focus:outline-none focus:ring-2 focus:ring-gold rounded">
+          <a href="/#home" className="text-xl md:text-2xl font-serif font-bold text-espresso z-50 relative focus:outline-none focus:ring-2 focus:ring-gold rounded">
             MK Bakery<span className="text-gold">&</span>Sweets
           </a>
 
@@ -99,7 +99,7 @@ export const Navigation: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 className={`text-sm font-medium transition-colors hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold rounded px-2 py-1 ${
-                  activeSection === link.href.substring(1)
+                  activeSection === link.href.substring(2)
                     ? 'text-gold'
                     : isScrolled
                     ? 'text-espresso'
@@ -187,7 +187,7 @@ export const Navigation: React.FC = () => {
                     key={link.name}
                     href={link.href}
                     className={`text-3xl font-serif focus:outline-none focus:text-gold transition-colors ${
-                      activeSection === link.href.substring(1) ? 'text-gold' : 'text-espresso'
+                      activeSection === link.href.substring(2) ? 'text-gold' : 'text-espresso'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >

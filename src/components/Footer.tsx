@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 // Icons removed due to lucide-react version differences
 
 export const Footer: React.FC = () => {
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubscribed(true);
+    setTimeout(() => setSubscribed(false), 3000);
+  };
+
   return (
     <footer className="bg-espresso text-cream pt-24 pb-12">
       <div className="container mx-auto px-6">
@@ -13,9 +22,10 @@ export const Footer: React.FC = () => {
             <p className="text-cream/80 font-light max-w-sm mb-8 leading-relaxed">
               Crafting sweet moments for your everyday celebrations. Pickup only, made fresh daily with love.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md">
               <input 
                 type="email" 
+                required
                 placeholder="Join our newsletter" 
                 className="bg-transparent border border-cream/30 rounded-full px-6 py-3 focus:outline-none focus:border-gold text-cream font-light flex-grow"
               />
@@ -23,7 +33,7 @@ export const Footer: React.FC = () => {
                 type="submit"
                 className="bg-gold text-espresso px-8 py-3 rounded-full font-medium hover:bg-cream transition-colors whitespace-nowrap"
               >
-                Subscribe
+                {subscribed ? 'Subscribed!' : 'Subscribe'}
               </button>
             </form>
           </div>
@@ -31,10 +41,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="font-serif text-xl mb-6">Quick Links</h4>
             <ul className="space-y-4 font-light text-cream/80">
-              <li><a href="#menu" className="hover:text-gold transition-colors">Our Menu</a></li>
-              <li><a href="#custom" className="hover:text-gold transition-colors">Custom Cakes</a></li>
-              <li><a href="#how-it-works" className="hover:text-gold transition-colors">How Pickup Works</a></li>
-              <li><a href="#story" className="hover:text-gold transition-colors">Our Story</a></li>
+              <li><Link to="/menu" className="hover:text-gold transition-colors">Our Menu</Link></li>
+              <li><a href="/#custom" className="hover:text-gold transition-colors">Custom Cakes</a></li>
+              <li><a href="/#how-it-works" className="hover:text-gold transition-colors">How Pickup Works</a></li>
+              <li><a href="/#story" className="hover:text-gold transition-colors">Our Story</a></li>
             </ul>
           </div>
 

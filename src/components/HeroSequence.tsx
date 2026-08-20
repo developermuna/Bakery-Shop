@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface FrameSequence {
   path: string;
@@ -175,12 +176,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
             transition={{ duration: 1, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
           >
-            <a href="#menu" className="px-8 py-4 bg-cream text-espresso rounded-full font-medium hover:bg-beige transition-colors shadow-lg">
+            <Link to="/menu" className="px-8 py-4 bg-cream text-espresso rounded-full font-medium hover:bg-beige transition-colors shadow-lg">
               Order for Pickup
-            </a>
-            <a href="#categories" className="px-8 py-4 bg-espresso/50 backdrop-blur-md text-cream border border-cream/30 rounded-full font-medium hover:bg-espresso/70 transition-colors shadow-lg">
+            </Link>
+            <Link to="/#categories" className="px-8 py-4 bg-espresso/50 backdrop-blur-md text-cream border border-cream/30 rounded-full font-medium hover:bg-espresso/70 transition-colors shadow-lg">
               View Menu
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>

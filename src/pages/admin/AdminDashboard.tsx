@@ -14,64 +14,8 @@ import {
 import { MOCK_PRODUCTS } from '../../data/products';
 import { formatCurrency, STANDARD_PICKUP_SLOTS } from '../../utils/cartUtils';
 import type { Product } from '../../data/products';
-
-interface StaffOrder {
-  id: string;
-  orderNumber: string;
-  customerName: string;
-  customerPhone: string;
-  customerEmail: string;
-  itemsSummary: string;
-  pickupDate: string;
-  pickupTime: string;
-  total: number;
-  status: 'New' | 'Confirmed' | 'Baking' | 'Ready for Pickup' | 'Collected' | 'Cancelled';
-  notes?: string;
-  createdAt: string;
-}
-
-const INITIAL_ORDERS: StaffOrder[] = [
-  {
-    id: 'ord_1',
-    orderNumber: 'MK-849201',
-    customerName: 'Sophia Reynolds',
-    customerPhone: '(555) 349-2819',
-    customerEmail: 'sophia@example.com',
-    itemsSummary: '1x Vanilla Bean Cloud Cake (8 inch, Vanilla Raspberry, Msg: "Happy Birthday Sophia!")',
-    pickupDate: '2026-08-22',
-    pickupTime: '10:00 AM - 11:00 AM',
-    total: 92.01,
-    status: 'Baking',
-    notes: 'Please pack in luxury presentation box.',
-    createdAt: '2026-08-20T14:30:00Z',
-  },
-  {
-    id: 'ord_2',
-    orderNumber: 'MK-849202',
-    customerName: 'Marcus Vance',
-    customerPhone: '(555) 782-9012',
-    customerEmail: 'marcus@example.com',
-    itemsSummary: '1x Dark Chocolate Truffle (6 inch, Gluten-Free)',
-    pickupDate: '2026-08-22',
-    pickupTime: '11:00 AM - 12:00 PM',
-    total: 81.18,
-    status: 'Ready for Pickup',
-    createdAt: '2026-08-20T15:10:00Z',
-  },
-  {
-    id: 'ord_3',
-    orderNumber: 'MK-849203',
-    customerName: 'Elena Rostova',
-    customerPhone: '(555) 902-1823',
-    customerEmail: 'elena@example.com',
-    itemsSummary: '2x Pistachio Rose Tart (8 inch Tart)',
-    pickupDate: '2026-08-23',
-    pickupTime: '02:00 PM - 03:00 PM',
-    total: 97.42,
-    status: 'New',
-    createdAt: '2026-08-20T16:05:00Z',
-  },
-];
+import { useOrderStore } from '../../store/useOrderStore';
+import type { Order } from '../../store/useOrderStore';
 
 export const AdminDashboard: React.FC = () => {
   // Auth state
@@ -83,7 +27,9 @@ export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'orders' | 'products' | 'availability'>('orders');
 
   // Orders State
-  const [orders, setOrders] = useState<StaffOrder[]>(INITIAL_ORDERS);
+  const orders = useOrderStore((state) => state.orders);
+  const updateOrderStatusGlobal = useOrderStore((state) => state.updateOrderStatus);
+  
   const [orderFilter, setOrderFilter] = useState<string>('All');
 
   // Products State
@@ -103,10 +49,8 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleUpdateOrderStatus = (orderId: string, newStatus: StaffOrder['status']) => {
-    setOrders((prev) =>
-      prev.map((ord) => (ord.id === orderId ? { ...ord, status: newStatus } : ord))
-    );
+  const handleUpdateOrderStatus = (orderId: string, newStatus: Order['status']) => {
+    updateOrderStatusGlobal(orderId, newStatus);
   };
 
   const handleToggleProductStatus = (productId: string) => {
@@ -132,20 +76,20 @@ export const AdminDashboard: React.FC = () => {
     return (
       <div className="pt-32 pb-24 bg-cream min-h-screen flex items-center justify-center px-4">
         <div className="bg-off-white border border-beige rounded-3xl p-8 max-w-md w-full shadow-soft text-center space-y-6">
-          <div className="w-16 h-16 bg-espresso text-cream rounded-3xl flex items-center justify-center mx-auto shadow-sm">
-            <Lock className="w-8 h-8 text-gold" />
+          <div className="w-16 h-16 bg-bento-black text-cream rounded-3xl flex items-center justify-center mx-auto shadow-sm">
+            <Lock className="w-8 h-8 text-bento-yellow" />
           </div>
 
           <div>
-            <h2 className="text-2xl font-serif font-bold text-espresso">Bakery Staff Portal</h2>
-            <p className="text-xs text-brown font-light mt-1">
+            <h2 className="text-2xl font-serif font-bold text-bento-black">Bakery Staff Portal</h2>
+            <p className="text-xs text-bento-grey font-light mt-1">
               Internal operations dashboard for kitchen staff and order fulfillment.
             </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4 text-left">
             <div>
-              <label className="block text-xs font-semibold text-espresso mb-1">
+              <label className="block text-xs font-semibold text-bento-black mb-1">
                 Enter Staff Access PIN
               </label>
               <input
@@ -153,7 +97,7 @@ export const AdminDashboard: React.FC = () => {
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
                 placeholder="PIN (e.g. admin)"
-                className="w-full bg-cream border border-beige rounded-2xl px-4 py-3 text-sm text-espresso focus:outline-none focus:border-gold tracking-widest text-center font-mono"
+                className="w-full bg-cream border border-beige rounded-2xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow tracking-widest text-center font-mono"
               />
             </div>
 
@@ -166,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-espresso text-cream rounded-full font-semibold text-xs uppercase tracking-wider hover:bg-espresso/90 transition-colors shadow-soft"
+              className="w-full py-3.5 bg-bento-black text-cream rounded-full font-semibold text-xs uppercase tracking-wider hover:bg-bento-black/90 transition-colors shadow-soft"
             >
               Sign In to Staff Dashboard
             </button>
@@ -182,10 +126,10 @@ export const AdminDashboard: React.FC = () => {
         {/* Dashboard Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-beige gap-4 mb-8">
           <div>
-            <span className="text-xs uppercase tracking-widest text-gold font-bold block">
-              MK Bakery & Sweets • Operations
+            <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold block">
+              Bento Cakery & Sweets • Operations
             </span>
-            <h1 className="text-3xl font-serif font-bold text-espresso">
+            <h1 className="text-3xl font-serif font-bold text-bento-black">
               Staff Operations Portal
             </h1>
           </div>
@@ -197,8 +141,8 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab('orders')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'orders'
-                    ? 'bg-espresso text-cream shadow-xs'
-                    : 'text-brown hover:text-espresso'
+                    ? 'bg-bento-black text-cream shadow-xs'
+                    : 'text-bento-grey hover:text-bento-black'
                 }`}
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
@@ -208,8 +152,8 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab('products')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'products'
-                    ? 'bg-espresso text-cream shadow-xs'
-                    : 'text-brown hover:text-espresso'
+                    ? 'bg-bento-black text-cream shadow-xs'
+                    : 'text-bento-grey hover:text-bento-black'
                 }`}
               >
                 <Package className="w-3.5 h-3.5" />
@@ -219,8 +163,8 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab('availability')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'availability'
-                    ? 'bg-espresso text-cream shadow-xs'
-                    : 'text-brown hover:text-espresso'
+                    ? 'bg-bento-black text-cream shadow-xs'
+                    : 'text-bento-grey hover:text-bento-black'
                 }`}
               >
                 <Calendar className="w-3.5 h-3.5" />
@@ -230,7 +174,7 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               onClick={() => setIsAuthenticated(false)}
-              className="p-2.5 rounded-full border border-beige hover:bg-beige/40 text-brown hover:text-espresso transition-colors"
+              className="p-2.5 rounded-full border border-beige hover:bg-beige/40 text-bento-grey hover:text-bento-black transition-colors"
               title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -250,8 +194,8 @@ export const AdminDashboard: React.FC = () => {
                     onClick={() => setOrderFilter(status)}
                     className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                       orderFilter === status
-                        ? 'bg-espresso text-cream'
-                        : 'bg-off-white border border-beige text-brown hover:border-gold/50'
+                        ? 'bg-bento-black text-cream'
+                        : 'bg-off-white border border-beige text-bento-grey hover:border-bento-yellow/50'
                     }`}
                   >
                     {status}
@@ -270,21 +214,21 @@ export const AdminDashboard: React.FC = () => {
                     className="bg-off-white border border-beige rounded-3xl p-6 shadow-soft space-y-4"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-beige gap-3">
-                      <div className="flex items-center space-x-3">
-                        <span className="font-mono font-bold text-espresso text-base">
+                      <div className="flex items-center space-x-3 flex-wrap">
+                        <span className="font-mono font-bold text-bento-black text-base">
                           #{order.orderNumber}
                         </span>
-                        <span className="text-xs font-semibold text-espresso">
-                          {order.customerName}
+                        <span className="text-xs font-semibold text-bento-black">
+                          {order.customer.name}
                         </span>
-                        <span className="text-xs text-brown font-light">
-                          ({order.customerPhone})
+                        <span className="text-xs text-bento-grey font-light">
+                          ({order.customer.phone})
                         </span>
                       </div>
 
                       <div className="flex items-center space-x-3">
-                        <span className="text-xs font-serif font-bold text-espresso">
-                          {formatCurrency(order.total)}
+                        <span className="text-xs font-serif font-bold text-bento-black">
+                          {formatCurrency(order.totals.total)}
                         </span>
 
                         {/* Status Changer Select */}
@@ -295,12 +239,12 @@ export const AdminDashboard: React.FC = () => {
                           }
                           className={`text-xs font-bold px-3 py-1.5 rounded-full border focus:outline-none ${
                             order.status === 'Baking'
-                              ? 'bg-gold/20 text-espresso border-gold/40'
+                              ? 'bg-bento-yellow/20 text-bento-black border-bento-yellow/40'
                               : order.status === 'Ready for Pickup'
                               ? 'bg-green-100 text-green-800 border-green-300'
                               : order.status === 'Collected'
-                              ? 'bg-beige text-brown border-beige'
-                              : 'bg-cream text-espresso border-beige'
+                              ? 'bg-beige text-bento-grey border-beige'
+                              : 'bg-cream text-bento-black border-beige'
                           }`}
                         >
                           <option value="New">New Order</option>
@@ -315,21 +259,31 @@ export const AdminDashboard: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
                       <div className="md:col-span-8 space-y-1">
-                        <span className="text-brown block font-medium">Order Items:</span>
-                        <p className="text-espresso font-light">{order.itemsSummary}</p>
+                        <span className="text-bento-grey block font-medium">Order Items:</span>
+                        <ul className="text-bento-black font-light list-disc list-inside space-y-1">
+                          {order.items.map((item, idx) => (
+                            <li key={idx}>
+                              {item.quantity}x {item.name} 
+                              {item.size && ` (${item.size})`}
+                              {item.flavor && ` - ${item.flavor}`}
+                              {item.eggless && ` - Eggless`}
+                              {item.message && ` - Msg: "${item.message}"`}
+                            </li>
+                          ))}
+                        </ul>
                         {order.notes && (
-                          <p className="text-gold italic pt-1">Notes: “{order.notes}”</p>
+                          <p className="text-bento-yellow italic pt-1">Notes: “{order.notes}”</p>
                         )}
                       </div>
 
                       <div className="md:col-span-4 bg-cream p-3 rounded-2xl border border-beige space-y-1">
-                        <div className="flex items-center space-x-1.5 text-espresso font-semibold">
-                          <Calendar className="w-3.5 h-3.5 text-gold" />
+                        <div className="flex items-center space-x-1.5 text-bento-black font-semibold">
+                          <Calendar className="w-3.5 h-3.5 text-bento-yellow" />
                           <span>Pickup: {order.pickupDate}</span>
                         </div>
-                        <div className="flex items-center space-x-1.5 text-brown">
+                        <div className="flex items-center space-x-1.5 text-bento-grey">
                           <Clock className="w-3.5 h-3.5" />
-                          <span>{order.pickupTime}</span>
+                          <span>{order.pickupTimeSlot}</span>
                         </div>
                       </div>
                     </div>
@@ -344,21 +298,21 @@ export const AdminDashboard: React.FC = () => {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between gap-4 items-stretch sm:items-center">
               <div className="relative flex-1 max-w-md">
-                <Search className="w-4 h-4 text-brown/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-bento-grey/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
                   placeholder="Filter inventory..."
-                  className="w-full bg-off-white border border-beige rounded-full pl-10 pr-4 py-2.5 text-xs text-espresso focus:outline-none focus:border-gold"
+                  className="w-full bg-off-white border border-beige rounded-full pl-10 pr-4 py-2.5 text-xs text-bento-black focus:outline-none focus:border-bento-yellow"
                 />
               </div>
 
               <button
                 onClick={() => alert('New product form modal: Connects to Cloudflare R2 Worker API.')}
-                className="px-6 py-2.5 bg-espresso text-cream rounded-full text-xs font-semibold hover:bg-espresso/90 transition-colors flex items-center space-x-1.5 shadow-soft"
+                className="px-6 py-2.5 bg-bento-black text-cream rounded-full text-xs font-semibold hover:bg-bento-black/90 transition-colors flex items-center space-x-1.5 shadow-soft"
               >
-                <Plus className="w-4 h-4 text-gold" />
+                <Plus className="w-4 h-4 text-bento-yellow" />
                 <span>Add New Cake Item</span>
               </button>
             </div>
@@ -367,7 +321,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="bg-off-white border border-beige rounded-3xl overflow-hidden shadow-soft">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-beige/60 text-espresso font-serif font-bold uppercase tracking-wider text-[10px] border-b border-beige">
+                  <thead className="bg-beige/60 text-bento-black font-serif font-bold uppercase tracking-wider text-[10px] border-b border-beige">
                     <tr>
                       <th className="p-4">Cake Item</th>
                       <th className="p-4">Categories</th>
@@ -392,15 +346,15 @@ export const AdminDashboard: React.FC = () => {
                               className="w-10 h-10 object-cover rounded-xl border border-beige flex-shrink-0"
                             />
                             <div>
-                              <span className="font-bold text-espresso block">{product.name}</span>
-                              <span className="text-[11px] text-brown">{product.sizes.length} sizes configured</span>
+                              <span className="font-bold text-bento-black block">{product.name}</span>
+                              <span className="text-[11px] text-bento-grey">{product.sizes.length} sizes configured</span>
                             </div>
                           </td>
-                          <td className="p-4 text-brown">{product.categories.join(', ')}</td>
-                          <td className="p-4 font-bold text-espresso font-serif">
+                          <td className="p-4 text-bento-grey">{product.categories.join(', ')}</td>
+                          <td className="p-4 font-bold text-bento-black font-serif">
                             {formatCurrency(product.price)}
                           </td>
-                          <td className="p-4 text-brown">{product.preparationLeadTimeHours}h notice</td>
+                          <td className="p-4 text-bento-grey">{product.preparationLeadTimeHours}h notice</td>
                           <td className="p-4">
                             <button
                               onClick={() => handleToggleProductStatus(product.id)}
@@ -418,7 +372,7 @@ export const AdminDashboard: React.FC = () => {
                               onClick={() => handleToggleProductStock(product.id)}
                               className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                 product.inStock
-                                  ? 'bg-gold/20 text-espresso'
+                                  ? 'bg-bento-yellow/20 text-bento-black'
                                   : 'bg-red-100 text-red-800'
                               }`}
                             >
@@ -428,7 +382,7 @@ export const AdminDashboard: React.FC = () => {
                           <td className="p-4 text-right">
                             <div className="flex items-center justify-end space-x-2">
                               <button
-                                className="p-1.5 text-brown hover:text-espresso rounded"
+                                className="p-1.5 text-bento-grey hover:text-bento-black rounded"
                                 title="Edit Product"
                               >
                                 <Edit2 className="w-4 h-4" />
@@ -448,16 +402,16 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'availability' && (
           <div className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-6">
             <div>
-              <h2 className="text-xl font-serif font-bold text-espresso">
+              <h2 className="text-xl font-serif font-bold text-bento-black">
                 Bakery Capacity & Slot Booking Controls
               </h2>
-              <p className="text-xs text-brown font-light mt-1">
+              <p className="text-xs text-bento-grey font-light mt-1">
                 Toggle unavailable pickup time slots during kitchen rush hours or kitchen maintenance days.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-serif font-bold text-espresso">
+              <h3 className="text-sm font-serif font-bold text-bento-black">
                 Standard Daily Pickup Slots
               </h3>
 
@@ -471,19 +425,19 @@ export const AdminDashboard: React.FC = () => {
                       className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                         isBlocked
                           ? 'bg-red-50/80 border-red-200 text-red-900'
-                          : 'bg-cream border-beige text-espresso hover:border-gold'
+                          : 'bg-cream border-beige text-bento-black hover:border-bento-yellow'
                       }`}
                     >
                       <div>
                         <span className="text-xs font-semibold block">{slot}</span>
-                        <span className="text-[10px] text-brown font-light">
+                        <span className="text-[10px] text-bento-grey font-light">
                           {isBlocked ? 'Blocked for Booking' : 'Open for Customer Pickup'}
                         </span>
                       </div>
 
                       <span
                         className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                          isBlocked ? 'bg-red-200 text-red-900' : 'bg-gold/20 text-espresso'
+                          isBlocked ? 'bg-red-200 text-red-900' : 'bg-bento-yellow/20 text-bento-black'
                         }`}
                       >
                         {isBlocked ? 'Blocked' : 'Available'}

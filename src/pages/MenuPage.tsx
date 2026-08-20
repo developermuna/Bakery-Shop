@@ -16,12 +16,18 @@ import { useToastStore } from '../store/useToastStore';
 import { formatCurrency } from '../utils/cartUtils';
 import type { Product } from '../data/products';
 
-export const MenuPage: React.FC = () => {
+interface MenuPageProps {
+  category?: string;
+}
+
+export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory }) => {
   const navigate = useNavigate();
   const { addItem, openDrawer } = useCartStore();
   const { addToast } = useToastStore();
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    initialCategory ? CATEGORIES.find(c => c.toLowerCase() === initialCategory.toLowerCase()) || 'All' : 'All'
+  );
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [selectedDietary, setSelectedDietary] = useState<string[]>([]);
@@ -107,14 +113,14 @@ export const MenuPage: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Header Hero */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs uppercase tracking-widest text-gold font-bold mb-3 block">
+          <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-3 block">
             Pickup-Only Bakery Collection
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-espresso mb-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-bento-black mb-4">
             Our Cake & Pastry Menu
           </h1>
-          <p className="text-brown text-base sm:text-lg font-light leading-relaxed">
-            Every creation is handcrafted from scratch in our Los Angeles kitchen with authentic Madagascar vanilla, Belgian chocolate, and seasonal fruits.
+          <p className="text-bento-grey text-base sm:text-lg font-light leading-relaxed">
+            Every creation is handcrafted from scratch in our Los Angeles kitchen with authentic Madagascar vanilla, Belgian bento-grey, and seasonal fruits.
           </p>
         </div>
 
@@ -123,18 +129,18 @@ export const MenuPage: React.FC = () => {
           <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
             {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="w-5 h-5 text-brown/50 absolute left-4 top-1/2 -translate-y-1/2" />
+              <Search className="w-5 h-5 text-bento-grey/50 absolute left-4 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search cakes by name, flavor, or ingredient..."
-                className="w-full bg-cream border border-beige rounded-full pl-12 pr-10 py-3 text-sm text-espresso focus:outline-none focus:border-gold"
+                className="w-full bg-cream border border-beige rounded-full pl-12 pr-10 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-brown hover:text-espresso"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-bento-grey hover:text-bento-black"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -143,14 +149,14 @@ export const MenuPage: React.FC = () => {
 
             {/* Sorting Dropdown */}
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2 text-xs font-semibold text-espresso">
-                <ArrowUpDown className="w-4 h-4 text-gold" />
+              <div className="flex items-center space-x-2 text-xs font-semibold text-bento-black">
+                <ArrowUpDown className="w-4 h-4 text-bento-yellow" />
                 <span>Sort by:</span>
               </div>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-cream border border-beige rounded-full px-4 py-2.5 text-xs font-medium text-espresso focus:outline-none focus:border-gold"
+                className="bg-cream border border-beige rounded-full px-4 py-2.5 text-xs font-medium text-bento-black focus:outline-none focus:border-bento-yellow"
               >
                 <option value="featured">Featured / Best Sellers</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -170,8 +176,8 @@ export const MenuPage: React.FC = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     isActive
-                      ? 'bg-espresso text-cream shadow-sm'
-                      : 'bg-cream border border-beige text-brown hover:border-gold/50 hover:text-espresso'
+                      ? 'bg-bento-black text-cream shadow-sm'
+                      : 'bg-cream border border-beige text-bento-grey hover:border-bento-yellow/50 hover:text-bento-black'
                   }`}
                 >
                   {cat}
@@ -182,8 +188,8 @@ export const MenuPage: React.FC = () => {
 
           {/* Dietary Filters */}
           <div className="pt-4 border-t border-beige flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-brown font-medium flex items-center gap-1 mr-2">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-gold" /> Dietary:
+            <span className="text-bento-grey font-medium flex items-center gap-1 mr-2">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-bento-yellow" /> Dietary:
             </span>
             {allDietaryTags.map((tag) => {
               const isSelected = selectedDietary.includes(tag);
@@ -193,11 +199,11 @@ export const MenuPage: React.FC = () => {
                   onClick={() => toggleDietary(tag)}
                   className={`px-3 py-1.5 rounded-full border transition-all flex items-center space-x-1.5 ${
                     isSelected
-                      ? 'bg-gold text-espresso border-gold font-bold shadow-xs'
-                      : 'bg-cream border-beige text-brown hover:border-gold/40'
+                      ? 'bg-bento-yellow text-bento-black border-bento-yellow font-bold shadow-xs'
+                      : 'bg-cream border-beige text-bento-grey hover:border-bento-yellow/40'
                   }`}
                 >
-                  {isSelected && <Check className="w-3 h-3 text-espresso" />}
+                  {isSelected && <Check className="w-3 h-3 text-bento-black" />}
                   <span>{tag}</span>
                 </button>
               );
@@ -205,7 +211,7 @@ export const MenuPage: React.FC = () => {
             {selectedDietary.length > 0 && (
               <button
                 onClick={() => setSelectedDietary([])}
-                className="text-[11px] text-brown hover:text-red-600 underline ml-2"
+                className="text-[11px] text-bento-grey hover:text-red-600 underline ml-2"
               >
                 Reset filters
               </button>
@@ -229,13 +235,13 @@ export const MenuPage: React.FC = () => {
         ) : filteredProducts.length === 0 ? (
           /* Empty Search State */
           <div className="text-center py-20 bg-off-white rounded-3xl border border-beige shadow-soft max-w-xl mx-auto p-8">
-            <div className="w-16 h-16 bg-beige rounded-full flex items-center justify-center mx-auto mb-4 text-espresso/40">
+            <div className="w-16 h-16 bg-beige rounded-full flex items-center justify-center mx-auto mb-4 text-bento-black/40">
               <Search className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-espresso mb-2">
+            <h3 className="text-2xl font-serif font-bold text-bento-black mb-2">
               No matching cakes found
             </h3>
-            <p className="text-sm text-brown font-light mb-6">
+            <p className="text-sm text-bento-grey font-light mb-6">
               Try adjusting your search terms, clearing dietary filters, or choosing a different category.
             </p>
             <button
@@ -244,7 +250,7 @@ export const MenuPage: React.FC = () => {
                 setSelectedCategory('All');
                 setSelectedDietary([]);
               }}
-              className="px-6 py-2.5 bg-espresso text-cream rounded-full text-xs font-semibold hover:bg-espresso/90 transition-colors"
+              className="px-6 py-2.5 bg-bento-black text-cream rounded-full text-xs font-semibold hover:bg-bento-black/90 transition-colors"
             >
               Clear All Filters
             </button>
@@ -276,19 +282,19 @@ export const MenuPage: React.FC = () => {
                       {/* Dietary & Status Badges */}
                       <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                         {product.featured && (
-                          <span className="bg-cream/90 backdrop-blur-md text-espresso text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
+                          <span className="bg-cream/90 backdrop-blur-md text-bento-black text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
                             Featured
                           </span>
                         )}
                         {product.seasonal && (
-                          <span className="bg-gold/95 backdrop-blur-md text-espresso text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
+                          <span className="bg-bento-yellow/95 backdrop-blur-md text-bento-black text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
                             Seasonal
                           </span>
                         )}
                         {product.dietaryTags.map((tag) => (
                           <span
                             key={tag}
-                            className="bg-espresso/80 backdrop-blur-md text-cream text-[9px] font-medium uppercase tracking-wider py-0.5 px-2 rounded-full"
+                            className="bg-bento-black/80 backdrop-blur-md text-cream text-[9px] font-medium uppercase tracking-wider py-0.5 px-2 rounded-full"
                           >
                             {tag}
                           </span>
@@ -296,10 +302,10 @@ export const MenuPage: React.FC = () => {
                       </div>
 
                       {/* Rating Pill */}
-                      <div className="absolute bottom-3 right-3 bg-cream/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-semibold text-espresso flex items-center gap-1 shadow-xs">
-                        <Star className="w-3.5 h-3.5 text-gold fill-gold" />
+                      <div className="absolute bottom-3 right-3 bg-cream/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-semibold text-bento-black flex items-center gap-1 shadow-xs">
+                        <Star className="w-3.5 h-3.5 text-bento-yellow fill-bento-yellow" />
                         <span>{product.rating}</span>
-                        <span className="text-[10px] text-brown font-normal">
+                        <span className="text-[10px] text-bento-grey font-normal">
                           ({product.reviewsCount})
                         </span>
                       </div>
@@ -307,10 +313,10 @@ export const MenuPage: React.FC = () => {
 
                     {/* Content */}
                     <div className="space-y-2">
-                      <h3 className="font-serif font-bold text-espresso text-xl group-hover:text-gold transition-colors leading-snug">
+                      <h3 className="font-serif font-bold text-bento-black text-xl group-hover:text-bento-yellow transition-colors leading-snug">
                         {product.name}
                       </h3>
-                      <p className="text-xs text-brown font-light line-clamp-2">
+                      <p className="text-xs text-bento-grey font-light line-clamp-2">
                         {product.shortDescription}
                       </p>
 
@@ -319,7 +325,7 @@ export const MenuPage: React.FC = () => {
                         {product.sizes.map((s) => (
                           <span
                             key={s.label}
-                            className="px-2 py-0.5 bg-beige rounded-md text-[10px] font-medium text-espresso"
+                            className="px-2 py-0.5 bg-beige rounded-md text-[10px] font-medium text-bento-black"
                           >
                             {s.label}
                           </span>
@@ -331,8 +337,8 @@ export const MenuPage: React.FC = () => {
                   {/* Card Bottom / Price & CTA */}
                   <div className="mt-5 pt-4 border-t border-beige flex items-center justify-between">
                     <div>
-                      <span className="text-[11px] text-brown block">Starting at</span>
-                      <span className="text-lg font-bold font-serif text-espresso">
+                      <span className="text-[11px] text-bento-grey block">Starting at</span>
+                      <span className="text-lg font-bold font-serif text-bento-black">
                         {formatCurrency(product.price)}
                       </span>
                     </div>
@@ -341,7 +347,7 @@ export const MenuPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={(e) => handleQuickAdd(e, product)}
-                        className="p-3 bg-cream hover:bg-gold text-espresso rounded-full border border-beige hover:border-gold transition-colors shadow-xs"
+                        className="p-3 bg-cream hover:bg-bento-yellow text-bento-black rounded-full border border-beige hover:border-bento-yellow transition-colors shadow-xs"
                         title="Quick Add to Cart"
                         aria-label={`Quick add ${product.name} to cart`}
                       >
@@ -349,7 +355,7 @@ export const MenuPage: React.FC = () => {
                       </button>
                       <Link
                         to={`/product/${product.id}`}
-                        className="px-4 py-2.5 bg-espresso text-cream text-xs font-medium rounded-full hover:bg-espresso/90 transition-colors shadow-xs"
+                        className="px-4 py-2.5 bg-bento-black text-cream text-xs font-medium rounded-full hover:bg-bento-black/90 transition-colors shadow-xs"
                       >
                         Order
                       </Link>

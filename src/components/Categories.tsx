@@ -21,11 +21,11 @@ export const Categories: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="categories" className="py-24 bg-cream">
+    <section id="categories" className="py-24 bg-off-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif text-espresso mb-4">Our Selection</h2>
-          <p className="text-lg text-brown max-w-2xl mx-auto font-light">
+          <h2 className="text-4xl md:text-5xl font-serif text-bento-black mb-4">Our Selection</h2>
+          <p className="text-lg text-bento-grey max-w-2xl mx-auto font-light">
             Crafted with passion, baked fresh daily. Explore our range of artisanal delights.
           </p>
         </div>
@@ -48,10 +48,10 @@ export const Categories: React.FC = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/20 to-transparent flex items-end p-8">
+              <div className="absolute inset-0 bg-gradient-to-t from-bento-black/80 via-bento-black/20 to-transparent flex items-end p-8">
                 <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
                   <h3 className="text-3xl font-serif text-cream mb-2">{category.name}</h3>
-                  <span className="text-gold uppercase tracking-wider text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="text-bento-yellow uppercase tracking-wider text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     Explore &rarr;
                   </span>
                 </div>

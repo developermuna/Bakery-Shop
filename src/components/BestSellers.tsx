@@ -44,21 +44,21 @@ export const BestSellers: React.FC = () => {
   };
 
   return (
-    <section className="py-24 bg-off-white">
+    <section className="py-24 bg-bento-black">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div className="max-w-2xl">
-            <span className="text-xs uppercase tracking-widest text-gold font-bold mb-2 block">
+            <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-2 block">
               Handcrafted Daily
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif text-espresso mb-4">Our Favorites</h2>
-            <p className="text-lg text-brown font-light">
+            <h2 className="text-4xl md:text-5xl font-serif text-cream mb-4">Our Favorites</h2>
+            <p className="text-lg text-cream/80 font-light">
               Our most loved creations, perfected over time and baked with the finest ingredients.
             </p>
           </div>
           <Link
             to="/menu"
-            className="mt-6 md:mt-0 px-8 py-3.5 border border-espresso text-espresso rounded-full hover:bg-espresso hover:text-cream transition-colors font-medium text-sm inline-flex items-center space-x-2"
+            className="mt-6 md:mt-0 px-8 py-3.5 border border-bento-yellow text-bento-yellow rounded-full hover:bg-bento-yellow hover:text-bento-black transition-colors font-medium text-sm inline-flex items-center space-x-2"
           >
             <span>View Full Menu</span>
             <ArrowRight className="w-4 h-4" />
@@ -86,14 +86,14 @@ export const BestSellers: React.FC = () => {
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-1.5">
                   {product.featured && (
-                    <span className="bg-cream/90 backdrop-blur-md text-espresso text-[11px] font-semibold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
+                    <span className="bg-cream/90 backdrop-blur-md text-bento-black text-[11px] font-semibold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
                       Best Seller
                     </span>
                   )}
                   {product.dietaryTags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-gold/90 backdrop-blur-md text-espresso text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
+                      className="bg-bento-yellow/90 backdrop-blur-md text-bento-black text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
                     >
                       {tag}
                     </span>
@@ -101,11 +101,11 @@ export const BestSellers: React.FC = () => {
                 </div>
 
                 {/* Hover Add to Cart Button */}
-                <div className="absolute inset-0 bg-espresso/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                <div className="absolute inset-0 bg-bento-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <button
                     type="button"
                     onClick={(e) => handleQuickAdd(e, product)}
-                    className="bg-cream text-espresso px-6 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl hover:bg-gold hover:text-espresso flex items-center space-x-2"
+                    className="bg-cream text-bento-black px-6 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl hover:bg-bento-yellow hover:text-bento-black flex items-center space-x-2"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>Quick Add</span>
@@ -115,18 +115,18 @@ export const BestSellers: React.FC = () => {
 
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-serif text-espresso mb-1 group-hover:text-gold transition-colors font-bold">
+                  <h3 className="text-xl font-serif text-bento-black mb-1 group-hover:text-bento-yellow transition-colors font-bold">
                     {product.name}
                   </h3>
-                  <p className="text-xs text-brown font-light line-clamp-2 mb-2">
+                  <p className="text-xs text-bento-grey font-light line-clamp-2 mb-2">
                     {product.shortDescription}
                   </p>
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t border-beige">
-                  <span className="text-sm font-bold text-espresso font-serif">
+                  <span className="text-sm font-bold text-bento-black font-serif">
                     From {formatCurrency(product.price)}
                   </span>
-                  <span className="text-xs text-gold font-medium">
+                  <span className="text-xs text-bento-yellow font-medium">
                     {product.preparationLeadTimeHours}h notice
                   </span>
                 </div>

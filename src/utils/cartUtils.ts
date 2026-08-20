@@ -14,8 +14,8 @@ export const AVAILABLE_DISCOUNTS: Record<string, DiscountCode> = {
   WELCOME5: {
     code: 'WELCOME5',
     type: 'fixed',
-    value: 5,
-    description: '$5 off for new sweet moments',
+    value: 50,
+    description: '₹50 off for new sweet moments',
     minSubtotal: 25,
   },
   GOLDEN20: {
@@ -149,10 +149,10 @@ export const calculateCartTotals = (
  * Format standard currency USD ($XX.XX)
  */
 export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
+    currency: 'INR',
+    minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   }).format(amount);
 };
@@ -200,7 +200,7 @@ export const isDateValidForPickup = (
   // Bakery closed on Mondays
   const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 1 = Monday
   if (dayOfWeek === 1) {
-    return { valid: false, reason: 'MK Bakery is closed on Mondays for kitchen maintenance.' };
+    return { valid: false, reason: 'Bento Cakery is closed on Mondays for kitchen maintenance.' };
   }
 
   return { valid: true };

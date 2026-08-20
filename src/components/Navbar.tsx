@@ -31,8 +31,8 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <div className="text-2xl font-serif font-bold text-espresso">
-            MK Bakery<span className="text-gold">&</span>Sweets
+          <div className="text-2xl font-serif font-bold text-bento-black">
+            Bento Cakery<span className="text-bento-yellow">&</span>Sweets
           </div>
 
           {/* Desktop Nav */}
@@ -41,8 +41,8 @@ export const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium hover:text-gold transition-colors ${
-                  isScrolled ? 'text-espresso' : 'text-cream'
+                className={`text-sm font-medium hover:text-bento-yellow transition-colors ${
+                  isScrolled ? 'text-bento-black' : 'text-cream'
                 }`}
               >
                 {link.name}
@@ -51,17 +51,17 @@ export const Navbar: React.FC = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-6">
-            <button className={`hover:text-gold transition-colors ${isScrolled ? 'text-espresso' : 'text-cream'}`}>
+            <button className={`hover:text-bento-yellow transition-colors ${isScrolled ? 'text-bento-black' : 'text-cream'}`}>
               <ShoppingBag className="w-5 h-5" />
             </button>
-            <button className="px-6 py-2.5 bg-espresso text-cream rounded-full text-sm font-medium hover:bg-espresso/90 transition-colors shadow-soft">
+            <button className="px-6 py-2.5 bg-bento-black text-cream rounded-full text-sm font-medium hover:bg-bento-black/90 transition-colors shadow-soft">
               Order for Pickup
             </button>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className={`md:hidden ${isScrolled ? 'text-espresso' : 'text-cream'}`}
+            className={`md:hidden ${isScrolled ? 'text-bento-black' : 'text-cream'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -83,18 +83,18 @@ export const Navbar: React.FC = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-2xl font-serif text-espresso hover:text-gold transition-colors"
+                  className="text-2xl font-serif text-bento-black hover:text-bento-yellow transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </a>
               ))}
               <div className="pt-8 border-t border-beige flex items-center justify-between">
-                <button className="flex items-center space-x-2 text-espresso">
+                <button className="flex items-center space-x-2 text-bento-black">
                   <ShoppingBag className="w-6 h-6" />
                   <span className="font-medium">Cart (0)</span>
                 </button>
-                <button className="px-6 py-3 bg-espresso text-cream rounded-full font-medium">
+                <button className="px-6 py-3 bg-bento-black text-cream rounded-full font-medium">
                   Order for Pickup
                 </button>
               </div>

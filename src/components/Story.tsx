@@ -31,21 +31,21 @@ export const Story: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="w-full md:w-1/2 order-1 md:order-2"
           >
-            <h2 className="text-4xl md:text-5xl font-serif text-espresso mb-6">Our Story</h2>
-            <p className="text-lg text-brown font-light mb-6 leading-relaxed">
-              Founded on a love for traditional techniques and premium ingredients, MK Bakery & Sweets started as a small dream to bring exceptional baked goods to our community.
+            <h2 className="text-4xl md:text-5xl font-serif text-bento-black mb-6">Our Story</h2>
+            <p className="text-lg text-bento-grey font-light mb-6 leading-relaxed">
+              Founded on a love for traditional techniques and premium ingredients, Bento Cakery & Sweets started as a small dream to bring exceptional baked goods to our community.
             </p>
-            <p className="text-lg text-brown font-light mb-8 leading-relaxed">
+            <p className="text-lg text-bento-grey font-light mb-8 leading-relaxed">
               Every morning, long before the sun rises, our bakers are at work. We believe in the slow process of artisanal baking, where patience and precision yield the most remarkable flavors and textures.
             </p>
             <div className="grid grid-cols-2 gap-8 border-t border-beige pt-8">
               <div>
-                <span className="block text-3xl font-serif text-espresso font-bold mb-1">10+</span>
-                <span className="text-sm uppercase tracking-wider text-brown font-medium">Years of Baking</span>
+                <span className="block text-3xl font-serif text-bento-black font-bold mb-1">10+</span>
+                <span className="text-sm uppercase tracking-wider text-bento-grey font-medium">Years of Baking</span>
               </div>
               <div>
-                <span className="block text-3xl font-serif text-espresso font-bold mb-1">100%</span>
-                <span className="text-sm uppercase tracking-wider text-brown font-medium">Handcrafted</span>
+                <span className="block text-3xl font-serif text-bento-black font-bold mb-1">100%</span>
+                <span className="text-sm uppercase tracking-wider text-bento-grey font-medium">Handcrafted</span>
               </div>
             </div>
           </motion.div>

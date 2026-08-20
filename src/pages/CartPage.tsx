@@ -147,56 +147,56 @@ export const CartPage: React.FC = () => {
             
             {/* Step 1 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-espresso text-cream font-bold text-xs flex items-center justify-center ring-4 ring-cream shadow-sm">
+              <div className="w-9 h-9 rounded-full bg-bento-black text-cream font-bold text-xs flex items-center justify-center ring-4 ring-cream shadow-sm">
                 1
               </div>
-              <span className="text-xs font-semibold text-espresso mt-2">1. Your Cart</span>
+              <span className="text-xs font-semibold text-bento-black mt-2">1. Your Cart</span>
             </div>
 
             {/* Step 2 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-beige text-brown font-medium text-xs flex items-center justify-center ring-4 ring-cream">
+              <div className="w-9 h-9 rounded-full bg-beige text-bento-grey font-medium text-xs flex items-center justify-center ring-4 ring-cream">
                 2
               </div>
-              <span className="text-xs text-brown/70 mt-2">2. Pickup Details</span>
+              <span className="text-xs text-bento-grey/70 mt-2">2. Pickup Details</span>
             </div>
 
             {/* Step 3 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-beige text-brown font-medium text-xs flex items-center justify-center ring-4 ring-cream">
+              <div className="w-9 h-9 rounded-full bg-beige text-bento-grey font-medium text-xs flex items-center justify-center ring-4 ring-cream">
                 3
               </div>
-              <span className="text-xs text-brown/70 mt-2">3. Payment</span>
+              <span className="text-xs text-bento-grey/70 mt-2">3. Payment</span>
             </div>
 
             {/* Step 4 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-beige text-brown font-medium text-xs flex items-center justify-center ring-4 ring-cream">
+              <div className="w-9 h-9 rounded-full bg-beige text-bento-grey font-medium text-xs flex items-center justify-center ring-4 ring-cream">
                 4
               </div>
-              <span className="text-xs text-brown/70 mt-2">4. Confirmation</span>
+              <span className="text-xs text-bento-grey/70 mt-2">4. Confirmation</span>
             </div>
           </div>
         </div>
 
         {/* Pickup Only Notice Banner */}
-        <div className="bg-gold/10 border border-gold/30 rounded-3xl p-4 sm:p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="bg-bento-yellow/10 border border-bento-yellow/30 rounded-3xl p-4 sm:p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-gold/20 flex items-center justify-center text-espresso flex-shrink-0">
-              <MapPin className="w-5 h-5 text-gold" />
+            <div className="w-10 h-10 rounded-2xl bg-bento-yellow/20 flex items-center justify-center text-bento-black flex-shrink-0">
+              <MapPin className="w-5 h-5 text-bento-yellow" />
             </div>
             <div>
-              <h4 className="font-serif font-bold text-espresso text-sm sm:text-base">
+              <h4 className="font-serif font-bold text-bento-black text-sm sm:text-base">
                 Pickup-Only Artisan Bakery
               </h4>
-              <p className="text-xs text-brown font-light">
+              <p className="text-xs text-bento-grey font-light">
                 All cakes are baked fresh for in-store collection at <strong>Main Road, Rayagada, Odisha</strong>.
               </p>
             </div>
           </div>
 
-          <div className="text-xs font-semibold text-espresso bg-cream/80 px-4 py-2 rounded-full border border-beige flex items-center gap-1.5 self-stretch sm:self-auto justify-center">
-            <Clock className="w-3.5 h-3.5 text-gold" />
+          <div className="text-xs font-semibold text-bento-black bg-cream/80 px-4 py-2 rounded-full border border-beige flex items-center gap-1.5 self-stretch sm:self-auto justify-center">
+            <Clock className="w-3.5 h-3.5 text-bento-yellow" />
             <span>Mon–Sat: 7am–6pm | Sun: 8am–2pm</span>
           </div>
         </div>
@@ -208,18 +208,18 @@ export const CartPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-16 px-6 bg-off-white rounded-3xl border border-beige shadow-soft max-w-2xl mx-auto"
           >
-            <div className="w-24 h-24 bg-beige/80 rounded-full flex items-center justify-center mx-auto mb-6 text-espresso/40">
+            <div className="w-24 h-24 bg-beige/80 rounded-full flex items-center justify-center mx-auto mb-6 text-bento-black/40">
               <ShoppingBag className="w-12 h-12" />
             </div>
-            <h2 className="text-3xl font-serif font-bold text-espresso mb-3">
+            <h2 className="text-3xl font-serif font-bold text-bento-black mb-3">
               Your Pickup Cart is Empty
             </h2>
-            <p className="text-brown font-light max-w-md mx-auto mb-8 leading-relaxed text-sm sm:text-base">
+            <p className="text-bento-grey font-light max-w-md mx-auto mb-8 leading-relaxed text-sm sm:text-base">
               Looks like you haven't selected any sweet creations yet. Browse our handcrafted celebration cakes and place your pickup order in advance.
             </p>
             <Link
               to="/menu"
-              className="inline-flex items-center space-x-2 px-8 py-4 bg-espresso text-cream rounded-full font-medium text-sm hover:bg-espresso/90 transition-colors shadow-soft"
+              className="inline-flex items-center space-x-2 px-8 py-4 bg-bento-black text-cream rounded-full font-medium text-sm hover:bg-bento-black/90 transition-colors shadow-soft"
             >
               <span>Explore Bakery Menu</span>
               <ArrowRight className="w-4 h-4" />
@@ -227,14 +227,14 @@ export const CartPage: React.FC = () => {
 
             {/* Popular recommendation preview */}
             <div className="mt-16 pt-10 border-t border-beige text-left">
-              <h4 className="text-xs uppercase tracking-wider text-gold font-bold mb-4 text-center">
+              <h4 className="text-xs uppercase tracking-wider text-bento-yellow font-bold mb-4 text-center">
                 Popular Customer Favorites
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {MOCK_PRODUCTS.slice(0, 2).map((prod) => (
                   <div
                     key={prod.id}
-                    className="p-3 bg-cream rounded-2xl border border-beige flex items-center space-x-3.5 hover:border-gold/50 transition-colors"
+                    className="p-3 bg-cream rounded-2xl border border-beige flex items-center space-x-3.5 hover:border-bento-yellow/50 transition-colors"
                   >
                     <img
                       src={prod.imageUuids[0]}
@@ -242,16 +242,16 @@ export const CartPage: React.FC = () => {
                       className="w-14 h-14 object-cover rounded-xl"
                     />
                     <div className="flex-1 min-w-0">
-                      <h5 className="font-serif font-bold text-espresso text-xs truncate">
+                      <h5 className="font-serif font-bold text-bento-black text-xs truncate">
                         {prod.name}
                       </h5>
-                      <span className="text-xs text-gold font-semibold">
+                      <span className="text-xs text-bento-yellow font-semibold">
                         From {formatCurrency(prod.price)}
                       </span>
                     </div>
                     <Link
                       to="/menu"
-                      className="text-xs font-semibold text-espresso hover:text-gold px-3 py-1.5 rounded-full border border-beige hover:bg-beige/40 transition-colors"
+                      className="text-xs font-semibold text-bento-black hover:text-bento-yellow px-3 py-1.5 rounded-full border border-beige hover:bg-beige/40 transition-colors"
                     >
                       View
                     </Link>
@@ -266,12 +266,12 @@ export const CartPage: React.FC = () => {
             {/* Left Column: Cart Items & Customization (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center justify-between pb-2 border-b border-beige">
-                <h2 className="text-2xl font-serif font-bold text-espresso">
+                <h2 className="text-2xl font-serif font-bold text-bento-black">
                   Selected Items ({totals.itemCount})
                 </h2>
                 <button
                   onClick={clearCart}
-                  className="text-xs text-brown/70 hover:text-red-600 transition-colors"
+                  className="text-xs text-bento-grey/70 hover:text-red-600 transition-colors"
                 >
                   Clear Cart
                 </button>
@@ -286,7 +286,7 @@ export const CartPage: React.FC = () => {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-off-white border border-beige rounded-3xl p-5 sm:p-6 shadow-soft relative group hover:border-gold/40 transition-all"
+                    className="bg-off-white border border-beige rounded-3xl p-5 sm:p-6 shadow-soft relative group hover:border-bento-yellow/40 transition-all"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                       {/* Product Image */}
@@ -300,19 +300,19 @@ export const CartPage: React.FC = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between">
                           <div>
-                            <h3 className="font-serif font-bold text-espresso text-lg leading-tight">
+                            <h3 className="font-serif font-bold text-bento-black text-lg leading-tight">
                               {item.name}
                             </h3>
-                            <span className="text-xs text-brown font-light">
+                            <span className="text-xs text-bento-grey font-light">
                               Base: {formatCurrency(item.selectedSize?.price || 0)}
                             </span>
                           </div>
 
                           <div className="text-right">
-                            <span className="text-lg font-bold font-serif text-espresso block">
+                            <span className="text-lg font-bold font-serif text-bento-black block">
                               {formatCurrency(item.unitPrice * item.quantity)}
                             </span>
-                            <span className="text-[11px] text-brown">
+                            <span className="text-[11px] text-bento-grey">
                               {formatCurrency(item.unitPrice)} each
                             </span>
                           </div>
@@ -320,31 +320,31 @@ export const CartPage: React.FC = () => {
 
                         {/* Specs & Customization Badges */}
                         <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                          <span className="px-3 py-1 bg-beige rounded-full font-medium text-espresso">
+                          <span className="px-3 py-1 bg-beige rounded-full font-medium text-bento-black">
                             {item.selectedSize?.label} ({item.selectedSize?.servings} servings)
                           </span>
                           {item.selectedFlavor && (
-                            <span className="px-3 py-1 bg-beige rounded-full text-brown">
+                            <span className="px-3 py-1 bg-beige rounded-full text-bento-grey">
                               {item.selectedFlavor}
                             </span>
                           )}
-                          <span className="px-3 py-1 bg-gold/10 text-espresso rounded-full text-[11px] font-semibold flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-gold" />
+                          <span className="px-3 py-1 bg-bento-yellow/10 text-bento-black rounded-full text-[11px] font-semibold flex items-center gap-1">
+                            <Clock className="w-3 h-3 text-bento-yellow" />
                             {item.preparationLeadTimeHours}h lead time
                           </span>
                         </div>
 
                         {/* Piped Message Preview */}
                         {item.cakeMessage && (
-                          <div className="mt-3 p-2.5 bg-cream rounded-xl border border-beige/80 text-xs text-espresso italic flex items-center gap-2">
-                            <MessageSquareQuote className="w-4 h-4 text-gold flex-shrink-0" />
+                          <div className="mt-3 p-2.5 bg-cream rounded-xl border border-beige/80 text-xs text-bento-black italic flex items-center gap-2">
+                            <MessageSquareQuote className="w-4 h-4 text-bento-yellow flex-shrink-0" />
                             <span>Piped Message: “{item.cakeMessage}”</span>
                           </div>
                         )}
 
                         {/* Add-ons List */}
                         {item.selectedAddOns && item.selectedAddOns.length > 0 && (
-                          <div className="mt-2 text-xs text-gold font-medium flex items-center gap-1.5">
+                          <div className="mt-2 text-xs text-bento-yellow font-medium flex items-center gap-1.5">
                             <Sparkles className="w-3.5 h-3.5 flex-shrink-0" />
                             <span>
                               Add-ons: {item.selectedAddOns.map((a) => `${a.name} (+${formatCurrency(a.price)})`).join(', ')}
@@ -364,12 +364,12 @@ export const CartPage: React.FC = () => {
                                   updateItemQuantity(item.id, item.quantity - 1);
                                 }
                               }}
-                              className="px-3 py-1.5 hover:bg-beige text-espresso transition-colors"
+                              className="px-3 py-1.5 hover:bg-beige text-bento-black transition-colors"
                               aria-label="Decrease quantity"
                             >
                               <Minus className="w-3.5 h-3.5" />
                             </button>
-                            <span className="px-3 text-xs font-bold text-espresso min-w-[24px] text-center">
+                            <span className="px-3 text-xs font-bold text-bento-black min-w-[24px] text-center">
                               {item.quantity}
                             </span>
                             <button
@@ -384,7 +384,7 @@ export const CartPage: React.FC = () => {
                                   updateItemQuantity(item.id, item.quantity + 1);
                                 }
                               }}
-                              className="px-3 py-1.5 hover:bg-beige text-espresso transition-colors"
+                              className="px-3 py-1.5 hover:bg-beige text-bento-black transition-colors"
                               aria-label="Increase quantity"
                             >
                               <Plus className="w-3.5 h-3.5" />
@@ -395,7 +395,7 @@ export const CartPage: React.FC = () => {
                           <div className="flex items-center space-x-3 text-xs font-medium">
                             <button
                               onClick={() => setEditingItem(item)}
-                              className="inline-flex items-center space-x-1 text-brown hover:text-espresso transition-colors"
+                              className="inline-flex items-center space-x-1 text-bento-grey hover:text-bento-black transition-colors"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
                               <span>Customize</span>
@@ -410,7 +410,7 @@ export const CartPage: React.FC = () => {
                                   description: `“${item.name}” moved to your saved list.`,
                                 });
                               }}
-                              className="inline-flex items-center space-x-1 text-brown hover:text-espresso transition-colors"
+                              className="inline-flex items-center space-x-1 text-bento-grey hover:text-bento-black transition-colors"
                             >
                               <Bookmark className="w-3.5 h-3.5" />
                               <span>Save for Later</span>
@@ -418,7 +418,7 @@ export const CartPage: React.FC = () => {
 
                             <button
                               onClick={() => setItemToRemove(item)}
-                              className="inline-flex items-center space-x-1 text-brown/70 hover:text-red-600 transition-colors"
+                              className="inline-flex items-center space-x-1 text-bento-grey/70 hover:text-red-600 transition-colors"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                               <span>Remove</span>
@@ -438,24 +438,24 @@ export const CartPage: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2.5">
-                    <Calendar className="w-5 h-5 text-gold" />
-                    <h3 className="font-serif font-bold text-espresso text-lg">
+                    <Calendar className="w-5 h-5 text-bento-yellow" />
+                    <h3 className="font-serif font-bold text-bento-black text-lg">
                       Schedule Bakery Pickup
                     </h3>
                   </div>
-                  <span className="text-xs font-semibold text-espresso bg-gold/10 px-3 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-bento-black bg-bento-yellow/10 px-3 py-1 rounded-full">
                     Min {totals.maxLeadTimeHours}h Prep Time Required
                   </span>
                 </div>
 
-                <p className="text-xs text-brown font-light">
+                <p className="text-xs text-bento-grey font-light">
                   Because our cakes are baked fresh from scratch to order, your earliest eligible pickup date is{' '}
-                  <strong className="text-espresso">{earliestPickupDate}</strong>.
+                  <strong className="text-bento-black">{earliestPickupDate}</strong>.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                   <div>
-                    <label className="block text-xs font-semibold text-espresso mb-1.5">
+                    <label className="block text-xs font-semibold text-bento-black mb-1.5">
                       Pickup Date *
                     </label>
                     <input
@@ -463,18 +463,18 @@ export const CartPage: React.FC = () => {
                       min={earliestPickupDate}
                       value={globalPickupDate}
                       onChange={(e) => handleGlobalDateChange(e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-4 py-3 text-sm text-espresso focus:outline-none focus:border-gold"
+                      className="w-full bg-cream border border-beige rounded-xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-espresso mb-1.5">
+                    <label className="block text-xs font-semibold text-bento-black mb-1.5">
                       Pickup Time Slot *
                     </label>
                     <select
                       value={globalPickupTimeSlot}
                       onChange={(e) => setGlobalPickup(globalPickupDate, e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-4 py-3 text-sm text-espresso focus:outline-none focus:border-gold"
+                      className="w-full bg-cream border border-beige rounded-xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                     >
                       <option value="">Select pickup window</option>
                       {availableSlots.map((slot) => (
@@ -493,10 +493,10 @@ export const CartPage: React.FC = () => {
 
               {/* Special Order Notes */}
               <div className="bg-off-white border border-beige rounded-3xl p-6 shadow-soft">
-                <label className="block font-serif font-bold text-espresso text-base mb-2">
+                <label className="block font-serif font-bold text-bento-black text-base mb-2">
                   Special Pickup Instructions or Notes
                 </label>
-                <p className="text-xs text-brown font-light mb-3">
+                <p className="text-xs text-bento-grey font-light mb-3">
                   Have dietary sensitivities or need help carrying your cake to your vehicle? Let our team know.
                 </p>
                 <textarea
@@ -504,14 +504,14 @@ export const CartPage: React.FC = () => {
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
                   placeholder="e.g. Please box separately, curbside pickup assistance needed."
-                  className="w-full bg-cream border border-beige rounded-2xl p-4 text-sm text-espresso focus:outline-none focus:border-gold"
+                  className="w-full bg-cream border border-beige rounded-2xl p-4 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                 />
               </div>
 
               {/* Saved for Later Section */}
               {savedForLater.length > 0 && (
                 <div className="pt-6 border-t border-beige space-y-4">
-                  <h3 className="font-serif font-bold text-espresso text-xl">
+                  <h3 className="font-serif font-bold text-bento-black text-xl">
                     Saved for Later ({savedForLater.length})
                   </h3>
                   <div className="space-y-3">
@@ -527,10 +527,10 @@ export const CartPage: React.FC = () => {
                             className="w-14 h-14 object-cover rounded-xl"
                           />
                           <div>
-                            <h4 className="font-serif font-bold text-espresso text-sm">
+                            <h4 className="font-serif font-bold text-bento-black text-sm">
                               {saved.name}
                             </h4>
-                            <span className="text-xs text-brown">
+                            <span className="text-xs text-bento-grey">
                               {saved.selectedSize?.label} • {formatCurrency(saved.unitPrice)}
                             </span>
                           </div>
@@ -546,13 +546,13 @@ export const CartPage: React.FC = () => {
                                 description: `“${saved.name}” was returned to your cart.`,
                               });
                             }}
-                            className="text-xs font-semibold text-espresso hover:text-gold px-3.5 py-1.5 rounded-full border border-beige bg-off-white hover:bg-beige/40 transition-colors"
+                            className="text-xs font-semibold text-bento-black hover:text-bento-yellow px-3.5 py-1.5 rounded-full border border-beige bg-off-white hover:bg-beige/40 transition-colors"
                           >
                             Move to Cart
                           </button>
                           <button
                             onClick={() => removeSavedItem(saved.id)}
-                            className="text-brown/60 hover:text-red-600 p-1.5 rounded"
+                            className="text-bento-grey/60 hover:text-red-600 p-1.5 rounded"
                             aria-label="Delete saved item"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -568,7 +568,7 @@ export const CartPage: React.FC = () => {
             {/* Right Column: Order Summary Card (5 cols sticky) */}
             <div className="lg:col-span-5 sticky top-24 space-y-6">
               <div className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-6">
-                <h3 className="font-serif font-bold text-espresso text-2xl pb-4 border-b border-beige">
+                <h3 className="font-serif font-bold text-bento-black text-2xl pb-4 border-b border-beige">
                   Order Summary
                 </h3>
 
@@ -576,18 +576,18 @@ export const CartPage: React.FC = () => {
                 <div>
                   <form onSubmit={handleApplyPromo} className="flex gap-2">
                     <div className="relative flex-1">
-                      <Tag className="w-4 h-4 text-brown/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <Tag className="w-4 h-4 text-bento-grey/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
                       <input
                         type="text"
                         value={promoInput}
                         onChange={(e) => setPromoInput(e.target.value)}
                         placeholder="Promo code (e.g. SWEET10)"
-                        className="w-full bg-cream border border-beige rounded-2xl pl-10 pr-4 py-3 text-xs sm:text-sm text-espresso uppercase tracking-wider focus:outline-none focus:border-gold"
+                        className="w-full bg-cream border border-beige rounded-2xl pl-10 pr-4 py-3 text-xs sm:text-sm text-bento-black uppercase tracking-wider focus:outline-none focus:border-bento-yellow"
                       />
                     </div>
                     <button
                       type="submit"
-                      className="px-5 py-3 bg-beige hover:bg-gold/20 text-espresso font-semibold text-xs rounded-2xl border border-beige transition-colors"
+                      className="px-5 py-3 bg-beige hover:bg-bento-yellow/20 text-bento-black font-semibold text-xs rounded-2xl border border-beige transition-colors"
                     >
                       Apply
                     </button>
@@ -595,16 +595,16 @@ export const CartPage: React.FC = () => {
 
                   {/* Active Discount Badge */}
                   {appliedDiscount && (
-                    <div className="mt-3 bg-gold/15 border border-gold/30 rounded-xl p-2.5 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5 text-espresso font-medium">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-gold" />
+                    <div className="mt-3 bg-bento-yellow/15 border border-bento-yellow/30 rounded-xl p-2.5 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5 text-bento-black font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-bento-yellow" />
                         <span>
                           {appliedDiscount.code} ({appliedDiscount.description})
                         </span>
                       </div>
                       <button
                         onClick={removeDiscount}
-                        className="text-brown/70 hover:text-espresso font-semibold text-[11px]"
+                        className="text-bento-grey/70 hover:text-bento-black font-semibold text-[11px]"
                       >
                         Remove
                       </button>
@@ -621,47 +621,47 @@ export const CartPage: React.FC = () => {
 
                 {/* Pricing Line Items */}
                 <div className="space-y-3 text-sm pt-2 border-t border-beige">
-                  <div className="flex justify-between text-brown font-light">
+                  <div className="flex justify-between text-bento-grey font-light">
                     <span>Cakes Subtotal</span>
-                    <span className="font-medium text-espresso">
+                    <span className="font-medium text-bento-black">
                       {formatCurrency(totals.baseSubtotal)}
                     </span>
                   </div>
 
                   {totals.addOnsSubtotal > 0 && (
-                    <div className="flex justify-between text-brown font-light">
+                    <div className="flex justify-between text-bento-grey font-light">
                       <span>Celebration Add-ons</span>
-                      <span className="font-medium text-espresso">
+                      <span className="font-medium text-bento-black">
                         +{formatCurrency(totals.addOnsSubtotal)}
                       </span>
                     </div>
                   )}
 
                   {totals.discount > 0 && (
-                    <div className="flex justify-between text-gold font-semibold">
+                    <div className="flex justify-between text-bento-yellow font-semibold">
                       <span>Promo Discount</span>
                       <span>-{formatCurrency(totals.discount)}</span>
                     </div>
                   )}
 
-                  <div className="flex justify-between text-brown font-light">
+                  <div className="flex justify-between text-bento-grey font-light">
                     <span>Estimated Sales Tax ({Math.round(totals.taxRate * 100)}%)</span>
                     <span>{formatCurrency(totals.tax)}</span>
                   </div>
 
-                  <div className="flex justify-between text-brown font-light">
+                  <div className="flex justify-between text-bento-grey font-light">
                     <span>In-Store Pickup</span>
-                    <span className="text-gold font-semibold">FREE</span>
+                    <span className="text-bento-yellow font-semibold">FREE</span>
                   </div>
 
                   <div className="pt-4 border-t border-beige flex justify-between items-baseline font-serif">
                     <div>
-                      <span className="text-xl font-bold text-espresso block">Total Due</span>
-                      <span className="text-[11px] font-sans text-brown font-light">
+                      <span className="text-xl font-bold text-bento-black block">Total Due</span>
+                      <span className="text-[11px] font-sans text-bento-grey font-light">
                         Charged securely upon checkout
                       </span>
                     </div>
-                    <span className="text-2xl font-extrabold text-espresso">
+                    <span className="text-2xl font-extrabold text-bento-black">
                       {formatCurrency(totals.total)}
                     </span>
                   </div>
@@ -671,7 +671,7 @@ export const CartPage: React.FC = () => {
                 <button
                   onClick={handleProceedToCheckout}
                   disabled={isValidating || items.length === 0}
-                  className="w-full py-4 px-6 bg-espresso text-cream rounded-full font-medium text-base hover:bg-espresso/90 transition-colors shadow-soft flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gold"
+                  className="w-full py-4 px-6 bg-bento-black text-cream rounded-full font-medium text-base hover:bg-bento-black/90 transition-colors shadow-soft flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-bento-yellow"
                 >
                   {isValidating ? (
                     <>
@@ -687,17 +687,17 @@ export const CartPage: React.FC = () => {
                 </button>
 
                 {/* Trust & Guarantee Badges */}
-                <div className="pt-4 border-t border-beige space-y-2.5 text-xs text-brown">
+                <div className="pt-4 border-t border-beige space-y-2.5 text-xs text-bento-grey">
                   <div className="flex items-center space-x-2">
-                    <ShieldCheck className="w-4 h-4 text-gold flex-shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-bento-yellow flex-shrink-0" />
                     <span>100% Satisfaction & Freshness Guarantee</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-gold flex-shrink-0" />
+                    <Clock className="w-4 h-4 text-bento-yellow flex-shrink-0" />
                     <span>Free order rescheduling up to 48 hours before pickup</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Info className="w-4 h-4 text-gold flex-shrink-0" />
+                    <Info className="w-4 h-4 text-bento-yellow flex-shrink-0" />
                     <span>No delivery fees — dedicated pickup parking available</span>
                   </div>
                 </div>

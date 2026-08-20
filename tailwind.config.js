@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: '#FAF9F6', // Changed to off-white hex per request
-        'off-white': '#FDFBF7',
-        beige: '#F5F0E6',
-        brown: '#5C4033',
-        espresso: '#3B2F2F',
-        gold: '#D4AF37',
+        cream: '#FFF8D6', // Pale bento yellow
+        'off-white': '#FFFCF0', // Lightest bento yellow
+        beige: '#FFE485', // Light bento yellow
+        'bento-grey': '#333333',
+        'bento-black': '#111111',
+        'bento-yellow': '#FFD700',
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'serif'],

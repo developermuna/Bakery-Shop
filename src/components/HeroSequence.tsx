@@ -108,35 +108,30 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
       }
     };
 
-    // Initial render
-    render();
+    const handleResize = () => {
+      // Set canvas internal resolution to match its display size (viewport)
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      render(); // Force a re-render so it doesn't stay blank
+    };
+
+    // Initial setup
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
     // Subscribe to currentFrameIndex changes
     const unsubscribe = currentFrameIndex.on('change', render);
 
-    return () => unsubscribe();
-  }, [currentFrameIndex, isLoaded, images]);
-
-  // Handle canvas resize
-  useEffect(() => {
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        // Set canvas internal resolution to match its display size (viewport)
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+    return () => {
+      unsubscribe();
+      window.removeEventListener('resize', handleResize);
     };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [currentFrameIndex, isLoaded, images]);
 
   return (
     <div ref={containerRef} className="relative h-[300vh] hero-sequence-container">
       {/* Sticky container for the video/canvas */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-espresso">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-bento-black">
         <canvas
           ref={canvasRef}
           className="absolute inset-0 h-full w-full object-cover"
@@ -144,7 +139,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
 
         {/* Loading overlay if images are not ready */}
         {!isLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-espresso z-10">
+          <div className="absolute inset-0 flex items-center justify-center bg-bento-black z-10">
             <p className="text-cream text-lg font-sans">Loading experience...</p>
           </div>
         )}
@@ -176,10 +171,10 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
             transition={{ duration: 1, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
           >
-            <Link to="/menu" className="px-8 py-4 bg-cream text-espresso rounded-full font-medium hover:bg-beige transition-colors shadow-lg">
+            <Link to="/menu" className="px-8 py-4 bg-cream text-bento-black rounded-full font-medium hover:bg-beige transition-colors shadow-lg">
               Order for Pickup
             </Link>
-            <Link to="/#categories" className="px-8 py-4 bg-espresso/50 backdrop-blur-md text-cream border border-cream/30 rounded-full font-medium hover:bg-espresso/70 transition-colors shadow-lg">
+            <Link to="/#categories" className="px-8 py-4 bg-bento-black/50 backdrop-blur-md text-cream border border-cream/30 rounded-full font-medium hover:bg-bento-black/70 transition-colors shadow-lg">
               View Menu
             </Link>
           </motion.div>

@@ -26,7 +26,7 @@ export const RemoveConfirmModal: React.FC<RemoveConfirmModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-espresso/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-bento-black/60 backdrop-blur-sm"
           onClick={onCancel}
         />
 
@@ -43,7 +43,7 @@ export const RemoveConfirmModal: React.FC<RemoveConfirmModalProps> = ({
           >
             <button
               onClick={onCancel}
-              className="absolute top-4 right-4 p-2 text-brown hover:text-espresso rounded-full hover:bg-beige/60 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+              className="absolute top-4 right-4 p-2 text-bento-grey hover:text-bento-black rounded-full hover:bg-beige/60 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -53,18 +53,18 @@ export const RemoveConfirmModal: React.FC<RemoveConfirmModalProps> = ({
               <Trash2 className="w-6 h-6" />
             </div>
 
-            <h3 id="remove-dialog-title" className="text-xl font-serif font-bold text-espresso mb-2">
+            <h3 id="remove-dialog-title" className="text-xl font-serif font-bold text-bento-black mb-2">
               Remove from Cart?
             </h3>
-            <p className="text-sm text-brown font-light leading-relaxed mb-6">
-              Are you sure you want to remove <span className="font-medium text-espresso">“{itemName}”</span> from your pickup cart?
+            <p className="text-sm text-bento-grey font-light leading-relaxed mb-6">
+              Are you sure you want to remove <span className="font-medium text-bento-black">“{itemName}”</span> from your pickup cart?
             </p>
 
             <div className="flex flex-col-reverse sm:flex-row gap-3">
               <button
                 id="cancel-btn"
                 onClick={onCancel}
-                className="flex-1 py-3 px-4 rounded-full border border-beige font-medium text-espresso hover:bg-beige/40 transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-gold"
+                className="flex-1 py-3 px-4 rounded-full border border-beige font-medium text-bento-black hover:bg-beige/40 transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-bento-yellow"
               >
                 Keep in Cart
               </button>

@@ -11,14 +11,14 @@ export const Location: React.FC<LocationProps> = ({
   directionsUrl = "https://maps.google.com/?q=Rayagada,+Odisha"
 }) => {
   return (
-    <section id="location" className="py-24 bg-beige relative overflow-hidden">
+    <section id="location" className="py-12 bg-beige relative overflow-hidden min-h-[60vh] flex flex-col justify-center">
       {/* Decorative background element */}
       <div className="absolute -left-32 -bottom-32 w-96 h-96 bg-cream rounded-full mix-blend-overlay filter blur-3xl opacity-60"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif text-espresso mb-4">Visit Our Bakery</h2>
-          <p className="text-lg text-brown max-w-2xl mx-auto font-light">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-serif text-bento-black mb-3">Visit Our Bakery</h2>
+          <p className="text-base text-bento-grey max-w-2xl mx-auto font-light">
             Your sweet moments are waiting for you in Rayagada. Find us here.
           </p>
         </div>
@@ -30,10 +30,10 @@ export const Location: React.FC<LocationProps> = ({
               
               {/* Address */}
               <div className="flex items-start space-x-4">
-                <MapPin className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
+                <MapPin className="w-6 h-6 text-bento-yellow flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-serif text-espresso mb-2">Location</h3>
-                  <p className="text-brown font-light mb-3">
+                  <h3 className="text-xl font-serif text-bento-black mb-2">Location</h3>
+                  <p className="text-bento-grey font-light mb-3">
                     Main Road, Near New Bus Stand<br />
                     Rayagada, Odisha 765001
                   </p>
@@ -41,7 +41,7 @@ export const Location: React.FC<LocationProps> = ({
                     href={directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-sm font-medium text-espresso bg-beige px-4 py-2 rounded-full hover:bg-gold hover:text-espresso transition-colors focus:outline-none focus:ring-2 focus:ring-espresso"
+                    className="inline-flex items-center space-x-2 text-sm font-medium text-bento-black bg-beige px-4 py-2 rounded-full hover:bg-bento-yellow hover:text-bento-black transition-colors focus:outline-none focus:ring-2 focus:ring-bento-black"
                   >
                     <span>Get Directions</span>
                     <ExternalLink className="w-4 h-4" />
@@ -51,21 +51,21 @@ export const Location: React.FC<LocationProps> = ({
 
               {/* Hours */}
               <div className="flex items-start space-x-4">
-                <Clock className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
+                <Clock className="w-6 h-6 text-bento-yellow flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-serif text-espresso mb-2">Hours</h3>
-                  <ul className="text-brown font-light space-y-1">
+                  <h3 className="text-xl font-serif text-bento-black mb-2">Hours</h3>
+                  <ul className="text-bento-grey font-light space-y-1">
                     <li className="flex justify-between w-48">
                       <span>Mon - Fri</span>
-                      <span className="font-medium text-espresso">7am - 6pm</span>
+                      <span className="font-medium text-bento-black">7am - 6pm</span>
                     </li>
                     <li className="flex justify-between w-48">
                       <span>Saturday</span>
-                      <span className="font-medium text-espresso">8am - 5pm</span>
+                      <span className="font-medium text-bento-black">8am - 5pm</span>
                     </li>
                     <li className="flex justify-between w-48">
                       <span>Sunday</span>
-                      <span className="font-medium text-espresso">8am - 2pm</span>
+                      <span className="font-medium text-bento-black">8am - 2pm</span>
                     </li>
                   </ul>
                 </div>
@@ -73,20 +73,20 @@ export const Location: React.FC<LocationProps> = ({
 
               {/* Contact */}
               <div className="flex items-start space-x-4 border-t border-beige pt-8">
-                <Phone className="w-6 h-6 text-gold flex-shrink-0 mt-1" />
+                <Phone className="w-6 h-6 text-bento-yellow flex-shrink-0 mt-1" />
                 <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:space-x-8 space-y-4 sm:space-y-0">
                   <div>
-                    <h3 className="text-sm font-serif text-espresso font-bold mb-1">Call Us</h3>
-                    <a href="tel:+15551234567" className="text-brown font-light hover:text-gold transition-colors block">
+                    <h3 className="text-sm font-serif text-bento-black font-bold mb-1">Call Us</h3>
+                    <a href="tel:+15551234567" className="text-bento-grey font-light hover:text-bento-yellow transition-colors block">
                       (555) 123-4567
                     </a>
                   </div>
                   <div>
-                    <h3 className="text-sm font-serif text-espresso font-bold mb-1 flex items-center space-x-2">
-                      <Mail className="w-4 h-4 text-gold inline mr-1" /> Email Us
+                    <h3 className="text-sm font-serif text-bento-black font-bold mb-1 flex items-center space-x-2">
+                      <Mail className="w-4 h-4 text-bento-yellow inline mr-1" /> Email Us
                     </h3>
-                    <a href="mailto:hello@mkbakery.com" className="text-brown font-light hover:text-gold transition-colors block">
-                      hello@mkbakery.com
+                    <a href="mailto:hello@bentocakery.com" className="text-bento-grey font-light hover:text-bento-yellow transition-colors block">
+                      hello@bentocakery.com
                     </a>
                   </div>
                 </div>
@@ -95,16 +95,16 @@ export const Location: React.FC<LocationProps> = ({
               {/* Pickup & Parking Instructions */}
               <div className="bg-beige/50 p-6 rounded-2xl space-y-4 border border-beige">
                 <div className="flex items-start space-x-3">
-                  <Info className="w-5 h-5 text-espresso flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-brown font-light leading-relaxed">
-                    <strong className="font-medium text-espresso block mb-1">Pickup Instructions</strong>
+                  <Info className="w-5 h-5 text-bento-black flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-bento-grey font-light leading-relaxed">
+                    <strong className="font-medium text-bento-black block mb-1">Pickup Instructions</strong>
                     Please have your order number ready. Skip the main line and head directly to the "Order Pickup" counter on the right.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Car className="w-5 h-5 text-espresso flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-brown font-light leading-relaxed">
-                    <strong className="font-medium text-espresso block mb-1">Parking</strong>
+                  <Car className="w-5 h-5 text-bento-black flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-bento-grey font-light leading-relaxed">
+                    <strong className="font-medium text-bento-black block mb-1">Parking</strong>
                     Dedicated 15-minute pickup parking is available directly behind the bakery (entrance via Maple Alley).
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export const Location: React.FC<LocationProps> = ({
           {/* Map and Visuals Column */}
           <div className="w-full lg:w-1/2 flex flex-col">
             {/* Embedded Map */}
-            <div className="h-64 lg:h-1/2 w-full bg-off-white">
+            <div className="h-[400px] lg:h-full w-full bg-off-white">
               <iframe
                 src={mapUrl}
                 width="100%"
@@ -126,18 +126,7 @@ export const Location: React.FC<LocationProps> = ({
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Bakery Location Map"
-                className="grayscale contrast-75 brightness-110"
               />
-            </div>
-            
-            {/* Bakery Photo */}
-            <div className="h-64 lg:h-1/2 w-full relative">
-              <img 
-                src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80" 
-                alt="Bakery storefront" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-espresso/20 mix-blend-multiply"></div>
             </div>
           </div>
         </div>

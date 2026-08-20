@@ -67,7 +67,7 @@ export const HowItWorks: React.FC = () => {
       className="py-24 md:py-32 bg-cream relative overflow-hidden"
     >
       {/* Subtle Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-64 bg-gold/5 blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-64 bg-bento-yellow/5 blur-3xl pointer-events-none rounded-full" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         {/* Section Header */}
@@ -76,7 +76,7 @@ export const HowItWorks: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs uppercase tracking-widest text-gold font-bold mb-3 block"
+            className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-3 block"
           >
             How Pickup Works
           </motion.span>
@@ -85,7 +85,7 @@ export const HowItWorks: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-espresso mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-bento-black mb-4"
           >
             Four Simple Steps to Sweet Moments
           </motion.h2>
@@ -94,7 +94,7 @@ export const HowItWorks: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-brown text-base md:text-lg font-light leading-relaxed"
+            className="text-bento-grey text-base md:text-lg font-light leading-relaxed"
           >
             A seamless, artisanal pickup experience crafted from kitchen oven to your celebration table.
           </motion.p>
@@ -103,11 +103,11 @@ export const HowItWorks: React.FC = () => {
         {/* DESKTOP: Clean Cardless Horizontal Timeline */}
         <div className="hidden lg:block relative mb-20">
           {/* Horizontal Connecting Track */}
-          <div className="absolute top-8 left-[6%] right-[6%] h-[2px] bg-espresso/10 -z-0">
+          <div className="absolute top-8 left-[6%] right-[6%] h-[2px] bg-bento-black/10 -z-0">
             {/* Animated Gold Fill Line */}
             <motion.div
               style={{ width: lineWidth }}
-              className="h-full bg-gradient-to-r from-gold via-gold to-espresso shadow-[0_0_10px_rgba(212,175,55,0.7)]"
+              className="h-full bg-gradient-to-r from-bento-yellow via-bento-yellow to-bento-black shadow-[0_0_10px_rgba(212,175,55,0.7)]"
             />
           </div>
 
@@ -128,23 +128,23 @@ export const HowItWorks: React.FC = () => {
                   {/* Node Circle on Track */}
                   <motion.div
                     whileHover={{ scale: 1.12 }}
-                    className="w-16 h-16 rounded-full bg-cream border-2 border-gold flex items-center justify-center text-espresso shadow-md mb-8 group-hover:border-espresso group-hover:bg-gold/10 transition-all cursor-pointer relative"
+                    className="w-16 h-16 rounded-full bg-cream border-2 border-bento-yellow flex items-center justify-center text-bento-black shadow-md mb-8 group-hover:border-bento-black group-hover:bg-bento-yellow/10 transition-all cursor-pointer relative"
                   >
-                    <Icon className="w-6 h-6 text-gold group-hover:text-espresso transition-colors" />
-                    <span className="absolute -bottom-2.5 bg-espresso text-cream text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                    <Icon className="w-6 h-6 text-bento-yellow group-hover:text-bento-black transition-colors" />
+                    <span className="absolute -bottom-2.5 bg-bento-black text-cream text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
                       {step.number}
                     </span>
                   </motion.div>
 
                   {/* Text Details without Card */}
                   <div className="px-2 space-y-2">
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-gold block">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-bento-yellow block">
                       {step.tag}
                     </span>
-                    <h3 className="text-xl font-serif font-bold text-espresso group-hover:text-gold transition-colors leading-snug">
+                    <h3 className="text-xl font-serif font-bold text-bento-black group-hover:text-bento-yellow transition-colors leading-snug">
                       {step.title}
                     </h3>
-                    <p className="text-brown text-xs md:text-sm font-light leading-relaxed max-w-xs mx-auto">
+                    <p className="text-bento-grey text-xs md:text-sm font-light leading-relaxed max-w-xs mx-auto">
                       {step.description}
                     </p>
                   </div>
@@ -157,10 +157,10 @@ export const HowItWorks: React.FC = () => {
         {/* MOBILE & TABLET: Clean Vertical Line (Cardless) */}
         <div className="lg:hidden relative pl-8 sm:pl-12 space-y-12 mb-16">
           {/* Vertical Connecting Line */}
-          <div className="absolute left-3.5 sm:left-5 top-4 bottom-4 w-[2px] bg-espresso/10">
+          <div className="absolute left-3.5 sm:left-5 top-4 bottom-4 w-[2px] bg-bento-black/10">
             <motion.div
               style={{ height: lineWidth }}
-              className="w-full bg-gold shadow-[0_0_8px_rgba(212,175,55,0.7)]"
+              className="w-full bg-bento-yellow shadow-[0_0_8px_rgba(212,175,55,0.7)]"
             />
           </div>
 
@@ -177,24 +177,24 @@ export const HowItWorks: React.FC = () => {
                 className="relative flex items-start space-x-4 sm:space-x-6 group"
               >
                 {/* Node Circle */}
-                <div className="absolute -left-8 sm:-left-12 top-0 w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-cream border-2 border-gold flex items-center justify-center text-espresso shadow-xs z-10">
-                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
+                <div className="absolute -left-8 sm:-left-12 top-0 w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-cream border-2 border-bento-yellow flex items-center justify-center text-bento-black shadow-xs z-10">
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-bento-yellow" />
                 </div>
 
                 {/* Content */}
                 <div className="space-y-1.5 pt-0.5">
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] font-mono font-bold bg-espresso text-cream px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-mono font-bold bg-bento-black text-cream px-2 py-0.5 rounded-full">
                       {step.number}
                     </span>
-                    <span className="text-xs uppercase tracking-wider text-gold font-bold">
+                    <span className="text-xs uppercase tracking-wider text-bento-yellow font-bold">
                       {step.tag}
                     </span>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-serif font-bold text-espresso group-hover:text-gold transition-colors">
+                  <h3 className="text-lg sm:text-xl font-serif font-bold text-bento-black group-hover:text-bento-yellow transition-colors">
                     {step.title}
                   </h3>
-                  <p className="text-brown text-xs sm:text-sm font-light leading-relaxed">
+                  <p className="text-bento-grey text-xs sm:text-sm font-light leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -207,10 +207,10 @@ export const HowItWorks: React.FC = () => {
         <div className="text-center pt-8 border-t border-beige">
           <Link
             to="/menu"
-            className="inline-flex items-center space-x-3 px-8 py-4 bg-espresso text-cream rounded-full font-medium text-xs sm:text-sm uppercase tracking-wider hover:bg-espresso/90 transition-colors shadow-soft"
+            className="inline-flex items-center space-x-3 px-8 py-4 bg-bento-black text-cream rounded-full font-medium text-xs sm:text-sm uppercase tracking-wider hover:bg-bento-black/90 transition-colors shadow-soft"
           >
             <span>Order for Pickup in Rayagada</span>
-            <ArrowRight className="w-4 h-4 text-gold" />
+            <ArrowRight className="w-4 h-4 text-bento-yellow" />
           </Link>
         </div>
       </div>

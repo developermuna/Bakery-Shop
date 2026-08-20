@@ -58,18 +58,18 @@ export const ConfirmationPage: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Success Header */}
         <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-gold/20 text-gold rounded-full flex items-center justify-center mx-auto mb-5 shadow-soft">
+          <div className="w-20 h-20 bg-bento-yellow/20 text-bento-yellow rounded-full flex items-center justify-center mx-auto mb-5 shadow-soft">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <span className="text-xs uppercase tracking-widest text-gold font-bold mb-2 block">
+          <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-2 block">
             Order Confirmed & Scheduled
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-espresso mb-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-bento-black mb-3">
             Thank You for Your Order!
           </h1>
-          <p className="text-brown text-sm sm:text-base font-light max-w-lg mx-auto">
+          <p className="text-bento-grey text-sm sm:text-base font-light max-w-lg mx-auto">
             We've received your pickup order. A confirmation receipt and barcode has been sent to{' '}
-            <strong className="text-espresso">{activeOrder.customer.email}</strong>.
+            <strong className="text-bento-black">{activeOrder.customer.email}</strong>.
           </p>
         </div>
 
@@ -78,15 +78,15 @@ export const ConfirmationPage: React.FC = () => {
           {/* Order Number & Status Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-beige gap-4">
             <div>
-              <span className="text-xs text-brown uppercase tracking-wider block">Order Number</span>
-              <span className="text-2xl font-mono font-bold text-espresso tracking-wide">
+              <span className="text-xs text-bento-grey uppercase tracking-wider block">Order Number</span>
+              <span className="text-2xl font-mono font-bold text-bento-black tracking-wide">
                 #{activeOrder.orderNumber}
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-gold/15 text-espresso font-semibold text-xs border border-gold/30">
-                <Clock className="w-3.5 h-3.5 text-gold" />
+              <span className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-bento-yellow/15 text-bento-black font-semibold text-xs border border-bento-yellow/30">
+                <Clock className="w-3.5 h-3.5 text-bento-yellow" />
                 <span>Scheduled for Baking</span>
               </span>
             </div>
@@ -95,32 +95,32 @@ export const ConfirmationPage: React.FC = () => {
           {/* Pickup Details Box */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-cream p-6 rounded-2xl border border-beige">
             <div className="space-y-3">
-              <h3 className="text-sm font-serif font-bold text-espresso flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-gold" />
+              <h3 className="text-sm font-serif font-bold text-bento-black flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-bento-yellow" />
                 Pickup Date & Time
               </h3>
-              <p className="text-sm text-espresso font-semibold">
+              <p className="text-sm text-bento-black font-semibold">
                 {activeOrder.pickup.date} • {activeOrder.pickup.timeSlot}
               </p>
-              <p className="text-xs text-brown font-light">
-                Please present your order number <strong className="text-espresso">#{activeOrder.orderNumber}</strong> at the pickup counter.
+              <p className="text-xs text-bento-grey font-light">
+                Please present your order number <strong className="text-bento-black">#{activeOrder.orderNumber}</strong> at the pickup counter.
               </p>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-sm font-serif font-bold text-espresso flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-gold" />
+              <h3 className="text-sm font-serif font-bold text-bento-black flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-bento-yellow" />
                 Bakery Pickup Location
               </h3>
-              <p className="text-sm text-espresso font-semibold leading-tight">
-                MK Bakery & Sweets<br />
-                <span className="font-normal text-xs text-brown">Main Road, Near New Bus Stand, Rayagada, Odisha 765001</span>
+              <p className="text-sm text-bento-black font-semibold leading-tight">
+                Bento Cakery & Sweets<br />
+                <span className="font-normal text-xs text-bento-grey">Main Road, Near New Bus Stand, Rayagada, Odisha 765001</span>
               </p>
               <a
                 href="https://maps.google.com/?q=Rayagada,+Odisha"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-espresso hover:text-gold transition-colors pt-1"
+                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-bento-black hover:text-bento-yellow transition-colors pt-1"
               >
                 <span>Get Directions in Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -130,11 +130,11 @@ export const ConfirmationPage: React.FC = () => {
 
           {/* Pickup Instructions */}
           <div className="bg-beige/40 p-5 rounded-2xl border border-beige space-y-3">
-            <h4 className="text-xs font-serif font-bold text-espresso uppercase tracking-wider flex items-center gap-1.5">
-              <Car className="w-4 h-4 text-gold" />
+            <h4 className="text-xs font-serif font-bold text-bento-black uppercase tracking-wider flex items-center gap-1.5">
+              <Car className="w-4 h-4 text-bento-yellow" />
               Pickup & Parking Guidance
             </h4>
-            <ul className="text-xs text-brown font-light space-y-1.5 list-disc list-inside">
+            <ul className="text-xs text-bento-grey font-light space-y-1.5 list-disc list-inside">
               <li>
                 <strong>Skip the regular bakery line:</strong> Head straight to the designated "Pickup Counter" located on the right side.
               </li>
@@ -149,8 +149,8 @@ export const ConfirmationPage: React.FC = () => {
 
           {/* Full Itemized Summary */}
           <div className="space-y-4 pt-4 border-t border-beige">
-            <h3 className="text-lg font-serif font-bold text-espresso flex items-center gap-2">
-              <Receipt className="w-5 h-5 text-gold" />
+            <h3 className="text-lg font-serif font-bold text-bento-black flex items-center gap-2">
+              <Receipt className="w-5 h-5 text-bento-yellow" />
               Itemized Receipt
             </h3>
 
@@ -167,21 +167,21 @@ export const ConfirmationPage: React.FC = () => {
                       className="w-12 h-12 object-cover rounded-lg border border-beige"
                     />
                     <div>
-                      <span className="font-semibold text-espresso text-sm block">
+                      <span className="font-semibold text-bento-black text-sm block">
                         {item.name}
                       </span>
-                      <span className="text-brown text-xs">
+                      <span className="text-bento-grey text-xs">
                         {item.selectedSize?.label} {item.selectedFlavor ? `• ${item.selectedFlavor}` : ''} × {item.quantity}
                       </span>
                       {item.cakeMessage && (
-                        <span className="text-[11px] text-brown italic block">
+                        <span className="text-[11px] text-bento-grey italic block">
                           Piped: “{item.cakeMessage}”
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <span className="font-bold text-espresso text-sm">
+                  <span className="font-bold text-bento-black text-sm">
                     {formatCurrency(item.unitPrice * item.quantity)}
                   </span>
                 </div>
@@ -190,27 +190,27 @@ export const ConfirmationPage: React.FC = () => {
 
             {/* Totals Breakdown */}
             <div className="bg-cream p-4 rounded-xl border border-beige space-y-1.5 text-xs">
-              <div className="flex justify-between text-brown">
+              <div className="flex justify-between text-bento-grey">
                 <span>Subtotal</span>
-                <span className="font-medium text-espresso">
+                <span className="font-medium text-bento-black">
                   {formatCurrency(activeOrder.totals.subtotal)}
                 </span>
               </div>
               {activeOrder.totals.discount > 0 && (
-                <div className="flex justify-between text-gold font-semibold">
+                <div className="flex justify-between text-bento-yellow font-semibold">
                   <span>Discount</span>
                   <span>-{formatCurrency(activeOrder.totals.discount)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-brown">
+              <div className="flex justify-between text-bento-grey">
                 <span>Sales Tax</span>
                 <span>{formatCurrency(activeOrder.totals.tax)}</span>
               </div>
-              <div className="flex justify-between text-brown">
+              <div className="flex justify-between text-bento-grey">
                 <span>In-Store Pickup</span>
-                <span className="text-gold font-semibold">FREE</span>
+                <span className="text-bento-yellow font-semibold">FREE</span>
               </div>
-              <div className="pt-2 border-t border-beige flex justify-between font-serif font-bold text-base text-espresso">
+              <div className="pt-2 border-t border-beige flex justify-between font-serif font-bold text-base text-bento-black">
                 <span>Total Paid</span>
                 <span>{formatCurrency(activeOrder.totals.total)}</span>
               </div>
@@ -222,16 +222,16 @@ export const ConfirmationPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/menu"
-            className="px-8 py-3.5 bg-espresso text-cream rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-espresso/90 transition-colors shadow-soft inline-flex items-center justify-center space-x-2"
+            className="px-8 py-3.5 bg-bento-black text-cream rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-bento-black/90 transition-colors shadow-soft inline-flex items-center justify-center space-x-2"
           >
             <span>Order Another Cake</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             to="/"
-            className="px-8 py-3.5 border border-beige bg-off-white text-espresso rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-beige/40 transition-colors inline-flex items-center justify-center space-x-2"
+            className="px-8 py-3.5 border border-beige bg-off-white text-bento-black rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-beige/40 transition-colors inline-flex items-center justify-center space-x-2"
           >
-            <ShoppingBag className="w-4 h-4 text-gold" />
+            <ShoppingBag className="w-4 h-4 text-bento-yellow" />
             <span>Return to Home</span>
           </Link>
         </div>

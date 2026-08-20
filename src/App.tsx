@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import { Navigation } from './components/Navigation';
@@ -8,17 +8,18 @@ import { BestSellers } from './components/BestSellers';
 import { HowItWorks } from './components/HowItWorks';
 import { CustomCakes } from './components/CustomCakes';
 import { Reviews } from './components/Reviews';
-import { Story } from './components/Story';
 import { Location } from './components/Location';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { ToastNotification } from './components/cart/ToastNotification';
-import { CartPage } from './pages/CartPage';
-import { MenuPage } from './pages/MenuPage';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { CheckoutPage } from './pages/CheckoutPage';
-import { ConfirmationPage } from './pages/ConfirmationPage';
-import { AdminDashboard } from './pages/admin/AdminDashboard';
+
+
+const CartPage = lazy(() => import('./pages/CartPage').then(module => ({ default: module.CartPage })));
+const MenuPage = lazy(() => import('./pages/MenuPage').then(module => ({ default: module.MenuPage })));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage').then(module => ({ default: module.ProductDetailPage })));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage').then(module => ({ default: module.CheckoutPage })));
+const ConfirmationPage = lazy(() => import('./pages/ConfirmationPage').then(module => ({ default: module.ConfirmationPage })));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
 
 const ScrollToHash = () => {
   const { pathname, hash } = useLocation();
@@ -47,9 +48,7 @@ const HomePage = () => (
     <Categories />
     <BestSellers />
     <HowItWorks />
-    <CustomCakes />
     <Reviews />
-    <Story />
     <HeroSequence 
       sequences={[{ path: '/cakevideo3/frame_', count: 210 }]}
       title={<>Behind the Scenes</>}
@@ -57,6 +56,13 @@ const HomePage = () => (
     />
     <Location />
   </main>
+);
+
+
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="w-12 h-12 border-4 border-bento-yellow/30 border-t-bento-yellow rounded-full animate-spin"></div>
+  </div>
 );
 
 function App() {
@@ -87,21 +93,24 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
-      <div className="font-sans antialiased text-espresso bg-cream flex flex-col min-h-screen">
+      <div className="font-sans antialiased text-bento-black bg-cream flex flex-col min-h-screen">
         <Navigation />
         
         <div className="flex-grow">
+          <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/menu" element={<MenuPage />} />
+            <Route path="/bento-cakes" element={<MenuPage category="Bento Cakes" />} />
+            <Route path="/custom-cakes" element={<main className="pt-24 min-h-screen"><CustomCakes /></main>} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/confirmation" element={<ConfirmationPage />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
           </Routes>
+          </Suspense>
         </div>
-
         <Footer />
 
         {/* Global Cart Drawer & Toast System */}

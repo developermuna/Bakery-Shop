@@ -145,16 +145,16 @@ export const ProductDetailPage: React.FC = () => {
     <div className="pt-28 pb-24 bg-cream min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-2 text-xs text-brown mb-8">
-          <Link to="/" className="hover:text-espresso">
+        <div className="flex items-center space-x-2 text-xs text-bento-grey mb-8">
+          <Link to="/" className="hover:text-bento-black">
             Home
           </Link>
           <span>/</span>
-          <Link to="/menu" className="hover:text-espresso">
+          <Link to="/menu" className="hover:text-bento-black">
             Menu
           </Link>
           <span>/</span>
-          <span className="text-espresso font-semibold truncate">{product.name}</span>
+          <span className="text-bento-black font-semibold truncate">{product.name}</span>
         </div>
 
         {/* Main Product Layout */}
@@ -172,14 +172,14 @@ export const ProductDetailPage: React.FC = () => {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
                 {product.featured && (
-                  <span className="bg-cream/90 backdrop-blur-md text-espresso text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
+                  <span className="bg-cream/90 backdrop-blur-md text-bento-black text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
                     Best Seller
                   </span>
                 )}
                 {product.dietaryTags.map((tag) => (
                   <span
                     key={tag}
-                    className="bg-gold text-espresso text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
+                    className="bg-bento-yellow text-bento-black text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
                   >
                     {tag}
                   </span>
@@ -189,13 +189,13 @@ export const ProductDetailPage: React.FC = () => {
               {/* Action buttons */}
               <div className="absolute top-4 right-4 flex space-x-2">
                 <button
-                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-espresso hover:text-gold transition-colors shadow-xs"
+                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-bento-black hover:text-bento-yellow transition-colors shadow-xs"
                   aria-label="Save to favorites"
                 >
                   <Heart className="w-4 h-4" />
                 </button>
                 <button
-                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-espresso hover:text-gold transition-colors shadow-xs"
+                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-bento-black hover:text-bento-yellow transition-colors shadow-xs"
                   aria-label="Share cake"
                 >
                   <Share2 className="w-4 h-4" />
@@ -212,8 +212,8 @@ export const ProductDetailPage: React.FC = () => {
                     onClick={() => setActiveImageIndex(idx)}
                     className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all flex-shrink-0 ${
                       activeImageIndex === idx
-                        ? 'border-gold ring-2 ring-gold/30'
-                        : 'border-beige hover:border-gold/50 opacity-70 hover:opacity-100'
+                        ? 'border-bento-yellow ring-2 ring-bento-yellow/30'
+                        : 'border-beige hover:border-bento-yellow/50 opacity-70 hover:opacity-100'
                     }`}
                   >
                     <img src={imgUrl} alt="Thumbnail" className="w-full h-full object-cover" />
@@ -225,19 +225,19 @@ export const ProductDetailPage: React.FC = () => {
             {/* Trust Badges */}
             <div className="bg-off-white border border-beige rounded-2xl p-5 grid grid-cols-3 gap-4 text-center">
               <div className="flex flex-col items-center">
-                <ShieldCheck className="w-5 h-5 text-gold mb-1" />
-                <span className="text-[11px] font-semibold text-espresso">Baked Fresh</span>
-                <span className="text-[10px] text-brown font-light">Scratch Recipe</span>
+                <ShieldCheck className="w-5 h-5 text-bento-yellow mb-1" />
+                <span className="text-[11px] font-semibold text-bento-black">Baked Fresh</span>
+                <span className="text-[10px] text-bento-grey font-light">Scratch Recipe</span>
               </div>
               <div className="flex flex-col items-center">
-                <MapPin className="w-5 h-5 text-gold mb-1" />
-                <span className="text-[11px] font-semibold text-espresso">In-Store Pickup</span>
-                <span className="text-[10px] text-brown font-light">Free Parking</span>
+                <MapPin className="w-5 h-5 text-bento-yellow mb-1" />
+                <span className="text-[11px] font-semibold text-bento-black">In-Store Pickup</span>
+                <span className="text-[10px] text-bento-grey font-light">Free Parking</span>
               </div>
               <div className="flex flex-col items-center">
-                <Clock className="w-5 h-5 text-gold mb-1" />
-                <span className="text-[11px] font-semibold text-espresso">Lead Time</span>
-                <span className="text-[10px] text-brown font-light">{product.preparationLeadTimeHours}h Notice</span>
+                <Clock className="w-5 h-5 text-bento-yellow mb-1" />
+                <span className="text-[11px] font-semibold text-bento-black">Lead Time</span>
+                <span className="text-[10px] text-bento-grey font-light">{product.preparationLeadTimeHours}h Notice</span>
               </div>
             </div>
           </div>
@@ -246,29 +246,29 @@ export const ProductDetailPage: React.FC = () => {
           <div className="lg:col-span-6 space-y-8">
             {/* Title & Ratings */}
             <div>
-              <div className="flex items-center space-x-2 text-xs text-gold mb-2">
+              <div className="flex items-center space-x-2 text-xs text-bento-yellow mb-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-gold text-gold" />
+                    <Star key={i} className="w-4 h-4 fill-bento-yellow text-bento-yellow" />
                   ))}
                 </div>
-                <span className="font-bold text-espresso">{product.rating}</span>
-                <span className="text-brown">({product.reviewsCount} customer reviews)</span>
+                <span className="font-bold text-bento-black">{product.rating}</span>
+                <span className="text-bento-grey">({product.reviewsCount} customer reviews)</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-serif font-bold text-espresso mb-3">
+              <h1 className="text-3xl sm:text-4xl font-serif font-bold text-bento-black mb-3">
                 {product.name}
               </h1>
 
-              <p className="text-brown font-light text-sm sm:text-base leading-relaxed">
+              <p className="text-bento-grey font-light text-sm sm:text-base leading-relaxed">
                 {product.description}
               </p>
 
               <div className="mt-4 flex items-baseline gap-3">
-                <span className="text-3xl font-extrabold font-serif text-espresso">
+                <span className="text-3xl font-extrabold font-serif text-bento-black">
                   {formatCurrency(unitPrice)}
                 </span>
-                <span className="text-xs text-brown">
+                <span className="text-xs text-bento-grey">
                   ({selectedSize.label} • {selectedSize.servings} servings)
                 </span>
               </div>
@@ -278,7 +278,7 @@ export const ProductDetailPage: React.FC = () => {
             <div className="space-y-6 pt-6 border-t border-beige">
               {/* 1. Size Selection */}
               <div>
-                <label className="block text-sm font-semibold text-espresso mb-3 font-serif">
+                <label className="block text-sm font-semibold text-bento-black mb-3 font-serif">
                   1. Select Cake Size & Servings *
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -291,17 +291,17 @@ export const ProductDetailPage: React.FC = () => {
                         onClick={() => setSelectedSize(size)}
                         className={`p-3.5 rounded-2xl border text-left transition-all ${
                           isSelected
-                            ? 'border-gold bg-gold/10 ring-1 ring-gold shadow-xs'
-                            : 'border-beige bg-off-white hover:border-gold/40'
+                            ? 'border-bento-yellow bg-bento-yellow/10 ring-1 ring-bento-yellow shadow-xs'
+                            : 'border-beige bg-off-white hover:border-bento-yellow/40'
                         }`}
                       >
                         <div className="flex justify-between items-center mb-1">
-                          <span className="font-semibold text-espresso text-sm">{size.label}</span>
-                          <span className="text-xs font-bold text-espresso">
+                          <span className="font-semibold text-bento-black text-sm">{size.label}</span>
+                          <span className="text-xs font-bold text-bento-black">
                             {formatCurrency(size.price)}
                           </span>
                         </div>
-                        <p className="text-xs text-brown font-light">{size.servings} servings</p>
+                        <p className="text-xs text-bento-grey font-light">{size.servings} servings</p>
                       </button>
                     );
                   })}
@@ -311,7 +311,7 @@ export const ProductDetailPage: React.FC = () => {
               {/* 2. Flavor Selection (if available) */}
               {product.flavors && product.flavors.length > 0 && (
                 <div>
-                  <label className="block text-sm font-semibold text-espresso mb-3 font-serif">
+                  <label className="block text-sm font-semibold text-bento-black mb-3 font-serif">
                     2. Select Flavor Profile *
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -324,12 +324,12 @@ export const ProductDetailPage: React.FC = () => {
                           onClick={() => setSelectedFlavor(flavor)}
                           className={`p-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-between ${
                             isSelected
-                              ? 'border-gold bg-gold/10 text-espresso ring-1 ring-gold font-semibold'
-                              : 'border-beige bg-off-white text-brown hover:border-gold/50'
+                              ? 'border-bento-yellow bg-bento-yellow/10 text-bento-black ring-1 ring-bento-yellow font-semibold'
+                              : 'border-beige bg-off-white text-bento-grey hover:border-bento-yellow/50'
                           }`}
                         >
                           <span>{flavor}</span>
-                          {isSelected && <Check className="w-3.5 h-3.5 text-gold flex-shrink-0" />}
+                          {isSelected && <Check className="w-3.5 h-3.5 text-bento-yellow flex-shrink-0" />}
                         </button>
                       );
                     })}
@@ -340,11 +340,11 @@ export const ProductDetailPage: React.FC = () => {
               {/* 3. Custom Cake Message */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm font-semibold text-espresso font-serif flex items-center gap-1.5">
-                    <MessageSquareQuote className="w-4 h-4 text-gold" />
+                  <label className="text-sm font-semibold text-bento-black font-serif flex items-center gap-1.5">
+                    <MessageSquareQuote className="w-4 h-4 text-bento-yellow" />
                     3. Piped Custom Cake Message (Optional)
                   </label>
-                  <span className="text-xs text-brown">{cakeMessage.length}/35</span>
+                  <span className="text-xs text-bento-grey">{cakeMessage.length}/35</span>
                 </div>
                 <input
                   type="text"
@@ -352,14 +352,14 @@ export const ProductDetailPage: React.FC = () => {
                   value={cakeMessage}
                   onChange={(e) => setCakeMessage(e.target.value)}
                   placeholder="e.g. Happy 30th Birthday Lucas! 🎂"
-                  className="w-full bg-off-white border border-beige rounded-2xl px-4 py-3 text-sm text-espresso focus:outline-none focus:border-gold"
+                  className="w-full bg-off-white border border-beige rounded-2xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                 />
               </div>
 
               {/* 4. Luxury Add-ons */}
               <div>
-                <label className="block text-sm font-semibold text-espresso mb-3 font-serif flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-gold" />
+                <label className="block text-sm font-semibold text-bento-black mb-3 font-serif flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-bento-yellow" />
                   4. Celebration Add-Ons
                 </label>
                 <div className="space-y-2">
@@ -371,8 +371,8 @@ export const ProductDetailPage: React.FC = () => {
                         onClick={() => toggleAddOn(addon)}
                         className={`flex items-center justify-between p-3.5 rounded-2xl border cursor-pointer transition-all ${
                           isChecked
-                            ? 'border-gold bg-gold/5'
-                            : 'border-beige bg-off-white hover:border-gold/40'
+                            ? 'border-bento-yellow bg-bento-yellow/5'
+                            : 'border-beige bg-off-white hover:border-bento-yellow/40'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -380,13 +380,13 @@ export const ProductDetailPage: React.FC = () => {
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => {}}
-                            className="rounded border-beige text-gold focus:ring-gold h-4 w-4 pointer-events-none"
+                            className="rounded border-beige text-bento-yellow focus:ring-bento-yellow h-4 w-4 pointer-events-none"
                           />
-                          <span className="text-xs sm:text-sm text-espresso font-medium">
+                          <span className="text-xs sm:text-sm text-bento-black font-medium">
                             {addon.name}
                           </span>
                         </div>
-                        <span className="text-xs sm:text-sm font-semibold text-espresso">
+                        <span className="text-xs sm:text-sm font-semibold text-bento-black">
                           +{formatCurrency(addon.price)}
                         </span>
                       </div>
@@ -398,18 +398,18 @@ export const ProductDetailPage: React.FC = () => {
               {/* 5. Pickup Date & Time Slot Selector */}
               <div className="bg-off-white border border-beige rounded-3xl p-5 space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-sm font-serif font-bold text-espresso">
-                    <Calendar className="w-4 h-4 text-gold" />
+                  <div className="flex items-center space-x-2 text-sm font-serif font-bold text-bento-black">
+                    <Calendar className="w-4 h-4 text-bento-yellow" />
                     <span>5. Schedule Pickup Date & Time</span>
                   </div>
-                  <span className="text-[11px] font-semibold text-gold bg-gold/10 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[11px] font-semibold text-bento-yellow bg-bento-yellow/10 px-2.5 py-0.5 rounded-full">
                     {product.preparationLeadTimeHours}h Prep Notice
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-espresso mb-1">
+                    <label className="block text-xs font-semibold text-bento-black mb-1">
                       Pickup Date *
                     </label>
                     <input
@@ -417,19 +417,19 @@ export const ProductDetailPage: React.FC = () => {
                       min={earliestDateStr}
                       value={pickupDate}
                       onChange={(e) => handleDateChange(e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-espresso focus:outline-none focus:border-gold"
+                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                     />
                     {dateError && <p className="text-xs text-red-600 mt-1">{dateError}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-espresso mb-1">
+                    <label className="block text-xs font-semibold text-bento-black mb-1">
                       Pickup Time Slot *
                     </label>
                     <select
                       value={pickupTimeSlot}
                       onChange={(e) => setPickupTimeSlot(e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-espresso focus:outline-none focus:border-gold"
+                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
                     >
                       {availableSlots.map((slot) => (
                         <option key={slot.id} value={slot.time} disabled={!slot.available}>
@@ -448,17 +448,17 @@ export const ProductDetailPage: React.FC = () => {
                   <div className="flex items-center border border-beige bg-off-white rounded-full overflow-hidden shadow-xs">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="p-3 hover:bg-beige text-espresso transition-colors"
+                      className="p-3 hover:bg-beige text-bento-black transition-colors"
                       aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="px-4 font-bold text-espresso text-sm min-w-[32px] text-center">
+                    <span className="px-4 font-bold text-bento-black text-sm min-w-[32px] text-center">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                      className="p-3 hover:bg-beige text-espresso transition-colors"
+                      className="p-3 hover:bg-beige text-bento-black transition-colors"
                       aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
@@ -469,7 +469,7 @@ export const ProductDetailPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleAddToCart(true)}
-                    className="flex-1 py-3.5 px-6 bg-off-white border-2 border-espresso text-espresso hover:bg-espresso hover:text-cream rounded-full font-medium text-sm transition-colors shadow-soft flex items-center justify-center space-x-2"
+                    className="flex-1 py-3.5 px-6 bg-off-white border-2 border-bento-black text-bento-black hover:bg-bento-black hover:text-cream rounded-full font-medium text-sm transition-colors shadow-soft flex items-center justify-center space-x-2"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>Add to Cart ({formatCurrency(totalPrice)})</span>
@@ -480,7 +480,7 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleBuyNow}
-                  className="w-full py-4 px-6 bg-espresso text-cream rounded-full font-medium text-sm hover:bg-espresso/90 transition-colors shadow-soft flex items-center justify-center space-x-2"
+                  className="w-full py-4 px-6 bg-bento-black text-cream rounded-full font-medium text-sm hover:bg-bento-black/90 transition-colors shadow-soft flex items-center justify-center space-x-2"
                 >
                   <span>Buy for Pickup Now • {formatCurrency(totalPrice)}</span>
                 </button>
@@ -493,17 +493,17 @@ export const ProductDetailPage: React.FC = () => {
               <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
                 <button
                   onClick={() => setOpenSection(openSection === 'ingredients' ? null : 'ingredients')}
-                  className="w-full p-4 text-left font-serif font-bold text-espresso flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
                 >
                   <span>Ingredients & Sourcing</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform ${
-                      openSection === 'ingredients' ? 'rotate-180 text-gold' : 'text-brown'
+                      openSection === 'ingredients' ? 'rotate-180 text-bento-yellow' : 'text-bento-grey'
                     }`}
                   />
                 </button>
                 {openSection === 'ingredients' && (
-                  <div className="px-4 pb-4 text-xs text-brown font-light leading-relaxed border-t border-beige/60 pt-3">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3">
                     <p>{product.ingredients.join(', ')}.</p>
                   </div>
                 )}
@@ -513,17 +513,17 @@ export const ProductDetailPage: React.FC = () => {
               <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
                 <button
                   onClick={() => setOpenSection(openSection === 'allergens' ? null : 'allergens')}
-                  className="w-full p-4 text-left font-serif font-bold text-espresso flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
                 >
                   <span>Allergens & Dietary Information</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform ${
-                      openSection === 'allergens' ? 'rotate-180 text-gold' : 'text-brown'
+                      openSection === 'allergens' ? 'rotate-180 text-bento-yellow' : 'text-bento-grey'
                     }`}
                   />
                 </button>
                 {openSection === 'allergens' && (
-                  <div className="px-4 pb-4 text-xs text-brown font-light leading-relaxed border-t border-beige/60 pt-3 space-y-1">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3 space-y-1">
                     <p>
                       <strong>Contains:</strong> {product.allergens.join(', ')}.
                     </p>
@@ -538,17 +538,17 @@ export const ProductDetailPage: React.FC = () => {
               <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
                 <button
                   onClick={() => setOpenSection(openSection === 'storage' ? null : 'storage')}
-                  className="w-full p-4 text-left font-serif font-bold text-espresso flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
                 >
                   <span>Storage & Serving Guidance</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform ${
-                      openSection === 'storage' ? 'rotate-180 text-gold' : 'text-brown'
+                      openSection === 'storage' ? 'rotate-180 text-bento-yellow' : 'text-bento-grey'
                     }`}
                   />
                 </button>
                 {openSection === 'storage' && (
-                  <div className="px-4 pb-4 text-xs text-brown font-light leading-relaxed border-t border-beige/60 pt-3">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3">
                     <p>{product.storageGuidance}</p>
                   </div>
                 )}
@@ -562,16 +562,16 @@ export const ProductDetailPage: React.FC = () => {
           <div className="mt-20 pt-16 border-t border-beige">
             <div className="flex justify-between items-end mb-10">
               <div>
-                <span className="text-xs uppercase tracking-widest text-gold font-bold mb-2 block">
+                <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-2 block">
                   You May Also Love
                 </span>
-                <h2 className="text-3xl font-serif font-bold text-espresso">
+                <h2 className="text-3xl font-serif font-bold text-bento-black">
                   Pair with Other Creations
                 </h2>
               </div>
               <Link
                 to="/menu"
-                className="text-xs font-semibold text-espresso hover:text-gold flex items-center space-x-1"
+                className="text-xs font-semibold text-bento-black hover:text-bento-yellow flex items-center space-x-1"
               >
                 <span>View Full Menu</span>
                 <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
@@ -595,14 +595,14 @@ export const ProductDetailPage: React.FC = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  <h3 className="font-serif font-bold text-espresso text-lg group-hover:text-gold transition-colors mb-1">
+                  <h3 className="font-serif font-bold text-bento-black text-lg group-hover:text-bento-yellow transition-colors mb-1">
                     {rel.name}
                   </h3>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-espresso font-serif">
+                    <span className="font-bold text-bento-black font-serif">
                       From {formatCurrency(rel.price)}
                     </span>
-                    <span className="text-brown">{rel.sizes[0]?.label}</span>
+                    <span className="text-bento-grey">{rel.sizes[0]?.label}</span>
                   </div>
                 </div>
               ))}

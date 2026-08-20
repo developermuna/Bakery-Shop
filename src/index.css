@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-cream text-espresso font-sans antialiased;
+    @apply bg-cream text-bento-black font-sans antialiased;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -46,19 +46,19 @@ html.lenis {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37; /* Gold theme color */
+  background: #FFD700; /* bento-yellow theme color */
   border-radius: 9999px;
   transition: background-color 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B2F2F; /* Espresso dark theme color on hover */
+  background: #111111; /* bento-black theme color on hover */
 }
 
 /* Firefox standard scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #D4AF37 transparent;
+  scrollbar-color: #FFD700 transparent;
 }
 
 /* Hide scrollbar completely on Mobile and Tablet (< 1024px) */

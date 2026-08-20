@@ -293,7 +293,7 @@ export const useCartStore = create<CartStore>()(
         if (discount.minSubtotal && totals.subtotal < discount.minSubtotal) {
           return {
             success: false,
-            message: `Requires minimum order subtotal of $${discount.minSubtotal}.`,
+            message: `Requires minimum order subtotal of $₹${discount.minSubtotal}.`,
           };
         }
 

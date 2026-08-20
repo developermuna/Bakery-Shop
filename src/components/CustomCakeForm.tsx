@@ -138,16 +138,16 @@ export const CustomCakeForm: React.FC = () => {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-cream p-12 rounded-3xl shadow-soft text-center max-w-2xl mx-auto"
       >
-        <div className="w-20 h-20 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-20 h-20 bg-bento-yellow/10 text-bento-yellow rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h3 className="text-3xl font-serif text-espresso mb-4">Inquiry Received</h3>
-        <p className="text-brown text-lg mb-8 leading-relaxed">
+        <h3 className="text-3xl font-serif text-bento-black mb-4">Inquiry Received</h3>
+        <p className="text-bento-grey text-lg mb-8 leading-relaxed">
           Thank you for trusting us with your special event! We’ll confirm availability and send your quote within <span className="font-semibold">24-48 business hours</span>.
         </p>
         <button 
           onClick={() => setIsSuccess(false)}
-          className="px-8 py-3 border border-espresso text-espresso rounded-full hover:bg-espresso hover:text-cream transition-colors font-medium"
+          className="px-8 py-3 border border-bento-black text-bento-black rounded-full hover:bg-bento-black hover:text-cream transition-colors font-medium"
         >
           Submit Another Inquiry
         </button>
@@ -158,11 +158,11 @@ export const CustomCakeForm: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto bg-cream p-8 md:p-12 rounded-3xl shadow-soft">
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-serif text-espresso mb-4">Custom Cake Inquiry</h2>
-        <p className="text-brown font-light">
+        <h2 className="text-3xl md:text-4xl font-serif text-bento-black mb-4">Custom Cake Inquiry</h2>
+        <p className="text-bento-grey font-light">
           Let's create something beautiful together. Please provide as much detail as possible.
         </p>
-        <p className="text-gold text-sm font-medium mt-2">
+        <p className="text-bento-yellow text-sm font-medium mt-2">
           Note: We require a minimum of {MIN_NOTICE_HOURS} hours notice for all custom orders.
         </p>
       </div>
@@ -171,40 +171,40 @@ export const CustomCakeForm: React.FC = () => {
         {/* Contact Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Full Name *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Full Name *</label>
             <input 
               {...register('name')}
-              className={`w-full bg-off-white border ${errors.name ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.name ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
               placeholder="Jane Doe"
             />
             {errors.name && <span className="text-red-500 text-xs mt-1 block">{errors.name.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Email Address *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Email Address *</label>
             <input 
               {...register('email')}
               type="email"
-              className={`w-full bg-off-white border ${errors.email ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.email ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
               placeholder="jane@example.com"
             />
             {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Phone Number *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Phone Number *</label>
             <input 
               {...register('phone')}
-              className={`w-full bg-off-white border ${errors.phone ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.phone ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
               placeholder="(555) 123-4567"
             />
             {errors.phone && <span className="text-red-500 text-xs mt-1 block">{errors.phone.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Event Date *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Event Date *</label>
             <input 
               {...register('eventDate')}
               type="date"
               min={minDate}
-              className={`w-full bg-off-white border ${errors.eventDate ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.eventDate ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
             />
             {errors.eventDate && <span className="text-red-500 text-xs mt-1 block">{errors.eventDate.message}</span>}
           </div>
@@ -213,10 +213,10 @@ export const CustomCakeForm: React.FC = () => {
         {/* Cake Details */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-beige">
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Estimated Servings *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Estimated Servings *</label>
             <select 
               {...register('servings')}
-              className={`w-full bg-off-white border ${errors.servings ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.servings ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
             >
               <option value="">Select servings</option>
               <option value="10-15">10 - 15 people</option>
@@ -227,33 +227,33 @@ export const CustomCakeForm: React.FC = () => {
             {errors.servings && <span className="text-red-500 text-xs mt-1 block">{errors.servings.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Budget Range *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Budget Range *</label>
             <select 
               {...register('budget')}
-              className={`w-full bg-off-white border ${errors.budget ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.budget ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
             >
               <option value="">Select budget range</option>
-              <option value="$100-$150">$100 - $150</option>
-              <option value="$150-$250">$150 - $250</option>
-              <option value="$250-$400">$250 - $400</option>
-              <option value="$400+">$400+</option>
+              <option value="$100-₹1500">$100 - ₹1500</option>
+              <option value="₹1500-₹2500">₹1500 - ₹2500</option>
+              <option value="₹2500-₹4000">₹2500 - ₹4000</option>
+              <option value="₹4000+">₹4000+</option>
             </select>
             {errors.budget && <span className="text-red-500 text-xs mt-1 block">{errors.budget.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Flavor Profile *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Flavor Profile *</label>
             <input 
               {...register('flavor')}
-              className={`w-full bg-off-white border ${errors.flavor ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.flavor ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
               placeholder="e.g. Vanilla with raspberry, Chocolate truffle"
             />
             {errors.flavor && <span className="text-red-500 text-xs mt-1 block">{errors.flavor.message}</span>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-espresso mb-2">Pickup Preference *</label>
+            <label className="block text-sm font-medium text-bento-black mb-2">Pickup Preference *</label>
             <select 
               {...register('pickupPreference')}
-              className={`w-full bg-off-white border ${errors.pickupPreference ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+              className={`w-full bg-off-white border ${errors.pickupPreference ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
             >
               <option value="">Select time</option>
               <option value="Morning (9am-12pm)">Morning (9am-12pm)</option>
@@ -266,18 +266,18 @@ export const CustomCakeForm: React.FC = () => {
 
         {/* Dietary & Details */}
         <div className="pt-6 border-t border-beige">
-          <label className="block text-sm font-medium text-espresso mb-2">Dietary Requirements (Optional)</label>
+          <label className="block text-sm font-medium text-bento-black mb-2">Dietary Requirements (Optional)</label>
           <input 
             {...register('dietary')}
-            className="w-full bg-off-white border border-beige rounded-xl px-4 py-3 focus:outline-none focus:border-gold mb-6"
+            className="w-full bg-off-white border border-beige rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow mb-6"
             placeholder="e.g. Gluten-free, Nut allergy"
           />
 
-          <label className="block text-sm font-medium text-espresso mb-2">Design Notes & Message *</label>
+          <label className="block text-sm font-medium text-bento-black mb-2">Design Notes & Message *</label>
           <textarea 
             {...register('notes')}
             rows={4}
-            className={`w-full bg-off-white border ${errors.notes ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-gold`}
+            className={`w-full bg-off-white border ${errors.notes ? 'border-red-500' : 'border-beige'} rounded-xl px-4 py-3 focus:outline-none focus:border-bento-yellow`}
             placeholder="Describe the occasion, colors, theme, and any text you want written on the cake."
           />
           {errors.notes && <span className="text-red-500 text-xs mt-1 block">{errors.notes.message}</span>}
@@ -285,18 +285,18 @@ export const CustomCakeForm: React.FC = () => {
 
         {/* Image Upload (R2 Simulation) */}
         <div className="pt-6 border-t border-beige">
-          <label className="block text-sm font-medium text-espresso mb-2">Inspiration Image (Optional)</label>
-          <p className="text-xs text-brown mb-4">Upload a photo to help us understand your vision (Max 5MB)</p>
+          <label className="block text-sm font-medium text-bento-black mb-2">Inspiration Image (Optional)</label>
+          <p className="text-xs text-bento-grey mb-4">Upload a photo to help us understand your vision (Max 5MB)</p>
           
           <div className="relative">
             {!preview ? (
               <div 
-                className={`border-2 border-dashed ${uploadError ? 'border-red-300 bg-red-50' : 'border-beige hover:border-gold bg-off-white'} rounded-xl p-8 text-center cursor-pointer transition-colors`}
+                className={`border-2 border-dashed ${uploadError ? 'border-red-300 bg-red-50' : 'border-beige hover:border-bento-yellow bg-off-white'} rounded-xl p-8 text-center cursor-pointer transition-colors`}
                 onClick={() => fileInputRef.current?.click()}
               >
-                <Upload className="w-8 h-8 text-gold mx-auto mb-3" />
-                <p className="text-sm text-espresso font-medium">Click to upload an image</p>
-                <p className="text-xs text-brown mt-1">JPEG, PNG</p>
+                <Upload className="w-8 h-8 text-bento-yellow mx-auto mb-3" />
+                <p className="text-sm text-bento-black font-medium">Click to upload an image</p>
+                <p className="text-xs text-bento-grey mt-1">JPEG, PNG</p>
                 {uploadError && <p className="text-xs text-red-500 mt-2">{uploadError}</p>}
               </div>
             ) : (
@@ -305,7 +305,7 @@ export const CustomCakeForm: React.FC = () => {
                 <button 
                   type="button"
                   onClick={clearFile}
-                  className="absolute top-2 right-2 p-1 bg-cream rounded-full text-espresso shadow-sm hover:text-red-500 transition-colors"
+                  className="absolute top-2 right-2 p-1 bg-cream rounded-full text-bento-black shadow-sm hover:text-red-500 transition-colors"
                   disabled={isSubmitting}
                 >
                   <X className="w-4 h-4" />
@@ -317,12 +317,12 @@ export const CustomCakeForm: React.FC = () => {
                     <motion.div 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="absolute inset-0 bg-espresso/50 flex flex-col items-center justify-center p-4 backdrop-blur-sm"
+                      className="absolute inset-0 bg-bento-black/50 flex flex-col items-center justify-center p-4 backdrop-blur-sm"
                     >
                       <Loader2 className="w-8 h-8 text-cream animate-spin mb-3" />
                       <div className="w-full bg-cream/30 rounded-full h-1.5 overflow-hidden">
                         <div 
-                          className="bg-gold h-full transition-all duration-300"
+                          className="bg-bento-yellow h-full transition-all duration-300"
                           style={{ width: `${uploadProgress}%` }}
                         />
                       </div>
@@ -347,7 +347,7 @@ export const CustomCakeForm: React.FC = () => {
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full md:w-auto px-10 py-4 bg-espresso text-cream rounded-full font-medium hover:bg-espresso/90 transition-colors shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full md:w-auto px-10 py-4 bg-bento-black text-cream rounded-full font-medium hover:bg-bento-black/90 transition-colors shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {isSubmitting ? (
               <>

@@ -66,7 +66,7 @@ export const BestSellers: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {MOCK_PRODUCTS.map((product, index) => (
+          {MOCK_PRODUCTS.slice(0, 8).map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}

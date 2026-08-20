@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -9,7 +9,7 @@ import {
   ArrowUpDown,
   X,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { MOCK_PRODUCTS, CATEGORIES } from '../data/products';
 import { useCartStore } from '../store/useCartStore';
 import { useToastStore } from '../store/useToastStore';
@@ -22,12 +22,21 @@ interface MenuPageProps {
 
 export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { addItem, openDrawer } = useCartStore();
   const { addToast } = useToastStore();
 
   const [selectedCategory, setSelectedCategory] = useState<string>(
     initialCategory ? CATEGORIES.find(c => c.toLowerCase() === initialCategory.toLowerCase()) || 'All' : 'All'
   );
+
+  // Effect to handle navigation state (e.g. from Categories homepage component)
+  useEffect(() => {
+    if (location.state && location.state.category) {
+      setSelectedCategory(location.state.category);
+    }
+  }, [location.state]);
+
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [selectedDietary, setSelectedDietary] = useState<string[]>([]);

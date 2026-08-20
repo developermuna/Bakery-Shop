@@ -4,21 +4,29 @@ import { useNavigate } from 'react-router-dom';
 
 const categories = [
   {
-    name: 'Signature Cakes',
+    name: 'Bento Cakes',
     image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80',
+    category: 'Bento Cakes'
   },
   {
-    name: 'Pastries & Tarts',
+    name: 'All Time Favourite',
     image: 'https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&fit=crop&q=80',
+    category: 'All Time Favourite Cakes'
   },
   {
-    name: 'Breads & Viennoiserie',
+    name: 'Premium Cakes',
     image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80',
+    category: 'Premium Cakes'
   },
 ];
 
 export const Categories: React.FC = () => {
   const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryName: string) => {
+    // Navigate to menu with category as a query parameter or state
+    navigate('/menu', { state: { category: categoryName } });
+  };
 
   return (
     <section id="categories" className="py-24 bg-off-white">
@@ -38,7 +46,7 @@ export const Categories: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              onClick={() => navigate('/menu')}
+              onClick={() => handleCategoryClick(category.category)}
               className="group cursor-pointer relative overflow-hidden rounded-2xl shadow-soft"
             >
               <div className="aspect-[4/5] overflow-hidden">

@@ -148,16 +148,16 @@ export const CartDrawer: React.FC = () => {
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
                   transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-                  className="w-screen max-w-md bg-cream shadow-2xl flex flex-col border-l border-beige"
+                  className="w-screen max-w-md bg-bento-black shadow-2xl flex flex-col"
                 >
                   {/* Drawer Header */}
-                  <div className="p-6 bg-cream border-b border-beige flex items-center justify-between">
+                  <div className="p-6 bg-bento-black flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 rounded-2xl bg-bento-yellow/15 flex items-center justify-center text-bento-black">
+                      <div className="w-10 h-10 rounded-2xl bg-bento-yellow/15 flex items-center justify-center text-white">
                         <ShoppingBag className="w-5 h-5 text-bento-yellow" />
                       </div>
                       <div>
-                        <h2 className="text-xl font-serif font-bold text-bento-black">Your Cart</h2>
+                        <h2 className="text-xl font-serif  font-bold text-white">Your Cart</h2>
                         <p className="text-xs text-bento-grey font-light">
                           {itemCount} {itemCount === 1 ? 'handcrafted item' : 'handcrafted items'}
                         </p>
@@ -166,7 +166,7 @@ export const CartDrawer: React.FC = () => {
 
                     <button
                       onClick={closeDrawer}
-                      className="p-2 text-bento-grey hover:text-bento-black rounded-full hover:bg-beige/60 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                      className="p-2 text-bento-grey hover:text-white rounded-full hover:bg-bento-grey/60 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
                       aria-label="Close cart drawer"
                     >
                       <X className="w-5 h-5" />
@@ -174,8 +174,8 @@ export const CartDrawer: React.FC = () => {
                   </div>
 
                   {/* Pickup Only Notice Bar */}
-                  <div className="bg-beige/60 px-6 py-2.5 border-b border-beige flex items-center justify-between text-xs text-bento-grey">
-                    <div className="flex items-center space-x-1.5 font-medium text-bento-black">
+                  <div className="bg-white/5 px-6 py-2.5 flex items-center justify-between text-xs text-bento-grey">
+                    <div className="flex items-center space-x-1.5 font-medium text-white">
                       <MapPin className="w-3.5 h-3.5 text-bento-yellow flex-shrink-0" />
                       <span>Bento Cakery is Pickup Only</span>
                     </div>
@@ -186,10 +186,10 @@ export const CartDrawer: React.FC = () => {
                   {items.length === 0 ? (
                     /* Empty State */
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-                      <div className="w-20 h-20 bg-beige rounded-full flex items-center justify-center mb-6 text-bento-black/40">
+                      <div className="w-20 h-20 bg-bento-grey rounded-full flex items-center justify-center mb-6 text-white/40">
                         <ShoppingBag className="w-10 h-10" />
                       </div>
-                      <h3 className="text-2xl font-serif font-bold text-bento-black mb-2">
+                      <h3 className="text-2xl  font-bold text-white mb-2">
                         Your cart is empty
                       </h3>
                       <p className="text-sm text-bento-grey font-light mb-8 max-w-xs leading-relaxed">
@@ -197,7 +197,7 @@ export const CartDrawer: React.FC = () => {
                       </p>
                       <button
                         onClick={handleBrowseMenu}
-                        className="px-8 py-3.5 bg-bento-black text-cream rounded-full text-sm font-medium hover:bg-bento-black/90 transition-colors shadow-soft flex items-center space-x-2"
+                        className="px-8 py-3.5 bg-bento-yellow text-black rounded-full text-sm font-medium hover:bg-yellow-400 transition-colors shadow-soft flex items-center space-x-2"
                       >
                         <span>Explore Our Menu</span>
                         <ArrowRight className="w-4 h-4" />
@@ -208,14 +208,14 @@ export const CartDrawer: React.FC = () => {
                     <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
                       {/* Lead Time Notice if applicable */}
                       {totals.maxLeadTimeHours > 0 && (
-                        <div className="bg-bento-yellow/10 border border-bento-yellow/30 rounded-2xl p-3.5 flex items-start space-x-3">
+                        <div className="bg-bento-yellow/10 shadow-md rounded-2xl p-3.5 flex items-start space-x-3">
                           <Clock className="w-4 h-4 text-bento-yellow flex-shrink-0 mt-0.5" />
                           <div className="text-xs text-bento-grey">
-                            <span className="font-semibold text-bento-black block">
+                            <span className="font-semibold text-white block">
                               Preparation Lead Time: {totals.maxLeadTimeHours}h Notice
                             </span>
                             Earliest pickup ready by{' '}
-                            <strong className="text-bento-black">{totals.earliestPickupDate}</strong>.
+                            <strong className="text-white">{totals.earliestPickupDate}</strong>.
                           </div>
                         </div>
                       )}
@@ -228,20 +228,20 @@ export const CartDrawer: React.FC = () => {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.9 }}
-                          className="bg-off-white border border-beige rounded-2xl p-4 shadow-sm relative group hover:border-bento-yellow/40 transition-colors"
+                          className="bg-white/5 rounded-2xl p-4 shadow-md hover:shadow-lg relative group transition-all transition-colors"
                         >
                           <div className="flex space-x-4">
                             {/* Product Thumbnail */}
                             <img
                               src={item.image}
                               alt={item.name}
-                              className="w-20 h-20 object-cover rounded-xl border border-beige flex-shrink-0"
+                              className="w-20 h-20 object-cover rounded-xl shadow-sm flex-shrink-0"
                             />
 
                             {/* Details */}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between">
-                                <h4 className="font-serif font-bold text-bento-black text-sm truncate pr-2">
+                                <h4 className=" font-bold text-white text-sm truncate pr-2">
                                   {item.name}
                                 </h4>
                                 <button
@@ -255,11 +255,11 @@ export const CartDrawer: React.FC = () => {
 
                               {/* Configuration Tags */}
                               <div className="mt-1 flex flex-wrap gap-1.5 text-[11px]">
-                                <span className="px-2 py-0.5 bg-beige rounded-md text-bento-black font-medium">
+                                <span className="px-2 py-0.5 bg-bento-grey rounded-md text-white font-medium">
                                   {item.selectedSize?.label} ({item.selectedSize?.servings} serv.)
                                 </span>
                                 {item.selectedFlavor && (
-                                  <span className="px-2 py-0.5 bg-beige rounded-md text-bento-grey">
+                                  <span className="px-2 py-0.5 bg-bento-grey rounded-md text-bento-grey">
                                     {item.selectedFlavor}
                                   </span>
                                 )}
@@ -286,7 +286,7 @@ export const CartDrawer: React.FC = () => {
                               {/* Pickup date tag if customized */}
                               {item.pickupDate && (
                                 <div className="mt-1 text-[10px] text-bento-grey flex items-center gap-1">
-                                  <Calendar className="w-3 h-3 text-bento-black/60" />
+                                  <Calendar className="w-3 h-3 text-white/60" />
                                   <span>
                                     {item.pickupDate} {item.pickupTimeSlot ? `• ${item.pickupTimeSlot}` : ''}
                                   </span>
@@ -294,12 +294,12 @@ export const CartDrawer: React.FC = () => {
                               )}
 
                               {/* Price and Quantity Controls */}
-                              <div className="mt-3 flex items-center justify-between pt-2 border-t border-beige/60">
+                              <div className="mt-3 flex items-center justify-between pt-2">
                                 <div>
                                   <span className="text-xs text-bento-grey block">
                                     {formatCurrency(item.unitPrice)} each
                                   </span>
-                                  <span className="text-sm font-bold text-bento-black">
+                                  <span className="text-sm font-bold text-white">
                                     {formatCurrency(item.unitPrice * item.quantity)}
                                   </span>
                                 </div>
@@ -307,7 +307,7 @@ export const CartDrawer: React.FC = () => {
                                 <div className="flex items-center space-x-2">
                                   <button
                                     onClick={() => setEditingItem(item)}
-                                    className="p-1.5 text-xs text-bento-grey hover:text-bento-black hover:bg-beige/60 rounded-lg transition-colors"
+                                    className="p-1.5 text-xs text-bento-grey hover:text-white hover:bg-bento-grey/60 rounded-lg transition-colors"
                                     title="Edit configuration"
                                     aria-label={`Edit ${item.name}`}
                                   >
@@ -315,20 +315,20 @@ export const CartDrawer: React.FC = () => {
                                   </button>
 
                                   {/* Quantity pill */}
-                                  <div className="flex items-center border border-beige bg-cream rounded-full overflow-hidden shadow-xs">
+                                  <div className="flex items-center bg-white/10 shadow-sm rounded-full overflow-hidden shadow-xs">
                                     <button
                                       onClick={() => handleQuantityMinus(item)}
-                                      className="p-1.5 hover:bg-beige text-bento-black transition-colors"
+                                      className="p-1.5 hover:bg-bento-grey text-white transition-colors"
                                       aria-label="Decrease quantity"
                                     >
                                       <Minus className="w-3 h-3" />
                                     </button>
-                                    <span className="px-2.5 text-xs font-semibold text-bento-black min-w-[20px] text-center">
+                                    <span className="px-2.5 text-xs font-semibold text-white min-w-[20px] text-center">
                                       {item.quantity}
                                     </span>
                                     <button
                                       onClick={() => handleQuantityPlus(item)}
-                                      className="p-1.5 hover:bg-beige text-bento-black transition-colors"
+                                      className="p-1.5 hover:bg-bento-grey text-white transition-colors"
                                       aria-label="Increase quantity"
                                     >
                                       <Plus className="w-3 h-3" />
@@ -345,12 +345,12 @@ export const CartDrawer: React.FC = () => {
 
                   {/* Drawer Footer / Summary */}
                   {items.length > 0 && (
-                    <div className="p-6 bg-cream border-t border-beige space-y-4 shadow-soft">
+                    <div className="p-6 bg-bento-black  space-y-4 shadow-soft">
                       {/* Price breakdown */}
                       <div className="space-y-1.5 text-xs">
                         <div className="flex justify-between text-bento-grey">
                           <span>Subtotal</span>
-                          <span className="font-medium text-bento-black">
+                          <span className="font-medium text-white">
                             {formatCurrency(totals.subtotal)}
                           </span>
                         </div>
@@ -364,7 +364,7 @@ export const CartDrawer: React.FC = () => {
                           <span>Estimated Tax ({Math.round(totals.taxRate * 100)}%)</span>
                           <span>{formatCurrency(totals.tax)}</span>
                         </div>
-                        <div className="flex justify-between text-sm font-bold text-bento-black pt-2 border-t border-beige font-serif">
+                        <div className="flex justify-between text-sm font-bold text-white pt-2">
                           <span>Estimated Total</span>
                           <span>{formatCurrency(totals.total)}</span>
                         </div>
@@ -374,14 +374,14 @@ export const CartDrawer: React.FC = () => {
                       <div className="space-y-2 pt-2">
                         <button
                           onClick={handleCheckout}
-                          className="w-full py-3.5 px-6 bg-bento-black text-cream rounded-full font-medium text-sm hover:bg-bento-black/90 transition-colors shadow-soft flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                          className="w-full py-3.5 px-6 bg-bento-yellow text-black rounded-full font-medium text-sm hover:bg-yellow-400 transition-colors shadow-soft flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-bento-yellow"
                         >
                           <span>Proceed to Checkout</span>
                           <ArrowRight className="w-4 h-4" />
                         </button>
                         <button
                           onClick={handleViewCart}
-                          className="w-full py-3 px-6 border border-beige bg-off-white text-bento-black rounded-full font-medium text-sm hover:bg-beige/40 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                          className="w-full py-3 px-6 bg-bento-yellow text-black shadow-lg shadow-bento-yellow/20 rounded-full font-medium text-sm hover:bg-bento-grey/40 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
                         >
                           View Full Cart & Edit Details
                         </button>

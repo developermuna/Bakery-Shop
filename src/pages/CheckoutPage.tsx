@@ -154,15 +154,15 @@ export const CheckoutPage: React.FC = () => {
 
   if (items.length === 0 && currentStep === 2) {
     return (
-      <div className="pt-32 pb-24 bg-cream min-h-screen text-center px-4">
-        <div className="max-w-md mx-auto bg-off-white p-8 rounded-3xl border border-beige shadow-soft">
-          <h2 className="text-2xl font-serif font-bold text-bento-black mb-3">No Items in Cart</h2>
+      <div className="pt-32 pb-24 bg-bento-black min-h-screen text-center px-4">
+        <div className="max-w-md mx-auto bg-white/5 p-8 rounded-3xl shadow-xl">
+          <h2 className="text-2xl  font-bold text-white mb-3">No Items in Cart</h2>
           <p className="text-xs text-bento-grey font-light mb-6">
             Your cart is currently empty. Please select cakes from our menu before proceeding to checkout.
           </p>
           <button
             onClick={() => navigate('/menu')}
-            className="px-6 py-3 bg-bento-black text-cream text-xs font-semibold rounded-full"
+            className="px-6 py-3 bg-bento-yellow text-black text-xs font-semibold rounded-full"
           >
             Go to Menu
           </button>
@@ -172,16 +172,16 @@ export const CheckoutPage: React.FC = () => {
   }
 
   return (
-    <div className="pt-28 pb-24 bg-cream min-h-screen">
+    <div className="pt-28 pb-24 bg-bento-black min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
         {/* Step Indicator: Cart → Pickup Details → Payment → Confirmation */}
         <div className="mb-10 max-w-3xl mx-auto">
           <div className="flex items-center justify-between relative">
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 bg-beige -z-0" />
+            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 bg-bento-grey -z-0" />
 
             {/* Step 1 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-bento-yellow text-bento-black font-bold text-xs flex items-center justify-center ring-4 ring-cream shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-bento-yellow text-white font-bold text-xs flex items-center justify-center ring-4 ring-cream shadow-xs">
                 ✓
               </div>
               <span className="text-xs text-bento-grey/70 mt-2">1. Your Cart</span>
@@ -192,15 +192,15 @@ export const CheckoutPage: React.FC = () => {
               <div
                 className={`w-9 h-9 rounded-full font-bold text-xs flex items-center justify-center ring-4 ring-cream ${
                   currentStep === 2
-                    ? 'bg-bento-black text-cream shadow-sm'
-                    : 'bg-bento-yellow text-bento-black'
+                    ? 'bg-bento-yellow text-black shadow-sm'
+                    : 'bg-bento-yellow text-white'
                 }`}
               >
                 {currentStep > 2 ? '✓' : '2'}
               </div>
               <span
                 className={`text-xs mt-2 ${
-                  currentStep === 2 ? 'font-semibold text-bento-black' : 'text-bento-grey/70'
+                  currentStep === 2 ? 'font-semibold text-white' : 'text-bento-grey/70'
                 }`}
               >
                 2. Pickup Details
@@ -212,15 +212,15 @@ export const CheckoutPage: React.FC = () => {
               <div
                 className={`w-9 h-9 rounded-full font-medium text-xs flex items-center justify-center ring-4 ring-cream ${
                   currentStep === 3
-                    ? 'bg-bento-black text-cream shadow-sm'
-                    : 'bg-beige text-bento-grey'
+                    ? 'bg-bento-yellow text-black shadow-sm'
+                    : 'bg-bento-grey text-bento-grey'
                 }`}
               >
                 3
               </div>
               <span
                 className={`text-xs mt-2 ${
-                  currentStep === 3 ? 'font-semibold text-bento-black' : 'text-bento-grey/70'
+                  currentStep === 3 ? 'font-semibold text-white' : 'text-bento-grey/70'
                 }`}
               >
                 3. Payment
@@ -229,7 +229,7 @@ export const CheckoutPage: React.FC = () => {
 
             {/* Step 4 */}
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-9 h-9 rounded-full bg-beige text-bento-grey font-medium text-xs flex items-center justify-center ring-4 ring-cream">
+              <div className="w-9 h-9 rounded-full bg-bento-grey text-bento-grey font-medium text-xs flex items-center justify-center ring-4 ring-cream">
                 4
               </div>
               <span className="text-xs text-bento-grey/70 mt-2">4. Confirmation</span>
@@ -238,8 +238,8 @@ export const CheckoutPage: React.FC = () => {
         </div>
 
         {/* Pickup Notice */}
-        <div className="bg-beige/60 border border-beige rounded-2xl px-5 py-3 mb-8 flex items-center justify-between text-xs text-bento-grey">
-          <div className="flex items-center space-x-2 font-medium text-bento-black">
+        <div className="bg-white/10 rounded-2xl shadow-md px-5 py-3 mb-8 flex items-center justify-between text-xs text-bento-grey">
+          <div className="flex items-center space-x-2 font-medium text-white">
             <MapPin className="w-4 h-4 text-bento-yellow flex-shrink-0" />
             <span>Pickup Location: Main Road, Near New Bus Stand, Rayagada, Odisha</span>
           </div>
@@ -255,10 +255,10 @@ export const CheckoutPage: React.FC = () => {
               /* STEP 2: Customer Contact & Pickup Details */
               <form
                 onSubmit={handleContinueToPayment}
-                className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-6"
+                className="bg-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6"
               >
-                <div className="border-b border-beige pb-4">
-                  <h2 className="text-2xl font-serif font-bold text-bento-black">
+                <div className="pb-4">
+                  <h2 className="text-2xl  font-bold text-white">
                     Customer & Pickup Details
                   </h2>
                   <p className="text-xs text-bento-grey font-light mt-1">
@@ -268,12 +268,12 @@ export const CheckoutPage: React.FC = () => {
 
                 {/* Contact Information */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-serif font-bold text-bento-black">
+                  <h3 className="text-sm  font-bold text-white">
                     Contact Information
                   </h3>
 
                   <div>
-                    <label className="block text-xs font-semibold text-bento-black mb-1">
+                    <label className="block text-xs font-semibold text-white mb-1">
                       Full Name *
                     </label>
                     <input
@@ -281,8 +281,8 @@ export const CheckoutPage: React.FC = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Jane Doe"
-                      className={`w-full bg-cream border rounded-xl px-4 py-2.5 text-sm text-bento-black focus:outline-none focus:border-bento-yellow ${
-                        formErrors.name ? 'border-red-500' : 'border-beige'
+                      className={`w-full bg-bento-black border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-bento-yellow ${
+                        formErrors.name ? 'border-red-500' : 'border-bento-grey'
                       }`}
                     />
                     {formErrors.name && (
@@ -292,7 +292,7 @@ export const CheckoutPage: React.FC = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-bento-black mb-1">
+                      <label className="block text-xs font-semibold text-white mb-1">
                         Email Address *
                       </label>
                       <input
@@ -300,8 +300,8 @@ export const CheckoutPage: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="jane@example.com"
-                        className={`w-full bg-cream border rounded-xl px-4 py-2.5 text-sm text-bento-black focus:outline-none focus:border-bento-yellow ${
-                          formErrors.email ? 'border-red-500' : 'border-beige'
+                        className={`w-full bg-bento-black border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-bento-yellow ${
+                          formErrors.email ? 'border-red-500' : 'border-bento-grey'
                         }`}
                       />
                       {formErrors.email && (
@@ -310,7 +310,7 @@ export const CheckoutPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-bento-black mb-1">
+                      <label className="block text-xs font-semibold text-white mb-1">
                         Phone Number *
                       </label>
                       <input
@@ -318,8 +318,8 @@ export const CheckoutPage: React.FC = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="(555) 019-2834"
-                        className={`w-full bg-cream border rounded-xl px-4 py-2.5 text-sm text-bento-black focus:outline-none focus:border-bento-yellow ${
-                          formErrors.phone ? 'border-red-500' : 'border-beige'
+                        className={`w-full bg-bento-black border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-bento-yellow ${
+                          formErrors.phone ? 'border-red-500' : 'border-bento-grey'
                         }`}
                       />
                       {formErrors.phone && (
@@ -330,9 +330,9 @@ export const CheckoutPage: React.FC = () => {
                 </div>
 
                 {/* Pickup Scheduling Details */}
-                <div className="space-y-4 pt-4 border-t border-beige">
+                <div className="space-y-4 pt-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-serif font-bold text-bento-black flex items-center gap-1.5">
+                    <h3 className="text-sm  font-bold text-white flex items-center gap-1.5">
                       <Calendar className="w-4 h-4 text-bento-yellow" />
                       Pickup Time & Date
                     </h3>
@@ -343,7 +343,7 @@ export const CheckoutPage: React.FC = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-bento-black mb-1">
+                      <label className="block text-xs font-semibold text-white mb-1">
                         Pickup Date *
                       </label>
                       <input
@@ -351,8 +351,8 @@ export const CheckoutPage: React.FC = () => {
                         min={earliestDateStr}
                         value={pickupDate}
                         onChange={(e) => setPickupDateLocal(e.target.value)}
-                        className={`w-full bg-cream border rounded-xl px-4 py-2.5 text-sm text-bento-black focus:outline-none focus:border-bento-yellow ${
-                          formErrors.pickupDate ? 'border-red-500' : 'border-beige'
+                        className={`w-full bg-bento-black border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-bento-yellow ${
+                          formErrors.pickupDate ? 'border-red-500' : 'border-bento-grey'
                         }`}
                       />
                       {formErrors.pickupDate && (
@@ -361,14 +361,14 @@ export const CheckoutPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-bento-black mb-1">
+                      <label className="block text-xs font-semibold text-white mb-1">
                         Pickup Time Slot *
                       </label>
                       <select
                         value={pickupTimeSlot}
                         onChange={(e) => setPickupTimeSlotLocal(e.target.value)}
-                        className={`w-full bg-cream border rounded-xl px-4 py-2.5 text-sm text-bento-black focus:outline-none focus:border-bento-yellow ${
-                          formErrors.pickupTimeSlot ? 'border-red-500' : 'border-beige'
+                        className={`w-full bg-bento-black border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-bento-yellow ${
+                          formErrors.pickupTimeSlot ? 'border-red-500' : 'border-bento-grey'
                         }`}
                       >
                         {availableSlots.map((slot) => (
@@ -387,8 +387,8 @@ export const CheckoutPage: React.FC = () => {
                 </div>
 
                 {/* Notes */}
-                <div className="pt-4 border-t border-beige">
-                  <label className="block text-xs font-semibold text-bento-black mb-1">
+                <div className="pt-4">
+                  <label className="block text-xs font-semibold text-white mb-1">
                     Special Pickup Notes (Optional)
                   </label>
                   <textarea
@@ -396,7 +396,7 @@ export const CheckoutPage: React.FC = () => {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="e.g. Please box each slice individually"
-                    className="w-full bg-cream border border-beige rounded-xl p-3 text-xs text-bento-black focus:outline-none focus:border-bento-yellow"
+                    className="w-full bg-bento-black border border-bento-grey rounded-xl p-3 text-xs text-white focus:outline-none focus:border-bento-yellow"
                   />
                 </div>
 
@@ -405,7 +405,7 @@ export const CheckoutPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/cart')}
-                    className="inline-flex items-center space-x-1.5 text-xs font-semibold text-bento-grey hover:text-bento-black"
+                    className="inline-flex items-center space-x-1.5 text-xs font-semibold text-bento-grey hover:text-white"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back to Cart</span>
@@ -413,7 +413,7 @@ export const CheckoutPage: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="px-8 py-3.5 bg-bento-black text-cream text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-bento-black/90 transition-colors shadow-soft inline-flex items-center space-x-2"
+                    className="px-8 py-3.5 bg-bento-yellow text-black text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-yellow-400 transition-colors shadow-soft inline-flex items-center space-x-2"
                   >
                     <span>Proceed to Payment</span>
                     <ArrowRight className="w-4 h-4" />
@@ -424,11 +424,11 @@ export const CheckoutPage: React.FC = () => {
               /* STEP 3: Payment (Stripe Mockup Element) */
               <form
                 onSubmit={handleProcessPayment}
-                className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-6"
+                className="bg-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6"
               >
-                <div className="border-b border-beige pb-4 flex justify-between items-start">
+                <div className="pb-4 flex justify-between items-start">
                   <div>
-                    <h2 className="text-2xl font-serif font-bold text-bento-black">
+                    <h2 className="text-2xl  font-bold text-white">
                       Payment Details
                     </h2>
                     <p className="text-xs text-bento-grey font-light mt-1">
@@ -441,20 +441,20 @@ export const CheckoutPage: React.FC = () => {
                 </div>
 
                 {/* Customer Review Recap */}
-                <div className="bg-cream p-4 rounded-2xl border border-beige text-xs space-y-1">
+                <div className="bg-black/30 p-4 rounded-2xl shadow-inner text-xs space-y-1">
                   <div className="flex justify-between">
                     <span className="text-bento-grey">Customer:</span>
-                    <strong className="text-bento-black">{name} ({phone})</strong>
+                    <strong className="text-white">{name} ({phone})</strong>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-bento-grey">Scheduled Pickup:</span>
-                    <strong className="text-bento-black">{pickupDate} at {pickupTimeSlot}</strong>
+                    <strong className="text-white">{pickupDate} at {pickupTimeSlot}</strong>
                   </div>
                 </div>
 
                 {/* Stripe Elements Mock Card Field */}
                 <div className="space-y-4 pt-2">
-                  <label className="block text-xs font-semibold text-bento-black flex items-center gap-1.5">
+                  <label className="block text-xs font-semibold text-white flex items-center gap-1.5">
                     <CreditCard className="w-4 h-4 text-bento-yellow" />
                     Credit / Debit Card
                   </label>
@@ -467,7 +467,7 @@ export const CheckoutPage: React.FC = () => {
                         value={cardNumber}
                         onChange={(e) => setCardNumber(e.target.value)}
                         placeholder="4242 •••• •••• 4242"
-                        className="w-full bg-cream border border-beige rounded-xl px-4 py-3 text-sm text-bento-black font-mono tracking-wider focus:outline-none focus:border-bento-yellow"
+                        className="w-full bg-bento-black border border-bento-grey rounded-xl px-4 py-3 text-sm text-white font-mono tracking-wider focus:outline-none focus:border-bento-yellow"
                       />
                     </div>
 
@@ -479,7 +479,7 @@ export const CheckoutPage: React.FC = () => {
                           value={cardExpiry}
                           onChange={(e) => setCardExpiry(e.target.value)}
                           placeholder="MM/YY"
-                          className="w-full bg-cream border border-beige rounded-xl px-3 py-2.5 text-xs text-bento-black text-center font-mono focus:outline-none focus:border-bento-yellow"
+                          className="w-full bg-bento-black border border-bento-grey rounded-xl px-3 py-2.5 text-xs text-white text-center font-mono focus:outline-none focus:border-bento-yellow"
                         />
                       </div>
                       <div>
@@ -489,7 +489,7 @@ export const CheckoutPage: React.FC = () => {
                           value={cardCvc}
                           onChange={(e) => setCardCvc(e.target.value)}
                           placeholder="CVC"
-                          className="w-full bg-cream border border-beige rounded-xl px-3 py-2.5 text-xs text-bento-black text-center font-mono focus:outline-none focus:border-bento-yellow"
+                          className="w-full bg-bento-black border border-bento-grey rounded-xl px-3 py-2.5 text-xs text-white text-center font-mono focus:outline-none focus:border-bento-yellow"
                         />
                       </div>
                       <div>
@@ -499,18 +499,18 @@ export const CheckoutPage: React.FC = () => {
                           value={cardZip}
                           onChange={(e) => setCardZip(e.target.value)}
                           placeholder="ZIP Code"
-                          className="w-full bg-cream border border-beige rounded-xl px-3 py-2.5 text-xs text-bento-black text-center focus:outline-none focus:border-bento-yellow"
+                          className="w-full bg-bento-black border border-bento-grey rounded-xl px-3 py-2.5 text-xs text-white text-center focus:outline-none focus:border-bento-yellow"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-beige/40 p-4 rounded-2xl border border-beige flex items-center space-x-3 text-xs text-bento-grey">
+                <div className="bg-white/5 p-4 rounded-2xl shadow-md flex items-center space-x-3 text-xs text-bento-grey">
                   <ShieldCheck className="w-5 h-5 text-bento-yellow flex-shrink-0" />
                   <p>
                     Your card will be charged{' '}
-                    <strong className="text-bento-black">{formatCurrency(totals.total)}</strong> upon
+                    <strong className="text-white">{formatCurrency(totals.total)}</strong> upon
                     confirmation. We will begin fresh baking according to your pickup time.
                   </p>
                 </div>
@@ -520,7 +520,7 @@ export const CheckoutPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className="inline-flex items-center space-x-1.5 text-xs font-semibold text-bento-grey hover:text-bento-black"
+                    className="inline-flex items-center space-x-1.5 text-xs font-semibold text-bento-grey hover:text-white"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back to Pickup Details</span>
@@ -529,7 +529,7 @@ export const CheckoutPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="px-8 py-3.5 bg-bento-black text-cream text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-bento-black/90 transition-colors shadow-soft inline-flex items-center space-x-2 disabled:opacity-60"
+                    className="px-8 py-3.5 bg-bento-yellow text-black text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-yellow-400 transition-colors shadow-soft inline-flex items-center space-x-2 disabled:opacity-60"
                   >
                     {isProcessing ? (
                       <>
@@ -550,8 +550,8 @@ export const CheckoutPage: React.FC = () => {
 
           {/* Right Column: Order Summary (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-5 sticky top-24">
-              <h3 className="font-serif font-bold text-bento-black text-xl pb-3 border-b border-beige">
+            <div className="bg-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5 sticky top-24">
+              <h3 className=" font-bold text-white text-xl font-serif pb-3">
                 Order Summary ({totals.itemCount} items)
               </h3>
 
@@ -563,10 +563,10 @@ export const CheckoutPage: React.FC = () => {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-10 h-10 object-cover rounded-lg border border-beige flex-shrink-0"
+                        className="w-10 h-10 object-cover rounded-lg flex-shrink-0 shadow-md"
                       />
                       <div className="truncate">
-                        <span className="font-medium text-bento-black block truncate">
+                        <span className="font-medium text-white block truncate">
                           {item.name}
                         </span>
                         <span className="text-[11px] text-bento-grey">
@@ -574,7 +574,7 @@ export const CheckoutPage: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                    <span className="font-semibold text-bento-black flex-shrink-0">
+                    <span className="font-semibold text-white flex-shrink-0">
                       {formatCurrency(item.unitPrice * item.quantity)}
                     </span>
                   </div>
@@ -582,10 +582,10 @@ export const CheckoutPage: React.FC = () => {
               </div>
 
               {/* Totals */}
-              <div className="space-y-2 pt-4 border-t border-beige text-xs">
+              <div className="space-y-2 pt-4 text-xs">
                 <div className="flex justify-between text-bento-grey">
                   <span>Subtotal</span>
-                  <span className="font-medium text-bento-black">
+                  <span className="font-medium text-white">
                     {formatCurrency(totals.subtotal)}
                   </span>
                 </div>
@@ -603,7 +603,7 @@ export const CheckoutPage: React.FC = () => {
                   <span>Pickup</span>
                   <span className="text-bento-yellow font-semibold">FREE</span>
                 </div>
-                <div className="flex justify-between text-base font-bold text-bento-black pt-3 border-t border-beige font-serif">
+                <div className="flex justify-between text-base font-bold text-white pt-3 ">
                   <span>Total</span>
                   <span>{formatCurrency(totals.total)}</span>
                 </div>

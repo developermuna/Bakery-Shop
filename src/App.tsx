@@ -14,6 +14,7 @@ import { CartDrawer } from './components/cart/CartDrawer';
 import { ToastNotification } from './components/cart/ToastNotification';
 
 
+
 const CartPage = lazy(() => import('./pages/CartPage').then(module => ({ default: module.CartPage })));
 const MenuPage = lazy(() => import('./pages/MenuPage').then(module => ({ default: module.MenuPage })));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage').then(module => ({ default: module.ProductDetailPage })));
@@ -93,7 +94,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
-      <div className="font-sans antialiased text-bento-black bg-cream flex flex-col min-h-screen">
+      <div className="font-sans antialiased text-white bg-bento-black flex flex-col min-h-screen">
         <Navigation />
         
         <div className="flex-grow">
@@ -101,8 +102,8 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/menu" element={<MenuPage />} />
-            <Route path="/bento-cakes" element={<MenuPage category="Bento Cakes" />} />
-            <Route path="/custom-cakes" element={<main className="pt-24 min-h-screen"><CustomCakes /></main>} />
+            <Route path="/decorations" element={<MenuPage category="Decorations" />} />
+            <Route path="/custom-cakes" element={<main className="pt-16 min-h-screen"><CustomCakes /></main>} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />

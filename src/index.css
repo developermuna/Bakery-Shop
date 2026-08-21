@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-cream text-bento-black font-sans antialiased;
+    @apply bg-bento-black text-white font-sans antialiased;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -73,4 +73,18 @@ html.lenis {
     width: 0 !important;
     height: 0 !important;
   }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 60s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }

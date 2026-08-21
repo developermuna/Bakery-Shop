@@ -74,14 +74,14 @@ export const AdminDashboard: React.FC = () => {
   // Staff Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="pt-32 pb-24 bg-cream min-h-screen flex items-center justify-center px-4">
-        <div className="bg-off-white border border-beige rounded-3xl p-8 max-w-md w-full shadow-soft text-center space-y-6">
-          <div className="w-16 h-16 bg-bento-black text-cream rounded-3xl flex items-center justify-center mx-auto shadow-sm">
+      <div className="pt-32 pb-24 bg-bento-black min-h-screen flex items-center justify-center px-4">
+        <div className="bg-white/5 rounded-3xl shadow-xl p-8 max-w-md w-full shadow-soft text-center space-y-6">
+          <div className="w-16 h-16 bg-bento-yellow text-black rounded-3xl flex items-center justify-center mx-auto shadow-sm">
             <Lock className="w-8 h-8 text-bento-yellow" />
           </div>
 
           <div>
-            <h2 className="text-2xl font-serif font-bold text-bento-black">Bakery Staff Portal</h2>
+            <h2 className="text-2xl font-serif font-bold text-white">Bakery Staff Portal</h2>
             <p className="text-xs text-bento-grey font-light mt-1">
               Internal operations dashboard for kitchen staff and order fulfillment.
             </p>
@@ -89,7 +89,7 @@ export const AdminDashboard: React.FC = () => {
 
           <form onSubmit={handleLogin} className="space-y-4 text-left">
             <div>
-              <label className="block text-xs font-semibold text-bento-black mb-1">
+              <label className="block text-xs font-semibold text-white mb-1">
                 Enter Staff Access PIN
               </label>
               <input
@@ -97,7 +97,7 @@ export const AdminDashboard: React.FC = () => {
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
                 placeholder="PIN (e.g. admin)"
-                className="w-full bg-cream border border-beige rounded-2xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow tracking-widest text-center font-mono"
+                className="w-full bg-bento-black border border-bento-grey rounded-2xl px-4 py-3 text-sm text-white focus:outline-none focus:border-bento-yellow tracking-widest text-center font-mono"
               />
             </div>
 
@@ -110,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-bento-black text-cream rounded-full font-semibold text-xs uppercase tracking-wider hover:bg-bento-black/90 transition-colors shadow-soft"
+              className="w-full py-3.5 bg-bento-yellow text-black rounded-full font-semibold text-xs uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-soft"
             >
               Sign In to Staff Dashboard
             </button>
@@ -121,28 +121,28 @@ export const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <div className="pt-28 pb-24 bg-cream min-h-screen">
+    <div className="pt-28 pb-24 bg-bento-black min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Dashboard Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-beige gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 gap-4 mb-8">
           <div>
             <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold block">
               Bento Cakery & Sweets • Operations
             </span>
-            <h1 className="text-3xl font-serif font-bold text-bento-black">
+            <h1 className="text-2xl font-serif font-bold text-white">
               Staff Operations Portal
             </h1>
           </div>
 
           <div className="flex items-center space-x-3">
             {/* Navigation Tabs */}
-            <div className="flex bg-off-white p-1 rounded-full border border-beige text-xs font-semibold">
+            <div className="flex bg-white/10 p-1 rounded-full shadow-inner text-xs font-semibold">
               <button
                 onClick={() => setActiveTab('orders')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'orders'
-                    ? 'bg-bento-black text-cream shadow-xs'
-                    : 'text-bento-grey hover:text-bento-black'
+                    ? 'bg-bento-yellow text-black shadow-xs'
+                    : 'text-bento-grey hover:text-white'
                 }`}
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
@@ -152,8 +152,8 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab('products')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'products'
-                    ? 'bg-bento-black text-cream shadow-xs'
-                    : 'text-bento-grey hover:text-bento-black'
+                    ? 'bg-bento-yellow text-black shadow-xs'
+                    : 'text-bento-grey hover:text-white'
                 }`}
               >
                 <Package className="w-3.5 h-3.5" />
@@ -163,8 +163,8 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab('availability')}
                 className={`px-4 py-2 rounded-full transition-all flex items-center space-x-1.5 ${
                   activeTab === 'availability'
-                    ? 'bg-bento-black text-cream shadow-xs'
-                    : 'text-bento-grey hover:text-bento-black'
+                    ? 'bg-bento-yellow text-black shadow-xs'
+                    : 'text-bento-grey hover:text-white'
                 }`}
               >
                 <Calendar className="w-3.5 h-3.5" />
@@ -174,7 +174,7 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               onClick={() => setIsAuthenticated(false)}
-              className="p-2.5 rounded-full border border-beige hover:bg-beige/40 text-bento-grey hover:text-bento-black transition-colors"
+              className="p-2.5 rounded-full shadow-md bg-white/5 hover:bg-white/10 text-bento-grey hover:text-white transition-colors"
               title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -194,8 +194,8 @@ export const AdminDashboard: React.FC = () => {
                     onClick={() => setOrderFilter(status)}
                     className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                       orderFilter === status
-                        ? 'bg-bento-black text-cream'
-                        : 'bg-off-white border border-beige text-bento-grey hover:border-bento-yellow/50'
+                        ? 'bg-bento-yellow text-black'
+                        : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
                     {status}
@@ -211,14 +211,14 @@ export const AdminDashboard: React.FC = () => {
                 .map((order) => (
                   <div
                     key={order.id}
-                    className="bg-off-white border border-beige rounded-3xl p-6 shadow-soft space-y-4"
+                    className="bg-white/5 rounded-3xl shadow-xl p-6 shadow-soft space-y-4"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-beige gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-3">
                       <div className="flex items-center space-x-3 flex-wrap">
-                        <span className="font-mono font-bold text-bento-black text-base">
+                        <span className="font-mono font-bold text-white text-base">
                           #{order.orderNumber}
                         </span>
-                        <span className="text-xs font-semibold text-bento-black">
+                        <span className="text-xs font-semibold text-white">
                           {order.customer.name}
                         </span>
                         <span className="text-xs text-bento-grey font-light">
@@ -227,7 +227,7 @@ export const AdminDashboard: React.FC = () => {
                       </div>
 
                       <div className="flex items-center space-x-3">
-                        <span className="text-xs font-serif font-bold text-bento-black">
+                        <span className="text-xs font-serif font-bold text-white">
                           {formatCurrency(order.totals.total)}
                         </span>
 
@@ -237,14 +237,14 @@ export const AdminDashboard: React.FC = () => {
                           onChange={(e) =>
                             handleUpdateOrderStatus(order.id, e.target.value as any)
                           }
-                          className={`text-xs font-bold px-3 py-1.5 rounded-full border focus:outline-none ${
+                          className={`text-xs font-bold px-3 py-1.5 rounded-full focus:outline-none ${
                             order.status === 'Baking'
-                              ? 'bg-bento-yellow/20 text-bento-black border-bento-yellow/40'
+                              ? 'bg-bento-yellow text-black'
                               : order.status === 'Ready for Pickup'
-                              ? 'bg-green-100 text-green-800 border-green-300'
+                              ? 'bg-green-500 text-white'
                               : order.status === 'Collected'
-                              ? 'bg-beige text-bento-grey border-beige'
-                              : 'bg-cream text-bento-black border-beige'
+                              ? 'bg-gray-600 text-white'
+                              : 'bg-white/10 text-white hover:bg-white/20'
                           }`}
                         >
                           <option value="New">New Order</option>
@@ -260,7 +260,7 @@ export const AdminDashboard: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
                       <div className="md:col-span-8 space-y-1">
                         <span className="text-bento-grey block font-medium">Order Items:</span>
-                        <ul className="text-bento-black font-light list-disc list-inside space-y-1">
+                        <ul className="text-white font-light list-disc list-inside space-y-1">
                           {order.items.map((item, idx) => (
                             <li key={idx}>
                               {item.quantity}x {item.name} 
@@ -276,8 +276,8 @@ export const AdminDashboard: React.FC = () => {
                         )}
                       </div>
 
-                      <div className="md:col-span-4 bg-cream p-3 rounded-2xl border border-beige space-y-1">
-                        <div className="flex items-center space-x-1.5 text-bento-black font-semibold">
+                      <div className="md:col-span-4 bg-black/30 p-3 rounded-2xl shadow-inner space-y-1">
+                        <div className="flex items-center space-x-1.5 text-white font-semibold">
                           <Calendar className="w-3.5 h-3.5 text-bento-yellow" />
                           <span>Pickup: {order.pickupDate}</span>
                         </div>
@@ -304,13 +304,13 @@ export const AdminDashboard: React.FC = () => {
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
                   placeholder="Filter inventory..."
-                  className="w-full bg-off-white border border-beige rounded-full pl-10 pr-4 py-2.5 text-xs text-bento-black focus:outline-none focus:border-bento-yellow"
+                  className="w-full bg-bento-black border border-bento-grey rounded-full pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-bento-yellow"
                 />
               </div>
 
               <button
                 onClick={() => alert('New product form modal: Connects to Cloudflare R2 Worker API.')}
-                className="px-6 py-2.5 bg-bento-black text-cream rounded-full text-xs font-semibold hover:bg-bento-black/90 transition-colors flex items-center space-x-1.5 shadow-soft"
+                className="px-6 py-2.5 bg-bento-yellow text-black rounded-full text-xs font-semibold hover:bg-yellow-400 transition-colors flex items-center space-x-1.5 shadow-soft"
               >
                 <Plus className="w-4 h-4 text-bento-yellow" />
                 <span>Add New Cake Item</span>
@@ -318,10 +318,10 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Products Table */}
-            <div className="bg-off-white border border-beige rounded-3xl overflow-hidden shadow-soft">
+            <div className="bg-white/5 rounded-3xl shadow-xl overflow-hidden shadow-soft">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-beige/60 text-bento-black font-serif font-bold uppercase tracking-wider text-[10px] border-b border-beige">
+                  <thead className="bg-bento-grey/60 text-white font-serif font-bold uppercase tracking-wider text-[10px] ">
                     <tr>
                       <th className="p-4">Cake Item</th>
                       <th className="p-4">Categories</th>
@@ -338,20 +338,20 @@ export const AdminDashboard: React.FC = () => {
                         p.name.toLowerCase().includes(productSearch.toLowerCase())
                       )
                       .map((product) => (
-                        <tr key={product.id} className="hover:bg-cream/40 transition-colors">
+                        <tr key={product.id} className="hover:bg-bento-black/40 transition-colors">
                           <td className="p-4 flex items-center space-x-3">
                             <img
                               src={product.imageUuids[0]}
                               alt={product.name}
-                              className="w-10 h-10 object-cover rounded-xl border border-beige flex-shrink-0"
+                              className="w-10 h-10 object-cover rounded-xl border border-bento-grey flex-shrink-0"
                             />
                             <div>
-                              <span className="font-bold text-bento-black block">{product.name}</span>
+                              <span className="font-bold text-white block">{product.name}</span>
                               <span className="text-[11px] text-bento-grey">{product.sizes.length} sizes configured</span>
                             </div>
                           </td>
                           <td className="p-4 text-bento-grey">{product.categories.join(', ')}</td>
-                          <td className="p-4 font-bold text-bento-black font-serif">
+                          <td className="p-4 font-bold text-white font-serif">
                             {formatCurrency(product.price)}
                           </td>
                           <td className="p-4 text-bento-grey">{product.preparationLeadTimeHours}h notice</td>
@@ -372,7 +372,7 @@ export const AdminDashboard: React.FC = () => {
                               onClick={() => handleToggleProductStock(product.id)}
                               className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                 product.inStock
-                                  ? 'bg-bento-yellow/20 text-bento-black'
+                                  ? 'bg-bento-yellow/20 text-white'
                                   : 'bg-red-100 text-red-800'
                               }`}
                             >
@@ -382,7 +382,7 @@ export const AdminDashboard: React.FC = () => {
                           <td className="p-4 text-right">
                             <div className="flex items-center justify-end space-x-2">
                               <button
-                                className="p-1.5 text-bento-grey hover:text-bento-black rounded"
+                                className="p-1.5 text-bento-grey hover:text-white rounded"
                                 title="Edit Product"
                               >
                                 <Edit2 className="w-4 h-4" />
@@ -400,9 +400,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* TAB 3: CAPACITY & PICKUP AVAILABILITY */}
         {activeTab === 'availability' && (
-          <div className="bg-off-white border border-beige rounded-3xl p-6 sm:p-8 shadow-soft space-y-6">
+          <div className="bg-white/5 rounded-3xl shadow-xl p-6 sm:p-8 shadow-soft space-y-6">
             <div>
-              <h2 className="text-xl font-serif font-bold text-bento-black">
+              <h2 className="text-xl font-serif font-bold text-white">
                 Bakery Capacity & Slot Booking Controls
               </h2>
               <p className="text-xs text-bento-grey font-light mt-1">
@@ -411,7 +411,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-serif font-bold text-bento-black">
+              <h3 className="text-sm font-serif font-bold text-white">
                 Standard Daily Pickup Slots
               </h3>
 
@@ -425,7 +425,7 @@ export const AdminDashboard: React.FC = () => {
                       className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                         isBlocked
                           ? 'bg-red-50/80 border-red-200 text-red-900'
-                          : 'bg-cream border-beige text-bento-black hover:border-bento-yellow'
+                          : 'bg-bento-black border-bento-grey text-white hover:border-bento-yellow'
                       }`}
                     >
                       <div>
@@ -437,7 +437,7 @@ export const AdminDashboard: React.FC = () => {
 
                       <span
                         className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                          isBlocked ? 'bg-red-200 text-red-900' : 'bg-bento-yellow/20 text-bento-black'
+                          isBlocked ? 'bg-red-200 text-red-900' : 'bg-bento-yellow/20 text-white'
                         }`}
                       >
                         {isBlocked ? 'Blocked' : 'Available'}

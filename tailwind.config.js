@@ -7,19 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: '#FFF8D6', // Pale bento yellow
-        'off-white': '#FFFCF0', // Lightest bento yellow
-        beige: '#FFE485', // Light bento yellow
-        'bento-grey': '#333333',
-        'bento-black': '#111111',
-        'bento-yellow': '#FFD700',
+        cream: '#FFD700', // Solid Yellow
+        'off-white': '#FFCC00', // Solid Yellow (slightly different for depth if needed, or same)
+        beige: '#E6B800', // Darker Yellow for borders/accents
+        'bento-grey': '#9CA3AF', // Lighter Gray for text on black background
+        'bento-black': '#000000', // Solid Black
+        'bento-yellow': '#FFD700', // Solid Yellow
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'serif'],
         sans: ['"Inter"', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 10px 40px -10px rgba(92, 64, 51, 0.08)',
+        'soft': '0 10px 40px -10px rgba(0, 0, 0, 0.2)',
       },
     },
   },

@@ -91,7 +91,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -173,7 +173,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -255,7 +255,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -337,7 +337,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -429,7 +429,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -521,7 +521,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -613,7 +613,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -705,7 +705,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -797,7 +797,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -889,7 +889,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -981,7 +981,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1073,7 +1073,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1165,7 +1165,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1257,7 +1257,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1349,7 +1349,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1441,7 +1441,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1526,7 +1526,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {
@@ -1606,7 +1606,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Wheat/Gluten"
     ],
     "dietaryTags": [
-      "Eggless"
+      "Contains Egg"
     ],
     "sizes": [
       {

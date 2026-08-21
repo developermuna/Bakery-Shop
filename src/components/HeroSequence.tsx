@@ -40,17 +40,18 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
       }
     });
 
+    
     let loadedCount = 0;
     setIsLoaded(false);
 
-    urls.forEach(url => {
+    urls.forEach((url, i) => {
       const img = new Image();
       img.src = url;
       
       const onComplete = () => {
         loadedCount++;
-        // If we processed all images (success or fail), mark as loaded
-        if (loadedCount === urls.length) {
+        // Unblock instantly after the first frame loads to make it fast
+        if (i === 0 || loadedCount === 1) {
           setIsLoaded(true);
         }
       };
@@ -60,6 +61,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
       
       loadedImages.push(img);
     });
+
     setImages(loadedImages);
   }, [JSON.stringify(sequences)]);
 
@@ -140,12 +142,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
         {/* Loading overlay if images are not ready */}
         {!isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-bento-black z-10">
-            <p className="text-cream text-lg font-sans">Loading experience...</p>
+            <p className="text-white text-lg font-sans">Loading experience...</p>
           </div>
         )}
 
-        {/* White gradient overlay at bottom 15% */}
-        <div className="absolute bottom-0 w-full h-[15%] bg-gradient-to-t from-cream to-transparent pointer-events-none z-20" />
+        {/* Yellow gradient overlay at bottom 15% to transition into next section */}
+        <div className="absolute bottom-0 w-full h-[15%] bg-gradient-to-t from-bento-yellow to-transparent pointer-events-none z-20" />
         
         {/* Hero Content Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 pointer-events-none p-4 mt-20">
@@ -153,7 +155,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif text-cream mb-6 drop-shadow-xl"
+            className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-6 drop-shadow-xl"
           >
             {title}
           </motion.h1>
@@ -161,7 +163,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="text-lg md:text-xl text-cream max-w-2xl mx-auto mb-10 drop-shadow-md font-sans font-light"
+            className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10 drop-shadow-md font-sans font-light"
           >
             {subtitle}
           </motion.p>
@@ -171,10 +173,10 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({
             transition={{ duration: 1, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
           >
-            <Link to="/menu" className="px-8 py-4 bg-cream text-bento-black rounded-full font-medium hover:bg-beige transition-colors shadow-lg">
+            <Link to="/menu" className="px-8 py-4 bg-bento-yellow text-black rounded-full font-medium hover:bg-yellow-400 transition-colors shadow-lg">
               Order for Pickup
             </Link>
-            <Link to="/#categories" className="px-8 py-4 bg-bento-black/50 backdrop-blur-md text-cream border border-cream/30 rounded-full font-medium hover:bg-bento-black/70 transition-colors shadow-lg">
+            <Link to="/#categories" className="px-8 py-4 bg-bento-black/50 backdrop-blur-md text-white rounded-full shadow-lg hover:shadow-xl font-medium hover:bg-black transition-colors shadow-lg">
               View Menu
             </Link>
           </motion.div>

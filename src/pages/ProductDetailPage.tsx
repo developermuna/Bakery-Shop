@@ -142,27 +142,27 @@ export const ProductDetailPage: React.FC = () => {
   const relatedProducts = MOCK_PRODUCTS.filter((p) => p.id !== product.id).slice(0, 3);
 
   return (
-    <div className="pt-28 pb-24 bg-cream min-h-screen">
+    <div className="pt-28 pb-24 bg-bento-black min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center space-x-2 text-xs text-bento-grey mb-8">
-          <Link to="/" className="hover:text-bento-black">
+          <Link to="/" className="hover:text-white">
             Home
           </Link>
           <span>/</span>
-          <Link to="/menu" className="hover:text-bento-black">
+          <Link to="/menu" className="hover:text-white">
             Menu
           </Link>
           <span>/</span>
-          <span className="text-bento-black font-semibold truncate">{product.name}</span>
+          <span className="text-white font-semibold truncate">{product.name}</span>
         </div>
 
         {/* Main Product Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-12">
           {/* Left Column: Image Gallery (6 cols) */}
           <div className="lg:col-span-6 space-y-4 sticky top-24">
             {/* Main Featured Image */}
-            <div className="relative aspect-square rounded-3xl overflow-hidden border border-beige bg-off-white shadow-soft group">
+            <div className="relative aspect-square rounded-3xl overflow-hidden bg-white/5 shadow-2xl group">
               <img
                 src={product.imageUuids[activeImageIndex] || product.imageUuids[0]}
                 alt={product.name}
@@ -172,14 +172,14 @@ export const ProductDetailPage: React.FC = () => {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
                 {product.featured && (
-                  <span className="bg-cream/90 backdrop-blur-md text-bento-black text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
+                  <span className="bg-bento-black/90 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-xs">
                     Best Seller
                   </span>
                 )}
                 {product.dietaryTags.map((tag) => (
                   <span
                     key={tag}
-                    className="bg-bento-yellow text-bento-black text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
+                    className="bg-bento-yellow text-white text-[10px] font-bold uppercase tracking-wider py-0.5 px-2.5 rounded-full shadow-xs"
                   >
                     {tag}
                   </span>
@@ -189,13 +189,13 @@ export const ProductDetailPage: React.FC = () => {
               {/* Action buttons */}
               <div className="absolute top-4 right-4 flex space-x-2">
                 <button
-                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-bento-black hover:text-bento-yellow transition-colors shadow-xs"
+                  className="p-2.5 rounded-full bg-bento-black/80 backdrop-blur-md text-white hover:text-bento-yellow transition-colors shadow-xs"
                   aria-label="Save to favorites"
                 >
                   <Heart className="w-4 h-4" />
                 </button>
                 <button
-                  className="p-2.5 rounded-full bg-cream/80 backdrop-blur-md text-bento-black hover:text-bento-yellow transition-colors shadow-xs"
+                  className="p-2.5 rounded-full bg-bento-black/80 backdrop-blur-md text-white hover:text-bento-yellow transition-colors shadow-xs"
                   aria-label="Share cake"
                 >
                   <Share2 className="w-4 h-4" />
@@ -213,7 +213,7 @@ export const ProductDetailPage: React.FC = () => {
                     className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all flex-shrink-0 ${
                       activeImageIndex === idx
                         ? 'border-bento-yellow ring-2 ring-bento-yellow/30'
-                        : 'border-beige hover:border-bento-yellow/50 opacity-70 hover:opacity-100'
+                        : 'border-bento-grey hover:border-bento-yellow/50 opacity-70 hover:opacity-100'
                     }`}
                   >
                     <img src={imgUrl} alt="Thumbnail" className="w-full h-full object-cover" />
@@ -223,20 +223,20 @@ export const ProductDetailPage: React.FC = () => {
             )}
 
             {/* Trust Badges */}
-            <div className="bg-off-white border border-beige rounded-2xl p-5 grid grid-cols-3 gap-4 text-center">
+            <div className="bg-white/5 rounded-2xl p-5 grid grid-cols-3 gap-4 text-center shadow-lg">
               <div className="flex flex-col items-center">
                 <ShieldCheck className="w-5 h-5 text-bento-yellow mb-1" />
-                <span className="text-[11px] font-semibold text-bento-black">Baked Fresh</span>
+                <span className="text-[11px] font-semibold text-white">Baked Fresh</span>
                 <span className="text-[10px] text-bento-grey font-light">Scratch Recipe</span>
               </div>
               <div className="flex flex-col items-center">
                 <MapPin className="w-5 h-5 text-bento-yellow mb-1" />
-                <span className="text-[11px] font-semibold text-bento-black">In-Store Pickup</span>
+                <span className="text-[11px] font-semibold text-white">In-Store Pickup</span>
                 <span className="text-[10px] text-bento-grey font-light">Free Parking</span>
               </div>
               <div className="flex flex-col items-center">
                 <Clock className="w-5 h-5 text-bento-yellow mb-1" />
-                <span className="text-[11px] font-semibold text-bento-black">Lead Time</span>
+                <span className="text-[11px] font-semibold text-white">Lead Time</span>
                 <span className="text-[10px] text-bento-grey font-light">{product.preparationLeadTimeHours}h Notice</span>
               </div>
             </div>
@@ -252,11 +252,11 @@ export const ProductDetailPage: React.FC = () => {
                     <Star key={i} className="w-4 h-4 fill-bento-yellow text-bento-yellow" />
                   ))}
                 </div>
-                <span className="font-bold text-bento-black">{product.rating}</span>
+                <span className="font-bold text-white">{product.rating}</span>
                 <span className="text-bento-grey">({product.reviewsCount} customer reviews)</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-serif font-bold text-bento-black mb-3">
+              <h1 className="text-2xl font-serif sm:text-3xl font-serif  font-bold text-white mb-3">
                 {product.name}
               </h1>
 
@@ -265,7 +265,7 @@ export const ProductDetailPage: React.FC = () => {
               </p>
 
               <div className="mt-4 flex items-baseline gap-3">
-                <span className="text-3xl font-extrabold font-serif text-bento-black">
+                <span className="text-2xl font-extrabold  text-white">
                   {formatCurrency(unitPrice)}
                 </span>
                 <span className="text-xs text-bento-grey">
@@ -275,10 +275,10 @@ export const ProductDetailPage: React.FC = () => {
             </div>
 
             {/* Customization Options */}
-            <div className="space-y-6 pt-6 border-t border-beige">
+            <div className="space-y-6 pt-6">
               {/* 1. Size Selection */}
               <div>
-                <label className="block text-sm font-semibold text-bento-black mb-3 font-serif">
+                <label className="block text-sm font-semibold text-white mb-3 ">
                   1. Select Cake Size & Servings *
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -289,15 +289,15 @@ export const ProductDetailPage: React.FC = () => {
                         key={size.label}
                         type="button"
                         onClick={() => setSelectedSize(size)}
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                        className={`p-3.5 rounded-2xl text-left transition-all ${
                           isSelected
-                            ? 'border-bento-yellow bg-bento-yellow/10 ring-1 ring-bento-yellow shadow-xs'
-                            : 'border-beige bg-off-white hover:border-bento-yellow/40'
+                            ? 'bg-bento-yellow/10 ring-2 ring-bento-yellow shadow-md'
+                            : 'bg-white/5 hover:ring-2 hover:ring-bento-yellow/40 shadow-sm'
                         }`}
                       >
                         <div className="flex justify-between items-center mb-1">
-                          <span className="font-semibold text-bento-black text-sm">{size.label}</span>
-                          <span className="text-xs font-bold text-bento-black">
+                          <span className="font-semibold text-white text-sm">{size.label}</span>
+                          <span className="text-xs font-bold text-white">
                             {formatCurrency(size.price)}
                           </span>
                         </div>
@@ -311,7 +311,7 @@ export const ProductDetailPage: React.FC = () => {
               {/* 2. Flavor Selection (if available) */}
               {product.flavors && product.flavors.length > 0 && (
                 <div>
-                  <label className="block text-sm font-semibold text-bento-black mb-3 font-serif">
+                  <label className="block text-sm font-semibold text-white mb-3 ">
                     2. Select Flavor Profile *
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -322,10 +322,10 @@ export const ProductDetailPage: React.FC = () => {
                           key={flavor}
                           type="button"
                           onClick={() => setSelectedFlavor(flavor)}
-                          className={`p-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-between ${
+                          className={`p-3 rounded-xl text-xs font-medium transition-all flex items-center justify-between ${
                             isSelected
-                              ? 'border-bento-yellow bg-bento-yellow/10 text-bento-black ring-1 ring-bento-yellow font-semibold'
-                              : 'border-beige bg-off-white text-bento-grey hover:border-bento-yellow/50'
+                              ? 'bg-bento-yellow/10 text-white ring-2 ring-bento-yellow font-semibold shadow-md'
+                              : 'bg-white/5 text-bento-grey hover:ring-2 hover:ring-bento-yellow/50 shadow-sm'
                           }`}
                         >
                           <span>{flavor}</span>
@@ -340,7 +340,7 @@ export const ProductDetailPage: React.FC = () => {
               {/* 3. Custom Cake Message */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm font-semibold text-bento-black font-serif flex items-center gap-1.5">
+                  <label className="text-sm font-semibold text-white  flex items-center gap-1.5">
                     <MessageSquareQuote className="w-4 h-4 text-bento-yellow" />
                     3. Piped Custom Cake Message (Optional)
                   </label>
@@ -352,13 +352,13 @@ export const ProductDetailPage: React.FC = () => {
                   value={cakeMessage}
                   onChange={(e) => setCakeMessage(e.target.value)}
                   placeholder="e.g. Happy 30th Birthday Lucas! 🎂"
-                  className="w-full bg-off-white border border-beige rounded-2xl px-4 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
+                  className="w-full bg-bento-black border border-bento-grey rounded-2xl px-4 py-3 text-sm text-white focus:outline-none focus:border-bento-yellow"
                 />
               </div>
 
               {/* 4. Luxury Add-ons */}
               <div>
-                <label className="block text-sm font-semibold text-bento-black mb-3 font-serif flex items-center gap-1.5">
+                <label className="block text-sm font-semibold text-white mb-3  flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-bento-yellow" />
                   4. Celebration Add-Ons
                 </label>
@@ -369,10 +369,10 @@ export const ProductDetailPage: React.FC = () => {
                       <div
                         key={addon.id}
                         onClick={() => toggleAddOn(addon)}
-                        className={`flex items-center justify-between p-3.5 rounded-2xl border cursor-pointer transition-all ${
+                        className={`flex items-center justify-between p-3.5 rounded-2xl cursor-pointer transition-all ${
                           isChecked
-                            ? 'border-bento-yellow bg-bento-yellow/5'
-                            : 'border-beige bg-off-white hover:border-bento-yellow/40'
+                            ? 'bg-bento-yellow/10 ring-2 ring-bento-yellow shadow-md'
+                            : 'bg-white/5 hover:ring-2 hover:ring-bento-yellow/40 shadow-sm'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -380,13 +380,13 @@ export const ProductDetailPage: React.FC = () => {
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => {}}
-                            className="rounded border-beige text-bento-yellow focus:ring-bento-yellow h-4 w-4 pointer-events-none"
+                            className="rounded border-bento-grey text-bento-yellow focus:ring-bento-yellow h-4 w-4 pointer-events-none"
                           />
-                          <span className="text-xs sm:text-sm text-bento-black font-medium">
+                          <span className="text-xs sm:text-sm text-white font-medium">
                             {addon.name}
                           </span>
                         </div>
-                        <span className="text-xs sm:text-sm font-semibold text-bento-black">
+                        <span className="text-xs sm:text-sm font-semibold text-white">
                           +{formatCurrency(addon.price)}
                         </span>
                       </div>
@@ -396,9 +396,9 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               {/* 5. Pickup Date & Time Slot Selector */}
-              <div className="bg-off-white border border-beige rounded-3xl p-5 space-y-4">
+              <div className="bg-white/5 rounded-3xl p-5 space-y-4 shadow-xl">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-sm font-serif font-bold text-bento-black">
+                  <div className="flex items-center space-x-2 text-sm  font-bold text-white">
                     <Calendar className="w-4 h-4 text-bento-yellow" />
                     <span>5. Schedule Pickup Date & Time</span>
                   </div>
@@ -409,7 +409,7 @@ export const ProductDetailPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-bento-black mb-1">
+                    <label className="block text-xs font-semibold text-white mb-1">
                       Pickup Date *
                     </label>
                     <input
@@ -417,19 +417,19 @@ export const ProductDetailPage: React.FC = () => {
                       min={earliestDateStr}
                       value={pickupDate}
                       onChange={(e) => handleDateChange(e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
+                      className="w-full bg-bento-black border border-bento-grey rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-bento-yellow"
                     />
                     {dateError && <p className="text-xs text-red-600 mt-1">{dateError}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-bento-black mb-1">
+                    <label className="block text-xs font-semibold text-white mb-1">
                       Pickup Time Slot *
                     </label>
                     <select
                       value={pickupTimeSlot}
                       onChange={(e) => setPickupTimeSlot(e.target.value)}
-                      className="w-full bg-cream border border-beige rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
+                      className="w-full bg-bento-black border border-bento-grey rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-bento-yellow"
                     >
                       {availableSlots.map((slot) => (
                         <option key={slot.id} value={slot.time} disabled={!slot.available}>
@@ -445,20 +445,20 @@ export const ProductDetailPage: React.FC = () => {
               <div className="space-y-4 pt-4">
                 <div className="flex items-center space-x-4">
                   {/* Quantity Counter */}
-                  <div className="flex items-center border border-beige bg-off-white rounded-full overflow-hidden shadow-xs">
+                  <div className="flex items-center bg-white/10 rounded-full overflow-hidden shadow-md">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="p-3 hover:bg-beige text-bento-black transition-colors"
+                      className="p-3 hover:bg-bento-grey text-white transition-colors"
                       aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="px-4 font-bold text-bento-black text-sm min-w-[32px] text-center">
+                    <span className="px-4 font-bold text-white text-sm min-w-[32px] text-center">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                      className="p-3 hover:bg-beige text-bento-black transition-colors"
+                      className="p-3 hover:bg-bento-grey text-white transition-colors"
                       aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
@@ -469,7 +469,7 @@ export const ProductDetailPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleAddToCart(true)}
-                    className="flex-1 py-3.5 px-6 bg-off-white border-2 border-bento-black text-bento-black hover:bg-bento-black hover:text-cream rounded-full font-medium text-sm transition-colors shadow-soft flex items-center justify-center space-x-2"
+                    className="flex-1 py-3.5 px-6 bg-bento-yellow text-black hover:bg-yellow-400 rounded-full font-medium text-sm transition-colors shadow-soft flex items-center justify-center space-x-2"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>Add to Cart ({formatCurrency(totalPrice)})</span>
@@ -480,7 +480,7 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleBuyNow}
-                  className="w-full py-4 px-6 bg-bento-black text-cream rounded-full font-medium text-sm hover:bg-bento-black/90 transition-colors shadow-soft flex items-center justify-center space-x-2"
+                  className="w-full py-4 px-6 bg-bento-yellow text-black rounded-full font-medium text-sm hover:bg-yellow-400 transition-colors shadow-soft flex items-center justify-center space-x-2"
                 >
                   <span>Buy for Pickup Now • {formatCurrency(totalPrice)}</span>
                 </button>
@@ -488,12 +488,12 @@ export const ProductDetailPage: React.FC = () => {
             </div>
 
             {/* Accordions: Ingredients, Allergens, Storage */}
-            <div className="border-t border-beige pt-6 space-y-3">
+            <div className="pt-6 space-y-3">
               {/* Ingredients */}
-              <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
+              <div className="rounded-2xl overflow-hidden bg-white/5 shadow-md">
                 <button
                   onClick={() => setOpenSection(openSection === 'ingredients' ? null : 'ingredients')}
-                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left  font-bold text-white flex justify-between items-center text-sm"
                 >
                   <span>Ingredients & Sourcing</span>
                   <ChevronDown
@@ -503,17 +503,17 @@ export const ProductDetailPage: React.FC = () => {
                   />
                 </button>
                 {openSection === 'ingredients' && (
-                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed pt-3">
                     <p>{product.ingredients.join(', ')}.</p>
                   </div>
                 )}
               </div>
 
               {/* Allergens */}
-              <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
+              <div className="rounded-2xl overflow-hidden bg-white/5 shadow-md">
                 <button
                   onClick={() => setOpenSection(openSection === 'allergens' ? null : 'allergens')}
-                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left  font-bold text-white flex justify-between items-center text-sm"
                 >
                   <span>Allergens & Dietary Information</span>
                   <ChevronDown
@@ -523,7 +523,7 @@ export const ProductDetailPage: React.FC = () => {
                   />
                 </button>
                 {openSection === 'allergens' && (
-                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3 space-y-1">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed pt-3 space-y-1">
                     <p>
                       <strong>Contains:</strong> {product.allergens.join(', ')}.
                     </p>
@@ -535,10 +535,10 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               {/* Storage */}
-              <div className="border border-beige rounded-2xl overflow-hidden bg-off-white">
+              <div className="rounded-2xl overflow-hidden bg-white/5 shadow-md">
                 <button
                   onClick={() => setOpenSection(openSection === 'storage' ? null : 'storage')}
-                  className="w-full p-4 text-left font-serif font-bold text-bento-black flex justify-between items-center text-sm"
+                  className="w-full p-4 text-left  font-bold text-white flex justify-between items-center text-sm"
                 >
                   <span>Storage & Serving Guidance</span>
                   <ChevronDown
@@ -548,7 +548,7 @@ export const ProductDetailPage: React.FC = () => {
                   />
                 </button>
                 {openSection === 'storage' && (
-                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed border-t border-beige/60 pt-3">
+                  <div className="px-4 pb-4 text-xs text-bento-grey font-light leading-relaxed pt-3">
                     <p>{product.storageGuidance}</p>
                   </div>
                 )}
@@ -559,19 +559,19 @@ export const ProductDetailPage: React.FC = () => {
 
         {/* Related Cakes Section */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 pt-16 border-t border-beige">
+          <div className="mt-20 pt-16">
             <div className="flex justify-between items-end mb-10">
               <div>
                 <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-2 block">
                   You May Also Love
                 </span>
-                <h2 className="text-3xl font-serif font-bold text-bento-black">
+                <h2 className="text-2xl font-serif  font-bold text-white">
                   Pair with Other Creations
                 </h2>
               </div>
               <Link
                 to="/menu"
-                className="text-xs font-semibold text-bento-black hover:text-bento-yellow flex items-center space-x-1"
+                className="text-xs font-semibold text-white hover:text-bento-yellow flex items-center space-x-1"
               >
                 <span>View Full Menu</span>
                 <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
@@ -586,20 +586,20 @@ export const ProductDetailPage: React.FC = () => {
                     navigate(`/product/${rel.id}`);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="bg-off-white rounded-3xl border border-beige p-5 shadow-soft hover:shadow-lg transition-all cursor-pointer group"
+                  className="bg-white/5 rounded-3xl p-5 shadow-lg hover:shadow-2xl transition-all cursor-pointer group"
                 >
-                  <div className="aspect-square rounded-2xl overflow-hidden mb-4 border border-beige bg-cream">
+                  <div className="aspect-square rounded-2xl overflow-hidden mb-4 bg-bento-black shadow-inner">
                     <img
                       src={rel.imageUuids[0]}
                       alt={rel.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  <h3 className="font-serif font-bold text-bento-black text-lg group-hover:text-bento-yellow transition-colors mb-1">
+                  <h3 className=" font-bold text-white text-lg group-hover:text-bento-yellow transition-colors mb-1">
                     {rel.name}
                   </h3>
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-bento-black font-serif">
+                    <span className="font-bold text-white ">
                       From {formatCurrency(rel.price)}
                     </span>
                     <span className="text-bento-grey">{rel.sizes[0]?.label}</span>

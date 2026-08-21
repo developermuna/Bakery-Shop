@@ -4,12 +4,12 @@ import {
   Search,
   SlidersHorizontal,
   ShoppingBag,
-  Star,
+  
   Check,
   ArrowUpDown,
   X,
 } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MOCK_PRODUCTS, CATEGORIES } from '../data/products';
 import { useCartStore } from '../store/useCartStore';
 import { useToastStore } from '../store/useToastStore';
@@ -118,14 +118,14 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
   };
 
   return (
-    <div className="pt-28 pb-24 bg-cream min-h-screen">
+    <div className="pt-28 pb-24 bg-bento-black min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Header Hero */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-3 block">
             Pickup-Only Bakery Collection
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-bento-black mb-4">
+          <h1 className="text-3xl font-serif sm:text-4xl font-serif md:text-5xl  font-bold text-white mb-4">
             Our Cake & Pastry Menu
           </h1>
           <p className="text-bento-grey text-base sm:text-lg font-light leading-relaxed">
@@ -134,7 +134,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
         </div>
 
         {/* Search & Sort & Filters Bar */}
-        <div className="bg-off-white border border-beige rounded-3xl p-4 sm:p-6 shadow-soft mb-10 space-y-6">
+        <div className="bg-bento-black/80 rounded-3xl p-4 sm:p-6 shadow-xl mb-10 space-y-6">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
             {/* Search Input */}
             <div className="relative flex-1">
@@ -144,12 +144,12 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search cakes by name, flavor, or ingredient..."
-                className="w-full bg-cream border border-beige rounded-full pl-12 pr-10 py-3 text-sm text-bento-black focus:outline-none focus:border-bento-yellow"
+                className="w-full bg-bento-black border border-bento-grey rounded-full pl-12 pr-10 py-3 text-sm text-white focus:outline-none focus:border-bento-yellow"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-bento-grey hover:text-bento-black"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-bento-grey hover:text-white"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -158,14 +158,14 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
 
             {/* Sorting Dropdown */}
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2 text-xs font-semibold text-bento-black">
+              <div className="flex items-center space-x-2 text-xs font-semibold text-white">
                 <ArrowUpDown className="w-4 h-4 text-bento-yellow" />
                 <span>Sort by:</span>
               </div>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-cream border border-beige rounded-full px-4 py-2.5 text-xs font-medium text-bento-black focus:outline-none focus:border-bento-yellow"
+                className="bg-bento-black border border-bento-grey rounded-full px-4 py-2.5 text-xs font-medium text-white focus:outline-none focus:border-bento-yellow"
               >
                 <option value="featured">Featured / Best Sellers</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -185,8 +185,8 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     isActive
-                      ? 'bg-bento-black text-cream shadow-sm'
-                      : 'bg-cream border border-beige text-bento-grey hover:border-bento-yellow/50 hover:text-bento-black'
+                      ? 'bg-bento-yellow text-black shadow-sm'
+                      : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
                 >
                   {cat}
@@ -196,7 +196,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
           </div>
 
           {/* Dietary Filters */}
-          <div className="pt-4 border-t border-beige flex flex-wrap items-center gap-2 text-xs">
+          <div className="pt-4 flex flex-wrap items-center gap-2 text-xs">
             <span className="text-bento-grey font-medium flex items-center gap-1 mr-2">
               <SlidersHorizontal className="w-3.5 h-3.5 text-bento-yellow" /> Dietary:
             </span>
@@ -208,11 +208,11 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
                   onClick={() => toggleDietary(tag)}
                   className={`px-3 py-1.5 rounded-full border transition-all flex items-center space-x-1.5 ${
                     isSelected
-                      ? 'bg-bento-yellow text-bento-black border-bento-yellow font-bold shadow-xs'
-                      : 'bg-cream border-beige text-bento-grey hover:border-bento-yellow/40'
+                      ? 'bg-bento-yellow text-white border-bento-yellow font-bold shadow-xs'
+                      : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
                 >
-                  {isSelected && <Check className="w-3 h-3 text-bento-black" />}
+                  {isSelected && <Check className="w-3 h-3 text-white" />}
                   <span>{tag}</span>
                 </button>
               );
@@ -233,21 +233,21 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
           /* Skeleton Loader */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="animate-pulse bg-off-white rounded-3xl p-5 border border-beige">
-                <div className="aspect-[4/5] bg-beige/60 rounded-2xl mb-4" />
-                <div className="h-5 bg-beige/60 rounded-full w-3/4 mb-2" />
-                <div className="h-4 bg-beige/40 rounded-full w-1/2 mb-4" />
-                <div className="h-8 bg-beige/60 rounded-full w-full" />
+              <div key={n} className="animate-pulse bg-white/5 rounded-3xl p-5 shadow-lg">
+                <div className="aspect-[4/5] bg-bento-grey/60 rounded-2xl mb-4" />
+                <div className="h-5 bg-bento-grey/60 rounded-full w-3/4 mb-2" />
+                <div className="h-4 bg-bento-grey/40 rounded-full w-1/2 mb-4" />
+                <div className="h-8 bg-bento-grey/60 rounded-full w-full" />
               </div>
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
           /* Empty Search State */
-          <div className="text-center py-20 bg-off-white rounded-3xl border border-beige shadow-soft max-w-xl mx-auto p-8">
-            <div className="w-16 h-16 bg-beige rounded-full flex items-center justify-center mx-auto mb-4 text-bento-black/40">
+          <div className="text-center py-20 bg-white/5 rounded-3xl shadow-xl max-w-xl mx-auto p-8">
+            <div className="w-16 h-16 bg-bento-grey rounded-full flex items-center justify-center mx-auto mb-4 text-white/40">
               <Search className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-bento-black mb-2">
+            <h3 className="text-2xl  font-bold text-white mb-2">
               No matching cakes found
             </h3>
             <p className="text-sm text-bento-grey font-light mb-6">
@@ -259,7 +259,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
                 setSelectedCategory('All');
                 setSelectedDietary([]);
               }}
-              className="px-6 py-2.5 bg-bento-black text-cream rounded-full text-xs font-semibold hover:bg-bento-black/90 transition-colors"
+              className="px-6 py-2.5 bg-bento-yellow text-black rounded-full text-xs font-semibold hover:bg-yellow-400 transition-colors"
             >
               Clear All Filters
             </button>
@@ -268,7 +268,11 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
           /* Product Cards */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <AnimatePresence>
-              {filteredProducts.map((product, idx) => (
+              {filteredProducts.map((product, idx) => {
+                const isVeg = product.dietaryTags.some(tag => tag.toLowerCase() === 'eggless' || tag.toLowerCase() === 'vegetarian' || tag.toLowerCase() === 'veg');
+                const defaultSize = product.sizes[0] || { servings: '8-10', label: 'Standard' };
+                
+                return (
                 <motion.div
                   key={product.id}
                   layout
@@ -277,101 +281,55 @@ export const MenuPage: React.FC<MenuPageProps> = ({ category: initialCategory })
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
                   onClick={() => navigate(`/product/${product.id}`)}
-                  className="bg-off-white rounded-3xl border border-beige p-5 shadow-soft hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between"
+                  className="group cursor-pointer flex flex-col bg-white/5 rounded-3xl p-4 transition-all duration-300 shadow-lg hover:-translate-y-2 hover:shadow-2xl hover:shadow-bento-yellow/10 hover:bg-white/10"
                 >
-                  <div>
-                    {/* Image & Badges */}
-                    <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 border border-beige bg-cream">
-                      <img
-                        src={product.imageUuids[0]}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      
-                      {/* Dietary & Status Badges */}
-                      <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                        {product.featured && (
-                          <span className="bg-cream/90 backdrop-blur-md text-bento-black text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
-                            Featured
-                          </span>
-                        )}
-                        {product.seasonal && (
-                          <span className="bg-bento-yellow/95 backdrop-blur-md text-bento-black text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full shadow-xs">
-                            Seasonal
-                          </span>
-                        )}
-                        {product.dietaryTags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="bg-bento-black/80 backdrop-blur-md text-cream text-[9px] font-medium uppercase tracking-wider py-0.5 px-2 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                  <div className="relative aspect-square overflow-hidden rounded-2xl mb-4 bg-bento-grey/10">
+                    <img
+                      src={product.imageUuids[0]}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
+                      <div className="bg-bento-black/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-md flex items-center gap-1.5">
+                        <span>{formatCurrency(product.price)}</span>
+                        <span className="text-[10px] text-white/60 font-medium bg-white/10 px-1.5 py-0.5 rounded-full">{defaultSize.label}</span>
                       </div>
-
-                      {/* Rating Pill */}
-                      <div className="absolute bottom-3 right-3 bg-cream/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-semibold text-bento-black flex items-center gap-1 shadow-xs">
-                        <Star className="w-3.5 h-3.5 text-bento-yellow fill-bento-yellow" />
-                        <span>{product.rating}</span>
-                        <span className="text-[10px] text-bento-grey font-normal">
-                          ({product.reviewsCount})
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="space-y-2">
-                      <h3 className="font-serif font-bold text-bento-black text-xl group-hover:text-bento-yellow transition-colors leading-snug">
-                        {product.name}
-                      </h3>
-                      <p className="text-xs text-bento-grey font-light line-clamp-2">
-                        {product.shortDescription}
-                      </p>
-
-                      {/* Sizes Pill Tags */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {product.sizes.map((s) => (
-                          <span
-                            key={s.label}
-                            className="px-2 py-0.5 bg-beige rounded-md text-[10px] font-medium text-bento-black"
-                          >
-                            {s.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Card Bottom / Price & CTA */}
-                  <div className="mt-5 pt-4 border-t border-beige flex items-center justify-between">
-                    <div>
-                      <span className="text-[11px] text-bento-grey block">Starting at</span>
-                      <span className="text-lg font-bold font-serif text-bento-black">
-                        {formatCurrency(product.price)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
                       <button
                         type="button"
                         onClick={(e) => handleQuickAdd(e, product)}
-                        className="p-3 bg-cream hover:bg-bento-yellow text-bento-black rounded-full border border-beige hover:border-bento-yellow transition-colors shadow-xs"
-                        title="Quick Add to Cart"
-                        aria-label={`Quick add ${product.name} to cart`}
+                        className="w-9 h-9 rounded-full bg-bento-yellow text-black flex items-center justify-center hover:bg-yellow-400 transition-colors shadow-md transform active:scale-95"
+                        aria-label="Add to cart"
                       >
                         <ShoppingBag className="w-4 h-4" />
                       </button>
-                      <Link
-                        to={`/product/${product.id}`}
-                        className="px-4 py-2.5 bg-bento-black text-cream text-xs font-medium rounded-full hover:bg-bento-black/90 transition-colors shadow-xs"
-                      >
-                        Order
-                      </Link>
+                    </div>
+
+                    {/* Veg Icon (Indian Standard) */}
+                    {
+                    /* Veg/Non-Veg Icon (Indian Standard) */
+                    <div className="absolute top-3 right-3 bg-white p-1 rounded shadow-sm flex items-center justify-center">
+                      <div className={`w-3.5 h-3.5 border-2 ${isVeg ? 'border-green-600' : 'border-red-700'} flex items-center justify-center p-[1px]`}>
+                        <div className={`w-1.5 h-1.5 ${isVeg ? 'bg-green-600' : 'bg-red-700'} rounded-full`}></div>
+                      </div>
+                    </div>
+                  }
+                  </div>
+                  <div className="flex-1 flex flex-col justify-between px-1 pb-1">
+                    <div className="mb-4">
+                      <div className="flex justify-between items-start gap-2 mb-1">
+                        <h3 className="text-lg font-serif font-bold text-white group-hover:text-bento-yellow transition-colors truncate">
+                          {product.name}
+                        </h3>
+                      </div>
+                      <p className="text-xs text-white/60 line-clamp-2 mb-2">
+                        {product.shortDescription}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
-              ))}
+                );
+              })}
             </AnimatePresence>
           </div>
         )}

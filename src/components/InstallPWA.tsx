@@ -13,8 +13,6 @@ interface BeforeInstallPromptEvent extends Event {
 export const InstallPWA: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
-  const [showTooltip, setShowTooltip] = useState(false);
-
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       // Prevent the mini-infobar from appearing on mobile
@@ -32,9 +30,6 @@ export const InstallPWA: React.FC = () => {
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      // Fallback for browsers/iframes where beforeinstallprompt doesn't fire
-      setShowTooltip(true);
-      setTimeout(() => setShowTooltip(false), 5000);
       return;
     }
     
@@ -48,21 +43,15 @@ export const InstallPWA: React.FC = () => {
     setDeferredPrompt(null);
   };
 
+  if (!deferredPrompt) return null;
+
   return (
-    <div className="relative inline-block">
-      <button
-        onClick={handleInstallClick}
-        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white text-[#1A1110] rounded-xl text-[10px] font-bold hover:bg-white/90 transition-colors shadow-sm"
-      >
-        <Download className="w-3.5 h-3.5" />
-        Install App
-      </button>
-      {showTooltip && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-bento-text text-white text-[10px] rounded-lg shadow-xl text-center z-50 animate-in fade-in slide-in-from-bottom-2">
-          To install, open your browser menu and select <strong className="text-strawberry">"Add to Home Screen"</strong> or <strong className="text-strawberry">"Install App"</strong>.
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-bento-text rotate-45"></div>
-        </div>
-      )}
-    </div>
+    <button
+      onClick={handleInstallClick}
+      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white text-[#1A1110] rounded-xl text-[10px] font-bold hover:bg-white/90 transition-colors shadow-sm"
+    >
+      <Download className="w-3.5 h-3.5" />
+      Install App
+    </button>
   );
 };

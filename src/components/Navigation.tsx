@@ -89,7 +89,7 @@ export const Navigation: React.FC = () => {
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           <a href="/#home" className="font-serif font-bold z-50 relative tracking-tight flex items-center gap-2 text-current hover:opacity-90 transition-opacity">
-            <img src="/logo.webp" alt="MK Bakery Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-md" />
+            <img src="https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp" alt="MK Bakery Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-md" />
             <div className="flex flex-col">
               <span className={`text-base md:text-lg font-bold leading-none tracking-tight ${!isOverHeroFrame ? 'text-bento-text' : 'text-white'}`}>
                 MK BAKERY

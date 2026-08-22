@@ -120,7 +120,7 @@ export const AdminDashboard: React.FC = () => {
       <div className="pt-32 pb-24 bg-bento-bg min-h-screen flex items-center justify-center px-4">
         <div className="bg-bento-text/5 rounded-3xl shadow-xl p-8 max-w-md w-full shadow-soft text-center space-y-6">
           <div className="w-20 h-20 bg-white p-1.5 rounded-full flex items-center justify-center mx-auto shadow-md">
-            <img src="/logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
+            <img src="https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
           </div>
 
           <div>
@@ -182,7 +182,7 @@ export const AdminDashboard: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 gap-4 mb-8">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-white p-1 rounded-full shadow-sm shrink-0">
-              <img src="/logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
+              <img src="https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
             </div>
             <div>
               <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold block">

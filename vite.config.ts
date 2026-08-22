@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'logo.webp'],
+      includeAssets: ['favicon.svg', 'https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp'],
       manifest: {
         name: 'MK Bakery',
         short_name: 'MK Bakery',
@@ -18,12 +18,12 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: 'logo.webp',
+            src: 'https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp',
             sizes: '192x192',
             type: 'image/webp'
           },
           {
-            src: 'logo.webp',
+            src: 'https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp',
             sizes: '512x512',
             type: 'image/webp',
             purpose: 'any maskable'

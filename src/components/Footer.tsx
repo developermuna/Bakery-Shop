@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-3.5 col-span-1">
             <div className="flex items-center gap-2.5 mb-2">
               <div className="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center shadow-lg shrink-0">
-                <img src="/logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
+                <img src="https://pub-48f5c35bbeac46cebd7922bbf8239e36.r2.dev/Bakery%20Shop/mk-bakery-logo.webp" alt="MK Bakery Logo" className="w-full h-full object-contain rounded-full" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5 text-base font-serif font-bold tracking-tight leading-none">

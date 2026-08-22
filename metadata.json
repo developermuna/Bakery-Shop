@@ -1,0 +1,6 @@
+{
+  "name": "MK Bakery & Sweets",
+  "description": "Artisanal bakery and cake shop with customizable orders, online booking, pickup scheduler, and product showcase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

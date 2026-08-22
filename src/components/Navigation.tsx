@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Menu, X, Phone, Search } from 'lucide-react';
+import { ShoppingBag, Phone, Search, X, Menu } from 'lucide-react';
 import { MOCK_PRODUCTS } from '../data/products';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FocusTrap } from 'focus-trap-react';
 import { useCartStore } from '../store/useCartStore';
 
 export const Navigation: React.FC = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchInputOpen, setIsSearchInputOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  
   const defaultRecommendations = [
     { id: 'rec1', name: 'Cakes', price: 'Starting ₹500', imageUuids: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=100'] },
     { id: 'rec2', name: 'Bento Cake', price: 'Starting ₹350', imageUuids: ['https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&q=80&w=100'] },
@@ -26,14 +25,22 @@ export const Navigation: React.FC = () => {
     ? MOCK_PRODUCTS.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.categories.some(c => c.toLowerCase().includes(searchQuery.toLowerCase()))).slice(0, 5)
     : defaultRecommendations;
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setIsSearchInputOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
-    if (isSearchOpen && searchInputRef.current) {
+    if (isSearchInputOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
-  }, [isSearchOpen]);
+  }, [isSearchInputOpen]);
 
-  
   const cartItemCount = useCartStore((state) => state.getCartItemCount());
   const openDrawer = useCartStore((state) => state.openDrawer);
   const headerRef = useRef<HTMLElement>(null);
@@ -41,8 +48,9 @@ export const Navigation: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Cakes', href: '/menu' },
-    { name: 'Decorations', href: '/decorations' },
     { name: 'Custom Cakes', href: '/custom-cakes' },
+    { name: 'Bakery', href: '/bakery' },
+    { name: 'Decorations', href: '/decorations' },
   ];
 
   useEffect(() => {
@@ -50,15 +58,16 @@ export const Navigation: React.FC = () => {
       let isOverVideo = false;
       const videoSections = document.querySelectorAll('.hero-sequence-container');
       
-      for (let i = 0; i < videoSections.length; i++) {
-        const rect = videoSections[i].getBoundingClientRect();
-        if (rect.top <= 80 && rect.bottom >= 80) {
+      videoSections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 60 && rect.bottom >= 60) {
           isOverVideo = true;
-          break;
         }
-      }
+      });
 
-      setIsScrolled(!isOverVideo && window.scrollY > 50);
+      // We are over the hero frame image sequence when at the top of the home page
+      const overHero = location.pathname === '/' && isOverVideo && window.scrollY < window.innerHeight * 2.5;
+      setIsScrolled(!overHero);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -66,129 +75,118 @@ export const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [mobileMenuOpen]);
+  const isOverHeroFrame = location.pathname === '/' && !isScrolled;
 
   return (
     <>
       <header
         ref={headerRef}
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-bento-black/95 backdrop-blur-md shadow-sm py-3 text-white' 
-            : 'bg-gradient-to-b from-black/70 to-transparent py-5 text-white'
+          !isOverHeroFrame
+            ? 'bg-white/85 backdrop-blur-md shadow-[0_2px_15px_rgba(0,0,0,0.05)] border-b border-black/5 py-2.5 text-bento-text'
+            : 'bg-transparent py-4 text-white'
         }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <a href="/#home" className={`text-xl md:text-2xl font-serif font-bold z-50 relative focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded text-white`}>
-            <span className="bg-bento-yellow text-black px-2 py-0.5 rounded-l-md">BENTO</span><span className="bg-black text-bento-yellow px-2 py-0.5 rounded-r-md border border-bento-yellow">CAKERY</span>
+          <a href="/#home" className="font-serif font-bold z-50 relative tracking-tight flex items-center gap-2 text-current hover:opacity-90 transition-opacity">
+            <img src="/logo.webp" alt="MK Bakery Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-md" />
+            <div className="flex flex-col">
+              <span className={`text-base md:text-lg font-bold leading-none tracking-tight ${!isOverHeroFrame ? 'text-bento-text' : 'text-white'}`}>
+                MK BAKERY
+              </span>
+              <span className={`text-[8px] md:text-[9px] font-sans tracking-widest uppercase mt-0.5 ${!isOverHeroFrame ? 'text-bento-text/60' : 'text-white/80'}`}>
+                Baked with Love
+              </span>
+            </div>
           </a>
 
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 text-base lg:text-lg font-bold">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className={`text-sm font-medium transition-all hover:text-bento-yellow focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded-full px-3 py-1.5 ${
+                className={`text-sm lg:text-base font-bold transition-all hover:text-strawberry px-3 py-1.5 ${
                   location.pathname === link.href || (link.href === '/' && location.pathname === '') 
-                    ? 'text-bento-yellow font-bold bg-white/10'
-                    : 'text-white'
+                    ? 'text-strawberry font-bold' 
+                    : 'text-current'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
           </nav>
-
           
-          
-          <div className="hidden lg:flex items-center space-x-6 z-50 relative">
-            <div className="relative flex items-center">
+          <div className="hidden lg:flex items-center space-x-4 z-50 relative">
+            
+            <div 
+              ref={searchContainerRef}
+              className="relative flex items-center" 
+            >
               <AnimatePresence>
-                {isSearchOpen && (
-                  <>
-                    <motion.div 
-                      initial={{ width: 0, opacity: 0 }}
-                      animate={{ width: 250, opacity: 1 }}
-                      exit={{ width: 0, opacity: 0 }}
-                      className="overflow-hidden mr-2"
-                    >
-                      <div className="relative w-[250px]">
-                        <input 
-                          ref={searchInputRef}
-                          type="text" 
-                          placeholder="Search cakes, pastries..." 
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full bg-white/10 rounded-full pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-bento-yellow backdrop-blur-md"
-                        />
-                        {searchQuery && (
-                          <button 
-                            onClick={() => setSearchQuery('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
-                    </motion.div>
+                {isSearchInputOpen && (
+                  <motion.div 
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 160, opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    className="overflow-hidden mr-2"
+                  >
+                    <div className="relative w-[160px]">
+                      <input 
+                        ref={searchInputRef}
+                        type="text" 
+                        placeholder="Search cakes, pastries..." 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-[#FAFAFA]/20 rounded-full pl-3 pr-8 py-1.5 text-sm text-current border-2 border-solid border-strawberry backdrop-blur-md"
+                      />
+                      {searchQuery && (
+                        <button 
+                          onClick={() => setSearchQuery('')}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-current/50 hover:text-current"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence>
+                {isSearchInputOpen && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full right-0 mt-4 w-64 sm:w-80 bg-vanilla text-black shadow-2xl rounded-2xl overflow-hidden p-4 border border-black/5 z-50"
+                  >
+                    {searchQuery.trim().length === 0 && (
+                      <h4 className="text-xs font-semibold text-strawberry uppercase tracking-wider mb-3">Popular Searches</h4>
+                    )}
                     
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full right-0 mt-4 w-72 sm:w-96 bg-bento-black shadow-2xl rounded-2xl overflow-hidden p-4 border border-white/5 z-50"
-                    >
-                      {searchQuery.trim().length === 0 && (
-                        <h4 className="text-xs font-semibold text-bento-yellow uppercase tracking-wider mb-3">Popular Searches</h4>
-                      )}
-                      
-                      <div className="space-y-2">
-                        {searchResults.map(product => (
-                          <Link 
-                            key={product.id}
-                            to={product.id.startsWith('rec') ? '/menu' : `/product/${product.id}`}
-                            onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                            className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors"
-                          >
-                            <img src={product.imageUuids[0]} alt={product.name} className="w-10 h-10 rounded-lg object-cover shadow-md" />
-                            <div>
-                              <p className="text-sm font-medium text-white">{product.name}</p>
-                              <p className="text-xs text-bento-grey">{product.price.toString().startsWith('Starting') ? product.price : `₹${product.price}`}</p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                      
-                      {searchQuery.trim().length > 0 && searchResults.length === 0 && (
-                        <p className="text-sm text-bento-grey mt-4 text-center">No results found.</p>
-                      )}
-                    </motion.div>
-                  </>
+                    <div className="space-y-2">
+                      {searchResults.map(product => (
+                        <Link 
+                          key={product.id}
+                          to={product.id.startsWith('rec') ? '/menu' : `/product/${product.id}`}
+                          onClick={() => { setIsSearchInputOpen(false); setSearchQuery(''); }}
+                          className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#FAFAFA]/20 transition-colors"
+                        >
+                          <img src={product.imageUuids[0]} alt={product.name} className="w-10 h-10 rounded-lg object-cover shadow-md" />
+                          <div>
+                            <h5 className="font-bold text-sm text-black">{product.name}</h5>
+                            <p className="text-xs text-bento-text">{product.price}</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
 
               <button 
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="relative hover:text-bento-yellow transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded p-1 text-white z-10"
+                onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
+                className="relative hover:text-strawberry transition-colors p-1 text-current z-10"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
@@ -198,7 +196,7 @@ export const Navigation: React.FC = () => {
 
             <a 
               href="/#location"
-              className="relative hover:text-bento-yellow transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded p-1 text-white"
+              className="relative hover:text-strawberry transition-colors p-1 text-current"
               aria-label="Contact"
             >
               <Phone className="w-5 h-5" />
@@ -207,105 +205,186 @@ export const Navigation: React.FC = () => {
             <button 
               type="button"
               onClick={openDrawer}
-              className={`relative hover:text-bento-yellow transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded p-1 text-white`}
+              className="flex items-center space-x-1.5 bg-strawberry text-white px-3.5 py-1.5 rounded-full font-bold hover:bg-strawberry/90 transition-colors shadow-sm text-xs"
               aria-label={`Open cart with ${cartItemCount} items`}
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 shrink-0" />
+              <span className="text-xs font-semibold lowercase tracking-wide">buy</span>
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-2 bg-bento-yellow text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">
+                <span className="bg-[#FAFAFA] text-strawberry text-[11px] font-bold min-w-[18px] h-4.5 px-1 flex items-center justify-center rounded-full">
                   {cartItemCount}
                 </span>
               )}
             </button>
-            <Link 
-              to="/menu"
-              className="px-8 py-3 bg-bento-yellow text-black rounded-full text-sm font-bold hover:bg-yellow-400 transition-colors shadow-soft focus:outline-none focus:ring-2 focus:ring-bento-yellow focus:ring-offset-2 focus:ring-offset-cream"
-            >
-              Order for Pickup
-            </Link>
           </div>
 
-          <div className="flex items-center space-x-4 lg:hidden z-50 relative">
+          <div className="flex items-center space-x-2 sm:space-x-3 lg:hidden z-50 relative">
             <button 
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="relative hover:text-bento-yellow transition-colors focus:outline-none p-1 text-white"
+              onClick={() => {
+                setIsSearchInputOpen(!isSearchInputOpen);
+                if (!isSearchInputOpen) setIsMobileMenuOpen(false);
+              }}
+              className="relative hover:text-strawberry transition-colors p-1.5 text-current rounded-full"
               aria-label="Search"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4.5 h-4.5" />
             </button>
             <a 
               href="/#location"
-              className="relative hover:text-bento-yellow transition-colors focus:outline-none p-1 text-white hidden sm:block"
+              className="relative hover:text-strawberry transition-colors p-1.5 text-current hidden xs:block"
               aria-label="Contact"
             >
-              <Phone className="w-5 h-5" />
+              <Phone className="w-4.5 h-4.5" />
             </a>
             <button 
               type="button"
               onClick={openDrawer}
-              className="relative hover:text-bento-yellow transition-colors focus:outline-none p-1 text-white"
+              className="flex items-center space-x-1 bg-strawberry text-white px-2.5 py-1 rounded-full font-bold hover:bg-strawberry/90 transition-colors shadow-sm"
               aria-label={`Open cart with ${cartItemCount} items`}
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
+              <span className="text-[10px] min-[360px]:text-[11px] font-semibold lowercase tracking-tight">buy</span>
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-2 bg-bento-yellow text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">
+                <span className="bg-[#FAFAFA] text-strawberry text-[10px] font-bold min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full">
                   {cartItemCount}
                 </span>
               )}
             </button>
             <button
-              className="p-1 focus:outline-none focus:ring-2 focus:ring-bento-yellow rounded text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              type="button"
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+                if (!isMobileMenuOpen) setIsSearchInputOpen(false);
+              }}
+              className="hidden md:inline-flex lg:hidden relative hover:text-strawberry transition-colors p-1.5 text-current rounded-full"
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open navigation menu'}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      </header>
 
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
+        {/* Tablet Navigation Menu Drawer (Hidden on Mobile and Desktop) */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: '-100%' }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-0 z-40 bg-bento-black pt-16 px-6 lg:hidden overflow-y-auto"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="hidden md:block lg:hidden bg-white/95 backdrop-blur-xl border-t border-black/10 shadow-2xl overflow-hidden"
             >
-              <div className="flex flex-col space-y-6 h-full pb-8">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className={`text-2xl font-serif focus:outline-none focus:text-bento-yellow transition-all px-4 py-2 rounded-xl ${
-                      location.pathname === link.href || (link.href === '/' && location.pathname === '') ? 'text-bento-yellow font-bold bg-white/10' : 'text-white'
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
+              <div className="px-5 py-4 flex flex-col gap-1.5 max-w-lg mx-auto">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-strawberry/80 px-2 pb-0.5">
+                  Navigation
+                </span>
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.href || (link.href === '/' && location.pathname === '');
+                  return (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl font-bold text-sm transition-colors ${
+                        isActive
+                          ? 'bg-strawberry text-white shadow-xs'
+                          : 'text-neutral-700 hover:text-strawberry hover:bg-rose-50/60'
+                      }`}
+                    >
+                      <span>{link.name}</span>
+                      {isActive && <span className="w-2 h-2 rounded-full bg-white" />}
+                    </Link>
+                  );
+                })}
+
+                <div className="h-px bg-black/5 my-1.5" />
+
+                <div className="grid grid-cols-2 gap-2 pt-0.5">
+                  <a
+                    href="/#location"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-neutral-100/90 text-neutral-700 font-bold text-xs hover:bg-neutral-200/80 transition-colors"
                   >
-                    {link.name}
-                  </Link>
-                ))}
-                
-                <div className="mt-auto pt-8 border-t border-bento-grey">
-                  <Link 
-                    to="/menu"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full block text-center px-8 py-4 bg-bento-yellow text-black rounded-full font-bold text-lg focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                    <Phone className="w-3.5 h-3.5 text-strawberry" />
+                    <span>Store Contact</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      openDrawer();
+                    }}
+                    className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-strawberry text-white font-bold text-xs hover:bg-strawberry/90 transition-colors shadow-xs"
                   >
-                    Order for Pickup
-                  </Link>
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>Buy ({cartItemCount})</span>
+                  </button>
                 </div>
               </div>
             </motion.div>
-          </FocusTrap>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Search Overlay Bar */}
+        <AnimatePresence>
+          {isSearchInputOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden bg-vanilla/95 backdrop-blur-xl border-t border-black/10 px-4 py-3 shadow-lg"
+            >
+              <div className="relative">
+                <Search className="w-4 h-4 text-bento-text absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search cakes, pastries, snacks..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                  className="w-full bg-white border border-strawberry/40 rounded-full pl-9 pr-9 py-2 text-sm text-black placeholder:text-bento-grey focus:outline-none focus:border-strawberry focus:ring-2 focus:ring-strawberry/20"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-bento-text hover:text-black p-1"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Mobile Search Results Dropdown */}
+              {searchResults.length > 0 && (
+                <div className="mt-2 bg-white rounded-2xl shadow-xl border border-black/10 max-h-60 overflow-y-auto divide-y divide-black/5">
+                  {searchResults.map((product) => (
+                    <Link
+                      key={product.id}
+                      to={product.id.startsWith('rec') ? '/menu' : `/product/${product.id}`}
+                      onClick={() => {
+                        setIsSearchInputOpen(false);
+                        setSearchQuery('');
+                      }}
+                      className="flex items-center gap-3 p-2.5 hover:bg-vanilla/40 transition-colors"
+                    >
+                      <img
+                        src={product.imageUuids[0]}
+                        alt={product.name}
+                        className="w-10 h-10 rounded-xl object-cover shrink-0"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <h5 className="font-bold text-xs text-black truncate">{product.name}</h5>
+                        <p className="text-[11px] text-strawberry font-semibold">{product.price}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 };

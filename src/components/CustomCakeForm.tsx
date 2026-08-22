@@ -1,29 +1,42 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { addHours, format } from 'date-fns';
-import { Upload, X, CheckCircle2, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Upload, X, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCartStore } from '../store/useCartStore';
+import { useToastStore } from '../store/useToastStore';
 
 // Minimum 72 hours notice
 const MIN_NOTICE_HOURS = 72;
 
 const formSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
-  pickupDate: z.string().min(1, 'Please select a pickup date'),
-  pickupTime: z.enum(['Morning', 'Afternoon', 'Evening', 'Night']),
+  // Section 1: Cake Specifications
+  cakeType: z.string().optional(),
+  cakeShape: z.string().min(1, 'Please select a cake shape'),
+  cakeSize: z.string().min(1, 'Please select a cake size'),
+  flavor: z.string().min(1, 'Please select a flavor'),
+  eggless: z.boolean(),
+  layers: z.string().optional(),
   budget: z.string().min(1, 'Please provide an estimated budget'),
-  flavor: z.string().min(1, 'Please suggest a flavor profile'),
-  notes: z.string().min(10, 'Please provide some details about your vision'),
+
+  // Section 2: Design & Details
+  cakeTheme: z.string().optional(),
+  borderStyle: z.string().optional(),
+  colorPreference: z.string().min(1, 'Please provide a color preference'),
+  textOnCake: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 export const CustomCakeForm: React.FC = () => {
+  const navigate = useNavigate();
+  const addItem = useCartStore((state) => state.addItem);
+  const addToast = useToastStore((state) => state.addToast);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   
   // File upload state
   const [file, setFile] = useState<File | null>(null);
@@ -31,16 +44,35 @@ export const CustomCakeForm: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [cakeType, setCakeType] = useState<'custom' | 'image'>('custom');
+  const [cakeTypeState, setCakeTypeState] = useState<'custom' | 'image'>('custom');
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      eggless: false,
+      layers: '1',
+    }
   });
+
+  const watchedData = watch();
+
+  const getEstimatedPrice = (budgetStr?: string) => {
+    if (!budgetStr) return '0';
+    if (budgetStr.includes('500') && !budgetStr.includes('1500')) return '499';
+    if (budgetStr.includes('1500') && !budgetStr.includes('2500')) return '1,499';
+    if (budgetStr.includes('2500')) return '2,499';
+    if (budgetStr.includes('4000')) return '3,999';
+    if (budgetStr.includes('1000') && !budgetStr.includes('1500')) return '999';
+    return '1,499';
+  };
+
+  const estimatedPrice = getEstimatedPrice(watchedData.budget);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -99,302 +131,522 @@ export const CustomCakeForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      let imageUrl = null;
+      let imageUrl = preview || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80';
       if (file) {
         // Mocking the R2 upload process
-        imageUrl = await simulateR2Upload(file);
+        await simulateR2Upload(file);
       }
 
-      // Mock submitting the form data
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Form submitted:', { ...data, imageUrl });
-      
-      setIsSuccess(true);
+      // Calculate unit price from budget option
+      const unitPrice = parseInt(getEstimatedPrice(data.budget).replace(/,/g, ''), 10) || 1499;
+
+      // Add the custom designed cake directly to user's order
+      addItem({
+        productId: `CUSTOM-${Date.now()}`,
+        slug: 'bespoke-custom-cake',
+        name: cakeTypeState === 'image' ? 'Custom Photo / Edible Print Cake' : `${data.cakeType} Cake`,
+        image: imageUrl,
+        selectedSize: {
+          label: `Custom Specs (${data.cakeSize})`,
+          price: unitPrice,
+          servings: 'Custom Order',
+        },
+        selectedFlavor: `${data.flavor}${data.eggless ? ' (Eggless)' : ''}`,
+        cakeMessage: cakeTypeState === 'image'
+          ? `Shape: ${data.cakeShape} | Layers: ${data.layers || '1'} | Border: ${data.borderStyle || 'None'} | Color: ${data.colorPreference} | Text: ${data.textOnCake || 'None'} | Notes: ${data.notes || 'None'}`
+          : `Shape: ${data.cakeShape} | Layers: ${data.layers || '1'} | Theme: ${data.cakeTheme} | Color: ${data.colorPreference} | Text: ${data.textOnCake || 'None'} | Notes: ${data.notes || 'None'}`,
+        quantity: 1,
+        inStock: true,
+        preparationLeadTimeHours: MIN_NOTICE_HOURS,
+      });
+
+      addToast({
+        type: 'success',
+        title: 'Custom Cake Added to Order!',
+        description: 'Proceeding to buy to confirm pickup and payment...',
+      });
+
       reset();
       clearFile();
+
+      // Navigate to checkout
+      navigate('/checkout');
     } catch (error) {
       console.error('Submission failed', error);
+      addToast({
+        type: 'error',
+        title: 'Order Error',
+        description: 'Could not process custom cake specifications. Please try again.',
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Calculate min date for the HTML date picker (72 hours from now)
-  const minDate = format(addHours(new Date(), MIN_NOTICE_HOURS), 'yyyy-MM-dd');
-
-  if (isSuccess) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="bg-bento-black/80 backdrop-blur-xl p-12 rounded-3xl shadow-2xl border border-white/5 text-center max-w-2xl mx-auto"
-      >
-        <div className="w-20 h-20 bg-bento-yellow/10 text-bento-yellow rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-10 h-10" />
-        </div>
-        <h3 className="text-2xl font-serif text-white mb-4">Inquiry Received</h3>
-        <p className="text-bento-grey text-lg mb-8 leading-relaxed">
-          Thank you for trusting us with your special event! We’ll confirm availability and send your quote within <span className="font-semibold">24-48 business hours</span>.
-        </p>
-        <button 
-          onClick={() => setIsSuccess(false)}
-          className="px-8 py-3 border border-bento-black text-white rounded-full hover:bg-bento-black hover:text-white transition-colors font-medium"
-        >
-          Submit Another Inquiry
-        </button>
-      </motion.div>
-    );
-  }
+  const renderImageUpload = (label: string) => (
+    <div>
+      <label className="block text-xs font-semibold text-bento-text mb-1">
+        {label}
+      </label>
+      
+      <div className="relative">
+        {!preview ? (
+          <div 
+            className={`border border-dashed ${uploadError ? 'border-red-300 bg-red-50/50' : 'border-black/15 hover:border-strawberry bg-black/[0.02]'} rounded-lg p-2.5 sm:p-3 flex items-center justify-between cursor-pointer transition-colors`}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="w-8 h-8 rounded-md bg-strawberry/10 text-strawberry flex items-center justify-center shrink-0">
+                <Upload className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-bento-text">Click or drag image to upload</p>
+                <p className="text-[10px] text-bento-text">PNG, JPG, WEBP (Max 5MB)</p>
+              </div>
+            </div>
+            <span className="text-xs font-bold text-strawberry bg-pink-50 px-2.5 py-1 rounded-md shrink-0">
+              Browse File
+            </span>
+            {uploadError && <p className="text-[10px] text-red-500 absolute -bottom-4 left-0">{uploadError}</p>}
+          </div>
+        ) : (
+          <div className="relative rounded-lg overflow-hidden border border-black/10 bg-black/5 p-2 flex items-center justify-between">
+            <div className="flex items-center space-x-2.5">
+              <img src={preview} alt="Preview" className="w-12 h-12 object-cover rounded-md shadow-xs" />
+              <div className="text-xs">
+                <p className="font-semibold text-bento-text truncate max-w-[200px]">{file?.name || 'Uploaded image'}</p>
+                <p className="text-[10px] text-bento-text">{file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : 'Ready'}</p>
+              </div>
+            </div>
+            <button 
+              type="button"
+              onClick={clearFile}
+              className="p-1.5 rounded-md text-bento-text hover:text-red-500 hover:bg-black/5 transition-colors cursor-pointer"
+              disabled={isSubmitting}
+            >
+              <X className="w-4 h-4" />
+            </button>
+            
+            {/* Upload Progress Overlay */}
+            <AnimatePresence>
+              {isSubmitting && uploadProgress < 100 && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 bg-white/90 flex items-center justify-center p-2 backdrop-blur-xs"
+                >
+                  <Loader2 className="w-4 h-4 text-strawberry animate-spin mr-2" />
+                  <span className="text-xs font-medium text-bento-text">Uploading {Math.round(uploadProgress)}%</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          onChange={handleFileChange} 
+          accept="image/jpeg, image/png, image/webp" 
+          className="hidden" 
+        />
+      </div>
+    </div>
+  );
 
   return (
-    <>
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-    <div className="max-w-4xl mx-auto bg-bento-black/80 backdrop-blur-xl p-8 md:p-12 rounded-3xl shadow-2xl border border-white/5">
-      
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Design Your Cake</h2>
-        <div className="inline-flex bg-black/50 backdrop-blur-md rounded-full p-1 border border-white/10 mt-2 mb-4">
+    <div className="w-full h-full mx-auto bg-white/85 backdrop-blur-md p-5 sm:p-7 rounded-2xl shadow-2xl border border-white/60 flex flex-col justify-between">
+      {/* Header & Mode Switcher */}
+      <div className="pb-3.5 border-b border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-bento-text font-serif leading-tight">
+              Design Your Bespoke Cake
+            </h2>
+          </div>
+          <p className="text-xs text-bento-text font-light mt-0.5">
+            {cakeTypeState === 'custom' 
+              ? 'Tell us your vision and our pastry chefs will craft your dream cake.' 
+              : 'Upload a photo for custom edible print decorating on your cake.'}
+          </p>
+        </div>
+
+        {/* Cake Type Toggle */}
+        <div className="inline-flex bg-black/5 rounded-lg p-0.5 shrink-0 self-start sm:self-auto">
           <button
             type="button"
-            onClick={() => setCakeType('custom')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${cakeType === 'custom' ? 'bg-bento-yellow text-black shadow-md' : 'text-white hover:text-bento-yellow'}`}
+            onClick={() => setCakeTypeState('custom')}
+            className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
+              cakeTypeState === 'custom'
+                ? 'bg-strawberry text-white shadow-xs'
+                : 'text-bento-text hover:text-bento-text'
+            }`}
           >
             Custom Cake
           </button>
           <button
             type="button"
-            onClick={() => setCakeType('image')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${cakeType === 'image' ? 'bg-bento-yellow text-black shadow-md' : 'text-white hover:text-bento-yellow'}`}
+            onClick={() => setCakeTypeState('image')}
+            className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
+              cakeTypeState === 'image'
+                ? 'bg-strawberry text-white shadow-xs'
+                : 'text-bento-text hover:text-bento-text'
+            }`}
           >
-            Image Cake
+            Photo / Image Cake
           </button>
         </div>
-        <p className="text-white/60 font-light text-sm max-w-md mx-auto">
-          {cakeType === 'custom' 
-            ? 'Fill out the form below to request a fully custom-designed cake.' 
-            : 'Want a photo printed on your cake? Upload it below and tell us the details.'}
-        </p>
       </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Full Name *</label>
-            <input 
-              {...register('name')}
-              className={`w-full bg-white/5 border ${errors.name ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-              placeholder="John Doe"
-            />
-            {errors.name && <span className="text-red-500 text-xs mt-1 block">{errors.name.message as string}</span>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Phone Number *</label>
-            <input 
-              {...register('phone')}
-              type="tel"
-              className={`w-full bg-white/5 border ${errors.phone ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-              placeholder="+1 (555) 000-0000"
-            />
-            {errors.phone && <span className="text-red-500 text-xs mt-1 block">{errors.phone.message as string}</span>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Pickup Date *</label>
-            <input 
-              {...register('pickupDate')}
-              type="date"
-              min={minDate}
-              className={`w-full bg-white/5 border ${errors.pickupDate ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors [color-scheme:dark]`}
-            />
-            {errors.pickupDate && <span className="text-red-500 text-xs mt-1 block">{errors.pickupDate.message as string}</span>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Pickup Time *</label>
-            <select 
-              {...register('pickupTime')}
-              className={`w-full bg-black border ${errors.pickupTime ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-            >
-              <option value="">Select time</option>
-              <option value="Morning">Morning</option>
-              <option value="Afternoon">Afternoon</option>
-              <option value="Evening">Evening</option>
-              <option value="Night">Night</option>
-            </select>
-            {errors.pickupTime && <span className="text-red-500 text-xs mt-1 block">{errors.pickupTime.message as string}</span>}
-          </div>
-        </div>
-
-        {/* Cake Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Budget Range *</label>
-            <select 
-              {...register('budget')}
-              className={`w-full bg-black border ${errors.budget ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-            >
-              <option value="">Select budget range</option>
-              <option value="$100-₹1500">$100 - ₹1500</option>
-              <option value="₹1500-₹2500">₹1500 - ₹2500</option>
-              <option value="₹2500-₹4000">₹2500 - ₹4000</option>
-              <option value="₹4000+">₹4000+</option>
-            </select>
-            {errors.budget && <span className="text-red-500 text-xs mt-1 block">{errors.budget.message as string}</span>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Flavor Profile *</label>
-            <input 
-              {...register('flavor')}
-              className={`w-full bg-white/5 border ${errors.flavor ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-              placeholder="e.g. Vanilla with raspberry, Chocolate truffle"
-            />
-            {errors.flavor && <span className="text-red-500 text-xs mt-1 block">{errors.flavor.message as string}</span>}
-          </div>
-        </div>
-
-        {/* Details */}
-        <div className="pt-6 border-t border-white/10">
-          <label className="block text-sm font-medium text-white mb-2">Design Notes & Message *</label>
-          <textarea 
-            {...register('notes')}
-            rows={4}
-            className={`w-full bg-white/5 border ${errors.notes ? 'border-red-500' : 'border-white/10'} rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bento-yellow transition-colors`}
-            placeholder={cakeType === 'image' ? "Any specific instructions for the printed image cake? Plus any custom text." : "Describe the occasion, colors, theme, and any text you want written on the cake."}
-          />
-          {errors.notes && <span className="text-red-500 text-xs mt-1 block">{errors.notes.message as string}</span>}
-        </div>
-
-        {/* Image Upload (R2 Simulation) */}
-        <div className="pt-6 border-t border-bento-grey">
-          <label className="block text-sm font-medium text-white mb-2">Inspiration Image (Optional)</label>
-          <p className="text-xs text-bento-grey mb-4">Upload a photo to help us understand your vision (Max 5MB)</p>
-          
-          <div className="relative">
-            {!preview ? (
-              <div 
-                className={`border-2 border-dashed ${uploadError ? 'border-red-300 bg-red-50' : 'border-bento-grey hover:border-bento-yellow bg-bento-black'} rounded-xl p-8 text-center cursor-pointer transition-colors`}
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <Upload className="w-8 h-8 text-bento-yellow mx-auto mb-3" />
-                <p className="text-sm text-white font-medium">Click to upload an image</p>
-                <p className="text-xs text-bento-grey mt-1">JPEG, PNG</p>
-                {uploadError && <p className="text-xs text-red-500 mt-2">{uploadError}</p>}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-4">
+        {cakeTypeState === 'custom' ? (
+          <>
+            {/* Section 1: Cake Specifications */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 border-b border-black/5 pb-2">
+                <div className="w-6 h-6 rounded-full bg-strawberry/10 text-strawberry flex items-center justify-center text-xs font-bold">1</div>
+                <h3 className="text-sm font-bold text-bento-text">Cake Specifications</h3>
               </div>
-            ) : (
-              <div className="relative rounded-xl overflow-hidden border border-bento-grey bg-bento-black inline-block">
-                <img src={preview} alt="Preview" className="h-48 object-cover" />
-                <button 
-                  type="button"
-                  onClick={clearFile}
-                  className="absolute top-2 right-2 p-1 bg-bento-black rounded-full text-white shadow-sm hover:text-red-500 transition-colors"
-                  disabled={isSubmitting}
-                >
-                  <X className="w-4 h-4" />
-                </button>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Cake Type *</label>
+                  <select {...register('cakeType')} className={`w-full bg-white border ${errors.cakeType ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Type</option>
+                    <option value="Birthday">Birthday</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  {errors.cakeType && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeType.message as string}</span>}
+                </div>
                 
-                {/* Upload Progress Overlay */}
-                <AnimatePresence>
-                  {isSubmitting && uploadProgress < 100 && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="absolute inset-0 bg-bento-black/50 flex flex-col items-center justify-center p-4 backdrop-blur-sm"
-                    >
-                      <Loader2 className="w-8 h-8 text-white animate-spin mb-3" />
-                      <div className="w-full bg-bento-black/30 rounded-full h-1.5 overflow-hidden">
-                        <div 
-                          className="bg-bento-yellow h-full transition-all duration-300"
-                          style={{ width: `${uploadProgress}%` }}
-                        />
-                      </div>
-                      <span className="text-xs text-white mt-2">{Math.round(uploadProgress)}% uploaded</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Cake Shape *</label>
+                  <select {...register('cakeShape')} className={`w-full bg-white border ${errors.cakeShape ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Shape</option>
+                    <option value="Round">Round</option>
+                    <option value="Square">Square</option>
+                    <option value="Heart">Heart</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                  {errors.cakeShape && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeShape.message as string}</span>}
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:col-span-2">
+                  <div>
+                    <label className="block text-xs font-semibold text-bento-text mb-1">Cake Size *</label>
+                    <select {...register('cakeSize')} className={`w-full bg-white border ${errors.cakeSize ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                      <option value="">Select Size</option>
+                      <option value="0.5 kg">0.5 kg</option>
+                      <option value="1 kg">1 kg</option>
+                      <option value="1.5 kg">1.5 kg</option>
+                      <option value="2 kg">2 kg</option>
+                    </select>
+                    {errors.cakeSize && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeSize.message as string}</span>}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-bento-text mb-1">Budget Range (₹) *</label>
+                    <select {...register('budget')} className={`w-full bg-white border ${errors.budget ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                      <option value="">Select Budget</option>
+                      <option value="200-500">200 - 500</option>
+                      <option value="500-1500">500 - 1500</option>
+                      <option value="1500-2500">1500 - 2500</option>
+                      <option value="2500-4000">2500 - 4000</option>
+                      <option value="4000+">4000+</option>
+                    </select>
+                    {errors.budget && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.budget.message as string}</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Flavor *</label>
+                  <select {...register('flavor')} className={`w-full bg-white border ${errors.flavor ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Flavor</option>
+                    <option value="Chocolate">Chocolate</option>
+                    <option value="Vanilla">Vanilla</option>
+                    <option value="Red Velvet">Red Velvet</option>
+                    <option value="Butterscotch">Butterscotch</option>
+                  </select>
+                  {errors.flavor && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.flavor.message as string}</span>}
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 sm:pt-6">
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" {...register('eggless')} className="sr-only peer" />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                    <span className="ml-3 text-xs sm:text-sm font-semibold text-bento-text">Make it Eggless</span>
+                  </label>
+                  
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xs sm:text-sm font-semibold text-bento-text">Layers:</span>
+                    <div className="flex items-center gap-3">
+                      {['1', '2', '3'].map((layer) => (
+                        <label key={layer} className="flex items-center cursor-pointer group">
+                          <div className="relative flex items-center justify-center">
+                            <input
+                              type="radio"
+                              value={layer}
+                              {...register('layers')}
+                              className="peer sr-only"
+                            />
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm border border-black/20 peer-checked:border-strawberry peer-checked:bg-strawberry flex items-center justify-center transition-colors">
+                              <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </div>
+                          </div>
+                          <span className="ml-2 text-xs sm:text-sm text-bento-text group-hover:text-strawberry transition-colors">
+                            {layer}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            )}
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              onChange={handleFileChange} 
-              accept="image/jpeg, image/png" 
-              className="hidden" 
-            />
+            </div>
+
+            {/* Section 2: Design & Details */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 border-b border-black/5 pb-2">
+                <div className="w-6 h-6 rounded-full bg-strawberry/10 text-strawberry flex items-center justify-center text-xs font-bold">2</div>
+                <h3 className="text-sm font-bold text-bento-text">Design & Details</h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Cake Theme *</label>
+                  <select {...register('cakeTheme')} className={`w-full bg-white border ${errors.cakeTheme ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Theme</option>
+                    <option value="Floral">Floral</option>
+                    <option value="Cartoon">Cartoon</option>
+                    <option value="Minimal">Minimal</option>
+                    <option value="Photo">Photo</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  {errors.cakeTheme && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeTheme.message as string}</span>}
+                </div>
+                
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Color Preference *</label>
+                  <select {...register('colorPreference')} className={`w-full bg-white border ${errors.colorPreference ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Color</option>
+                    <option value="Red">Red</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Blue">Blue</option>
+                    <option value="White/Gold">White & Gold</option>
+                    <option value="Multi">Multi-color</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  {errors.colorPreference && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.colorPreference.message as string}</span>}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Text on Cake</label>
+                <input 
+                  {...register('textOnCake')}
+                  className="w-full bg-white border border-black/10 rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs"
+                  placeholder="e.g. Happy Birthday Muna!"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Additional Instructions</label>
+                <textarea 
+                  {...register('notes')}
+                  rows={2}
+                  className="w-full bg-white border border-black/10 rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs resize-none"
+                  placeholder="e.g. Make it less sweet, specific design elements..."
+                />
+              </div>
+
+              {renderImageUpload("Reference / Inspiration Image (Optional)")}
+            </div>
+          </>
+        ) : (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 border-b border-black/5 pb-2">
+              <div className="w-6 h-6 rounded-full bg-strawberry/10 text-strawberry flex items-center justify-center text-xs font-bold">1</div>
+              <h3 className="text-sm font-bold text-bento-text">Image Cake Details</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:col-span-2">
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Cake Size *</label>
+                  <select {...register('cakeSize')} className={`w-full bg-white border ${errors.cakeSize ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Size</option>
+                    <option value="0.5 kg">0.5 kg</option>
+                    <option value="1 kg">1 kg</option>
+                    <option value="1.5 kg">1.5 kg</option>
+                    <option value="2 kg">2 kg</option>
+                  </select>
+                  {errors.cakeSize && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeSize.message as string}</span>}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-bento-text mb-1">Price Range (₹) *</label>
+                  <select {...register('budget')} className={`w-full bg-white border ${errors.budget ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                    <option value="">Select Budget</option>
+                    <option value="500-1000">500 - 1000</option>
+                    <option value="1000-1500">1000 - 1500</option>
+                    <option value="1500-2500">1500 - 2500</option>
+                    <option value="2500+">2500+</option>
+                  </select>
+                  {errors.budget && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.budget.message as string}</span>}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Flavor *</label>
+                <select {...register('flavor')} className={`w-full bg-white border ${errors.flavor ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                  <option value="">Select Flavor</option>
+                  <option value="Chocolate">Chocolate</option>
+                  <option value="Vanilla">Vanilla</option>
+                  <option value="Red Velvet">Red Velvet</option>
+                  <option value="Butterscotch">Butterscotch</option>
+                </select>
+                {errors.flavor && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.flavor.message as string}</span>}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Cake Shape *</label>
+                <select {...register('cakeShape')} className={`w-full bg-white border ${errors.cakeShape ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                  <option value="">Select Shape</option>
+                  <option value="Round">Round</option>
+                  <option value="Square">Square</option>
+                </select>
+                {errors.cakeShape && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.cakeShape.message as string}</span>}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Border / Decorative Style</label>
+                <select {...register('borderStyle')} className={`w-full bg-white border ${errors.borderStyle ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                  <option value="">Select Style</option>
+                  <option value="Rose Frame">Rose Frame</option>
+                  <option value="Minimal">Minimal</option>
+                  <option value="Star Pipe">Star Pipe</option>
+                  <option value="None">None</option>
+                </select>
+                {errors.borderStyle && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.borderStyle.message as string}</span>}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-bento-text mb-1">Color / Theme *</label>
+                <select {...register('colorPreference')} className={`w-full bg-white border ${errors.colorPreference ? 'border-red-500' : 'border-black/10'} rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs`}>
+                  <option value="">Select Color</option>
+                  <option value="Chocolate">Chocolate</option>
+                  <option value="Red">Red</option>
+                  <option value="Pink">Pink</option>
+                  <option value="Blue">Blue</option>
+                  <option value="White">White</option>
+                </select>
+                {errors.colorPreference && <span className="text-red-500 text-[10px] mt-0.5 block">{errors.colorPreference.message as string}</span>}
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 sm:pt-6">
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" {...register('eggless')} className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                  <span className="ml-3 text-xs sm:text-sm font-semibold text-bento-text">Make it Eggless</span>
+                </label>
+                
+                <div className="flex items-center space-x-3">
+                  <span className="text-xs sm:text-sm font-semibold text-bento-text">Layers:</span>
+                  <div className="flex items-center gap-3">
+                    {['1', '2', '3'].map((layer) => (
+                      <label key={layer} className="flex items-center cursor-pointer group">
+                        <div className="relative flex items-center justify-center">
+                          <input
+                            type="radio"
+                            value={layer}
+                            {...register('layers')}
+                            className="peer sr-only"
+                          />
+                          <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm border border-black/20 peer-checked:border-strawberry peer-checked:bg-strawberry flex items-center justify-center transition-colors">
+                            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <span className="ml-2 text-xs sm:text-sm text-bento-text group-hover:text-strawberry transition-colors">
+                          {layer}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-bento-text mb-1">Cake Message</label>
+              <input 
+                {...register('textOnCake')}
+                className="w-full bg-white border border-black/10 rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs"
+                placeholder="e.g. Happy Birthday!"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-bento-text mb-1">Special Instructions</label>
+              <textarea 
+                {...register('notes')}
+                rows={2}
+                className="w-full bg-white border border-black/10 rounded-lg px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-strawberry transition-colors shadow-xs resize-none"
+                placeholder="Optional"
+              />
+            </div>
+
+            {renderImageUpload("Cake Image (Photo / Edible Print) *")}
+          </div>
+        )}
+
+        {/* Live Order Preview */}
+        <div className="mt-8 p-4 border border-black/10 rounded-xl bg-black/[0.02]">
+          <h3 className="text-sm font-bold text-bento-text mb-3">Live Order Preview</h3>
+          <div className="flex items-center gap-4">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-white overflow-hidden shadow-sm border border-black/5 shrink-0 flex items-center justify-center">
+              {preview ? (
+                <img src={preview} alt="Cake Preview" className="w-full h-full object-cover" />
+              ) : (
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80" alt="Placeholder" className="w-full h-full object-cover opacity-70" />
+              )}
+            </div>
+            <div className="flex flex-col flex-1">
+              <span className="font-bold text-bento-text text-sm sm:text-base">
+                {cakeTypeState === 'image' ? 'Photo / Edible Print Cake' : `${watchedData.cakeType || 'Custom'} Cake`}
+              </span>
+              <span className="text-xs text-bento-text/70 mt-0.5 line-clamp-1">
+                {watchedData.cakeSize ? `${watchedData.cakeSize} • ` : ''} {watchedData.flavor || 'Flavor'} {watchedData.layers && watchedData.layers !== '1' ? `• ${watchedData.layers} Layers ` : ''}{watchedData.eggless ? '(Eggless)' : ''}
+              </span>
+              <div className="mt-2 text-strawberry font-bold text-sm sm:text-base">
+                {watchedData.budget ? `₹${estimatedPrice} (Est.)` : 'Select budget for estimate'}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-8 flex justify-end">
+        {/* Submit Action */}
+        <div className="pt-4 flex justify-center items-center">
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full md:w-auto px-10 py-4 bg-bento-yellow text-black rounded-full font-medium hover:bg-yellow-400 transition-colors shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full sm:w-auto min-w-[280px] sm:min-w-[340px] px-8 py-3.5 bg-strawberry text-white rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-bento-yellow hover:text-bento-text transition-all shadow-md disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer active:scale-98"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                Processing...
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                <span>Processing...</span>
               </>
             ) : (
-              'Submit Inquiry'
+              'Proceed to Buy'
             )}
           </button>
         </div>
-      
-        {/* Recommendations Scroll Row */}
-        <div className="pt-10 mt-10 border-t border-white/10 relative">
-          <h3 className="text-xl font-serif text-white mb-6">Complete Your Celebration</h3>
-          
-          <button 
-            type="button"
-            onClick={() => document.getElementById('rec-scroll')?.scrollBy({ left: -200, behavior: 'smooth' })}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/80 hover:text-bento-yellow backdrop-blur-md hidden md:block opacity-0 group-hover/recs:opacity-100 transition-opacity"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <div className="group/recs relative">
-            <div 
-              id="rec-scroll"
-              className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {[
-                { name: 'Metallic Balloons', price: '₹200', img: 'https://images.unsplash.com/photo-1530103862676-de8892bc9522?auto=format&fit=crop&q=80&w=300' },
-                { name: 'Sparkler Candles', price: '₹150', img: 'https://images.unsplash.com/photo-1550977274-a7407dfb44a2?auto=format&fit=crop&q=80&w=300' },
-                { name: 'Party Poppers', price: '₹350', img: 'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&q=80&w=300' },
-                { name: 'Cake Topper', price: '₹250', img: 'https://images.unsplash.com/photo-1559868725-7b5853b9f4e2?auto=format&fit=crop&q=80&w=300' },
-                { name: 'Box of Chocolates', price: '₹500', img: 'https://images.unsplash.com/photo-1548842103-ce20c32728df?auto=format&fit=crop&q=80&w=300' },
-                { name: 'Floral Bouquet', price: '₹800', img: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&q=80&w=300' },
-              ].map((item, i) => (
-                <div key={i} className="min-w-[160px] md:min-w-[180px] snap-start bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-bento-yellow/50 transition-colors shrink-0 group/card cursor-pointer">
-                  <div className="h-32 w-full overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500" />
-                  </div>
-                  <div className="p-3">
-                    <p className="text-white text-sm font-medium truncate">{item.name}</p>
-                    <p className="text-bento-yellow text-xs font-bold mt-1">{item.price}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button 
-              type="button"
-              onClick={() => document.getElementById('rec-scroll')?.scrollBy({ left: 200, behavior: 'smooth' })}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/80 hover:text-bento-yellow backdrop-blur-md hidden md:block opacity-0 group-hover/recs:opacity-100 transition-opacity"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
       </form>
-
     </div>
-    </>
   );
 };

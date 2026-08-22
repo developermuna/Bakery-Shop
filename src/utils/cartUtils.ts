@@ -1,7 +1,7 @@
 import { addHours, format, isBefore, parseISO, startOfDay } from 'date-fns';
 import type { CakeAddOn, CartItem, CartTotals, DiscountCode, PickupSlot } from '../types/cart';
 
-export const TAX_RATE = 0.0825; // 8.25% California Sales Tax
+export const TAX_RATE = 0.18; // 18% GST (Included in price)
 
 export const AVAILABLE_DISCOUNTS: Record<string, DiscountCode> = {
   SWEET10: {
@@ -125,8 +125,8 @@ export const calculateCartTotals = (
   }
 
   const discountedSubtotal = Math.max(0, subtotal - discount);
-  const tax = discountedSubtotal * taxRate;
-  const total = discountedSubtotal + tax;
+  const total = discountedSubtotal;
+  const tax = total * (taxRate / (1 + taxRate));
 
   const earliestPickupDate = getEarliestPickupDate(maxLeadTimeHours || 24);
 

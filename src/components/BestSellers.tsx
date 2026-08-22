@@ -1,15 +1,83 @@
-import React from 'react';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MOCK_PRODUCTS } from '../data/products';
 import { useCartStore } from '../store/useCartStore';
 import { useToastStore } from '../store/useToastStore';
 import { formatCurrency } from '../utils/cartUtils';
 
+const ORIGINAL_PRODUCTS = MOCK_PRODUCTS.slice(0, 8);
+const CAROUSEL_PRODUCTS = [...ORIGINAL_PRODUCTS, ...ORIGINAL_PRODUCTS, ...ORIGINAL_PRODUCTS];
+
 export const BestSellers: React.FC = () => {
   const navigate = useNavigate();
   const { addItem, openDrawer } = useCartStore();
   const { addToast } = useToastStore();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [cardStepWidth, setCardStepWidth] = useState(246);
+  const [viewportWidth, setViewportWidth] = useState<number>(0);
+  const [visibleCardsCount, setVisibleCardsCount] = useState<number>(5);
+
+  // Measure card width dynamically + gap
+  useEffect(() => {
+    const updateSizes = () => {
+      if (cardRef.current) {
+        const isSmall = window.innerWidth < 1024;
+        const visibleCount = isSmall ? 3 : 5;
+        setVisibleCardsCount(visibleCount);
+
+        const gap = window.innerWidth >= 640 ? 16 : 12;
+        const cardW = cardRef.current.offsetWidth;
+        const step = cardW + gap;
+        setCardStepWidth(step);
+        // visible cards viewport width = visibleCount * cardW + (visibleCount - 1) * gap
+        setViewportWidth(visibleCount * step - gap);
+      }
+    };
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
+  }, []);
+
+  const handleNext = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    if (currentIndex === 0) {
+      setIsTransitioning(false);
+      setCurrentIndex(ORIGINAL_PRODUCTS.length);
+      setTimeout(() => {
+        setIsTransitioning(true);
+        setCurrentIndex(ORIGINAL_PRODUCTS.length - 1);
+      }, 50);
+    } else {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  // Seamless infinite loop reset on transition end
+  const handleTransitionEnd = () => {
+    if (currentIndex >= ORIGINAL_PRODUCTS.length) {
+      setIsTransitioning(false);
+      setCurrentIndex(currentIndex % ORIGINAL_PRODUCTS.length);
+    }
+  };
+
+  // Auto slide 1 card every 2.5 seconds
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      handleNext();
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [isHovered, currentIndex]);
 
   const handleQuickAdd = (e: React.MouseEvent, product: typeof MOCK_PRODUCTS[0]) => {
     e.stopPropagation();
@@ -41,92 +109,163 @@ export const BestSellers: React.FC = () => {
     openDrawer();
   };
 
-  const carouselProducts = [...MOCK_PRODUCTS.slice(0, 8), ...MOCK_PRODUCTS.slice(0, 8)];
-
   return (
-    <section className="py-16 bg-bento-black">
+    <section className="pt-6 pb-16 bg-transparent relative z-10">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-10">
           <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-bento-yellow font-bold mb-2 block">
               Handcrafted Daily
             </span>
             <h2 className="text-3xl font-serif md:text-4xl text-white mb-4">Our Favorites</h2>
-            <p className="text-base text-white/80 font-light">
+            <p className="text-base text-white/90 font-light">
               Our most loved creations, perfected over time and baked with the finest ingredients.
             </p>
           </div>
           
-          <Link
-            to="/menu"
-            className="mt-6 md:mt-0 px-8 py-3.5 text-bento-yellow shadow-[0_0_15px_rgba(255,215,0,0.2)] hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] rounded-full hover:bg-yellow-400 hover:text-black transition-colors font-medium text-sm inline-flex items-center space-x-2"
-          >
-            <span>View Full Menu</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="mt-6 md:mt-0">
+            <Link
+              to="/menu"
+              className="px-6 py-3 text-strawberry bg-white hover:bg-bento-yellow hover:text-bento-text rounded-full transition-all duration-300 font-bold text-xs sm:text-sm inline-flex items-center space-x-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              <span>View Full Menu</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
 
-        <div className="relative w-full overflow-hidden -mx-6 px-6 pb-8">
-          <div className="flex animate-marquee hover:[animation-play-state:paused] space-x-6 w-max pr-6">
-            {carouselProducts.map((product, index) => {
-              const isVeg = product.dietaryTags.some(tag => tag.toLowerCase() === 'eggless' || tag.toLowerCase() === 'vegetarian' || tag.toLowerCase() === 'veg');
-              const defaultSize = product.sizes[0] || { servings: '8-10', label: 'Standard' };
-              
+        <div
+          className="relative max-w-full mx-auto group/slider flex justify-center items-center"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Side Navigation Arrow: Left */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            className={`absolute -left-3 sm:-left-12 top-1/2 -translate-y-1/2 z-40 p-3 bg-black/85 hover:bg-strawberry text-white backdrop-blur-md border border-white/20 rounded-full transition-all duration-300 shadow-2xl active:scale-95 cursor-pointer ${
+              isHovered ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 -translate-x-3 pointer-events-none'
+            }`}
+            title="Previous card"
+            aria-label="Previous card"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Side Navigation Arrow: Right */}
+          <button
+            type="button"
+            onClick={handleNext}
+            className={`absolute -right-3 sm:-right-12 top-1/2 -translate-y-1/2 z-40 p-3 bg-black/85 hover:bg-strawberry text-white backdrop-blur-md border border-white/20 rounded-full transition-all duration-300 shadow-2xl active:scale-95 cursor-pointer ${
+              isHovered ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 translate-x-3 pointer-events-none'
+            }`}
+            title="Next card"
+            aria-label="Next card"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Viewport that clips EXACTLY to the 5 active cards */}
+          <div
+            className="overflow-hidden py-8 max-w-full"
+            style={{ width: viewportWidth ? `${viewportWidth}px` : '100%' }}
+          >
+            <div
+              onTransitionEnd={handleTransitionEnd}
+              style={{
+                transform: `translateX(-${currentIndex * cardStepWidth}px)`,
+                transition: isTransitioning ? 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
+              }}
+              className="flex space-x-3 sm:space-x-4 w-max items-center py-2"
+            >
+            {CAROUSEL_PRODUCTS.map((product, index) => {
+              const isCenter = visibleCardsCount === 3
+                ? index === currentIndex + 1
+                : index === currentIndex + 2;
+
+              const isInnerSide = visibleCardsCount === 3
+                ? (index === currentIndex || index === currentIndex + 2)
+                : (index === currentIndex + 1 || index === currentIndex + 3);
+
               return (
                 <div
                   key={`${product.id}-${index}`}
+                  ref={index === 0 ? cardRef : undefined}
                   onClick={() => navigate(`/product/${product.id}`)}
-                  className="group cursor-pointer flex flex-col w-[280px] sm:w-[300px] bg-white/5 rounded-3xl p-4 shrink-0 transition-all shadow-lg hover:-translate-y-2 hover:shadow-2xl hover:shadow-bento-yellow/10 hover:bg-white/10"
+                  className={`group relative cursor-pointer flex flex-col w-[110px] min-[400px]:w-[125px] sm:w-[170px] md:w-[190px] bg-[#1e1715] rounded-2xl overflow-hidden shrink-0 transition-all duration-500 aspect-[3/4] ${
+                    isCenter
+                      ? 'scale-[1.12] z-30 opacity-100 shadow-[0_20px_44px_rgba(0,0,0,0.65)] ring-1 ring-white/30'
+                      : isInnerSide
+                      ? 'scale-[1.04] z-20 opacity-95 shadow-[0_12px_28px_rgba(0,0,0,0.45)]'
+                      : 'scale-100 z-10 opacity-80 hover:opacity-100 shadow-[0_8px_20px_rgba(0,0,0,0.3)]'
+                  }`}
                 >
-                  <div className="relative aspect-square overflow-hidden rounded-2xl mb-4 bg-bento-grey/10">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 w-full h-full">
                     <img
                       src={product.imageUuids[0]}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
                     />
-                    
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
-                      <div className="bg-bento-black/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-md flex items-center gap-1.5">
-                        <span>{formatCurrency(product.price)}</span>
-                        <span className="text-[10px] text-white/60 font-medium bg-white/10 px-1.5 py-0.5 rounded-full">{defaultSize.label}</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={(e) => handleQuickAdd(e, product)}
-                        className="w-9 h-9 rounded-full bg-bento-yellow text-black flex items-center justify-center hover:bg-yellow-400 transition-colors shadow-md transform active:scale-95"
-                        aria-label="Add to cart"
-                      >
-                        <ShoppingBag className="w-4 h-4" />
-                      </button>
-                    </div>
-                    
-
-
-                    {/* Veg Icon (Indian Standard) */}
-                    {
-                    /* Veg/Non-Veg Icon (Indian Standard) */
-                    <div className="absolute top-3 right-3 bg-white p-1 rounded shadow-sm flex items-center justify-center">
-                      <div className={`w-3.5 h-3.5 border-2 ${isVeg ? 'border-green-600' : 'border-red-700'} flex items-center justify-center p-[1px]`}>
-                        <div className={`w-1.5 h-1.5 ${isVeg ? 'bg-green-600' : 'bg-red-700'} rounded-full`}></div>
-                      </div>
-                    </div>
-                  }
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-between px-1 pb-1">
-                    <div className="mb-4">
-                      <div className="flex justify-between items-start gap-2 mb-1">
-                        <h3 className="text-lg font-serif font-bold text-white group-hover:text-bento-yellow transition-colors truncate">
-                          {product.name}
-                        </h3>
-                      </div>
-                      <p className="text-xs text-white/60 line-clamp-1 mb-2">
-                        {product.shortDescription}
-                      </p>
-                      
+                  {/* Veg / Non-Veg Standard Food Symbol */}
+                  {product.dietaryTags?.length > 0 && (
+                    <div className="absolute top-2.5 left-2.5 z-20">
+                      {product.dietaryTags.includes('Eggless') || product.dietaryTags.includes('Vegetarian') || product.dietaryTags.includes('Veg') ? (
+                        <div className="w-3.5 h-3.5 bg-white border-[1.5px] border-green-600 rounded-[3px] flex items-center justify-center shadow-xs" title="Veg">
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
+                        </div>
+                      ) : product.dietaryTags.includes('Egg') || product.dietaryTags.includes('Non-Veg') ? (
+                        <div className="w-3.5 h-3.5 bg-white border-[1.5px] border-amber-600 rounded-[3px] flex items-center justify-center shadow-xs" title="Non-Veg">
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+                        </div>
+                      ) : null}
                     </div>
-                    
+                  )}
 
+                  {/* Bottom Gradient overlay */}
+                  <div className="absolute inset-x-0 bottom-0 top-1/4 bg-gradient-to-t from-[#1e1715] via-[#1e1715]/85 to-transparent z-10" />
+
+                  {/* Content over gradient */}
+                  <div className="relative z-20 mt-auto p-3.5 flex flex-col gap-1 text-left">
+                    <h3 className="text-sm font-bold text-white leading-snug drop-shadow-sm line-clamp-1">
+                      {product.name}
+                    </h3>
+                    
+                    <p className="text-[10px] text-white/80 line-clamp-1 leading-normal font-light">
+                      {product.shortDescription}
+                    </p>
+                    
+                    {/* Integrated Price, Weight (for Cakes), and Add to Cart Button */}
+                    <div className="mt-1.5 flex items-center justify-center w-full">
+                      <div className="w-full inline-flex items-center justify-between bg-white/20 hover:bg-white/25 backdrop-blur-md border border-white/30 p-1 pl-2.5 pr-1 rounded-full shadow-md transition-colors gap-1">
+                        <span className="text-xs font-extrabold text-white tracking-tight shrink-0">
+                          {formatCurrency(product.price)}
+                        </span>
+
+                        {/* Weight badge only for Cakes */}
+                        {product.catalog === 'Cakes' && product.sizes?.[0]?.label && (
+                          <>
+                            <div className="h-3 w-px bg-white/25" />
+                            <span className="text-[10px] font-medium text-white/90 whitespace-nowrap shrink-0">
+                              {product.sizes[0].label}
+                            </span>
+                          </>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={(e) => handleQuickAdd(e, product)}
+                          className="bg-strawberry hover:bg-bento-yellow hover:text-bento-text text-white font-bold text-[10px] py-1.5 px-2.5 rounded-full transition-all duration-300 flex items-center gap-1 shadow-xs hover:shadow-md active:scale-95 shrink-0 ml-auto"
+                        >
+                          <ShoppingCart className="w-3 h-3 shrink-0" />
+                          <span className="whitespace-nowrap">Add</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -134,6 +273,7 @@ export const BestSellers: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 };

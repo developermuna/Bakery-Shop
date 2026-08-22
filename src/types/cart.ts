@@ -58,4 +58,6 @@ export interface CartTotals {
   maxLeadTimeHours: number;
   earliestPickupDate: string;
   hasUnavailableItems: boolean;
+  advancePaid?: number;
+  balanceDue?: number;
 }

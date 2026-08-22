@@ -4,11 +4,8 @@ import {
   X,
   ShoppingBag,
   Plus,
-  Minus,
   Trash2,
-  Edit2,
   Calendar,
-  Clock,
   Sparkles,
   MapPin,
   ArrowRight,
@@ -21,7 +18,6 @@ import { useCartStore } from '../../store/useCartStore';
 import { useToastStore } from '../../store/useToastStore';
 import type { CartItem } from '../../types/cart';
 import { formatCurrency } from '../../utils/cartUtils';
-import { ItemConfigModal } from './ItemConfigModal';
 import { RemoveConfirmModal } from './RemoveConfirmModal';
 
 export const CartDrawer: React.FC = () => {
@@ -31,7 +27,6 @@ export const CartDrawer: React.FC = () => {
     isDrawerOpen,
     closeDrawer,
     updateItemQuantity,
-    updateItemConfiguration,
     removeItem,
     getTotals,
     getCartItemCount,
@@ -40,7 +35,6 @@ export const CartDrawer: React.FC = () => {
   const { addToast } = useToastStore();
 
   // State for modals
-  const [editingItem, setEditingItem] = useState<CartItem | null>(null);
   const [itemToRemove, setItemToRemove] = useState<CartItem | null>(null);
 
   const totals = getTotals();
@@ -49,13 +43,13 @@ export const CartDrawer: React.FC = () => {
   // Handle ESC key to close drawer
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isDrawerOpen && !editingItem && !itemToRemove) {
+      if (e.key === 'Escape' && isDrawerOpen && !itemToRemove) {
         closeDrawer();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isDrawerOpen, editingItem, itemToRemove, closeDrawer]);
+  }, [isDrawerOpen, itemToRemove, closeDrawer]);
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -101,20 +95,6 @@ export const CartDrawer: React.FC = () => {
     }
   };
 
-  const handleSaveConfig = (oldId: string, updates: Partial<CartItem>) => {
-    updateItemConfiguration(oldId, updates);
-    addToast({
-      type: 'success',
-      title: 'Configuration Updated',
-      description: 'Your cake choices and pickup details were saved.',
-    });
-  };
-
-  const handleViewCart = () => {
-    closeDrawer();
-    navigate('/cart');
-  };
-
   const handleCheckout = () => {
     closeDrawer();
     navigate('/checkout');
@@ -136,29 +116,29 @@ export const CartDrawer: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-bento-black/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-bento-bg/60 backdrop-blur-sm"
               onClick={closeDrawer}
             />
 
             {/* Slide-in panel */}
-            <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
               <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <motion.div
                   initial={{ x: '100%' }}
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
                   transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-                  className="w-screen max-w-md bg-bento-black shadow-2xl flex flex-col"
+                  className="w-screen max-w-full sm:max-w-md bg-bento-bg shadow-2xl flex flex-col"
                 >
                   {/* Drawer Header */}
-                  <div className="p-6 bg-bento-black flex items-center justify-between">
+                  <div className="p-4 sm:p-6 bg-bento-bg flex items-center justify-between border-b border-black/5">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 rounded-2xl bg-bento-yellow/15 flex items-center justify-center text-white">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-bento-yellow/15 flex items-center justify-center text-bento-text">
                         <ShoppingBag className="w-5 h-5 text-bento-yellow" />
                       </div>
                       <div>
-                        <h2 className="text-xl font-serif  font-bold text-white">Your Cart</h2>
-                        <p className="text-xs text-bento-grey font-light">
+                        <h2 className="text-lg sm:text-xl font-serif font-bold text-bento-text">Your Cart</h2>
+                        <p className="text-xs text-bento-text font-light">
                           {itemCount} {itemCount === 1 ? 'handcrafted item' : 'handcrafted items'}
                         </p>
                       </div>
@@ -166,7 +146,7 @@ export const CartDrawer: React.FC = () => {
 
                     <button
                       onClick={closeDrawer}
-                      className="p-2 text-bento-grey hover:text-white rounded-full hover:bg-bento-grey/60 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                      className="p-2 text-bento-text hover:text-bento-text rounded-full hover:bg-bento-grey/60 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
                       aria-label="Close cart drawer"
                     >
                       <X className="w-5 h-5" />
@@ -174,30 +154,30 @@ export const CartDrawer: React.FC = () => {
                   </div>
 
                   {/* Pickup Only Notice Bar */}
-                  <div className="bg-white/5 px-6 py-2.5 flex items-center justify-between text-xs text-bento-grey">
-                    <div className="flex items-center space-x-1.5 font-medium text-white">
+                  <div className="bg-bento-text/5 px-4 sm:px-6 py-2.5 flex items-center justify-between text-xs text-bento-text">
+                    <div className="flex items-center space-x-1.5 font-medium text-bento-text">
                       <MapPin className="w-3.5 h-3.5 text-bento-yellow flex-shrink-0" />
                       <span>Bento Cakery is Pickup Only</span>
                     </div>
-                    <span className="text-[11px] text-bento-grey font-light">Main Road, Rayagada</span>
+                    <span className="text-[11px] text-bento-text font-light">Main Road, Rayagada</span>
                   </div>
 
                   {/* Drawer Content */}
                   {items.length === 0 ? (
                     /* Empty State */
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-                      <div className="w-20 h-20 bg-bento-grey rounded-full flex items-center justify-center mb-6 text-white/40">
+                      <div className="w-20 h-20 bg-bento-grey rounded-full flex items-center justify-center mb-6 text-bento-text/40">
                         <ShoppingBag className="w-10 h-10" />
                       </div>
-                      <h3 className="text-2xl  font-bold text-white mb-2">
+                      <h3 className="text-2xl  font-bold text-bento-text mb-2">
                         Your cart is empty
                       </h3>
-                      <p className="text-sm text-bento-grey font-light mb-8 max-w-xs leading-relaxed">
+                      <p className="text-sm text-bento-text font-light mb-8 max-w-xs leading-relaxed">
                         Indulge in our freshly baked celebration cakes, artisan pastries, and seasonal treats.
                       </p>
                       <button
                         onClick={handleBrowseMenu}
-                        className="px-8 py-3.5 bg-bento-yellow text-black rounded-full text-sm font-medium hover:bg-yellow-400 transition-colors shadow-soft flex items-center space-x-2"
+                        className="px-8 py-3.5 bg-bento-yellow text-bento-text-inverse rounded-full text-sm font-medium hover:bg-bento-yellow/80 transition-colors shadow-soft flex items-center space-x-2"
                       >
                         <span>Explore Our Menu</span>
                         <ArrowRight className="w-4 h-4" />
@@ -205,21 +185,13 @@ export const CartDrawer: React.FC = () => {
                     </div>
                   ) : (
                     /* Cart Items List */
-                    <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-                      {/* Lead Time Notice if applicable */}
-                      {totals.maxLeadTimeHours > 0 && (
-                        <div className="bg-bento-yellow/10 shadow-md rounded-2xl p-3.5 flex items-start space-x-3">
-                          <Clock className="w-4 h-4 text-bento-yellow flex-shrink-0 mt-0.5" />
-                          <div className="text-xs text-bento-grey">
-                            <span className="font-semibold text-white block">
-                              Preparation Lead Time: {totals.maxLeadTimeHours}h Notice
-                            </span>
-                            Earliest pickup ready by{' '}
-                            <strong className="text-white">{totals.earliestPickupDate}</strong>.
-                          </div>
-                        </div>
-                      )}
-
+                    <div 
+                      className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar overscroll-contain"
+                      data-lenis-prevent
+                      data-lenis-prevent-wheel
+                      data-lenis-prevent-touch
+                      onWheel={(e) => e.stopPropagation()}
+                    >
                       {/* Items */}
                       {items.map((item) => (
                         <motion.div
@@ -228,7 +200,7 @@ export const CartDrawer: React.FC = () => {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.9 }}
-                          className="bg-white/5 rounded-2xl p-4 shadow-md hover:shadow-lg relative group transition-all transition-colors"
+                          className="bg-bento-text/5 rounded-2xl p-4 shadow-md hover:shadow-lg relative group transition-all transition-colors"
                         >
                           <div className="flex space-x-4">
                             {/* Product Thumbnail */}
@@ -241,12 +213,12 @@ export const CartDrawer: React.FC = () => {
                             {/* Details */}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between">
-                                <h4 className=" font-bold text-white text-sm truncate pr-2">
+                                <h4 className=" font-bold text-bento-text text-sm truncate pr-2">
                                   {item.name}
                                 </h4>
                                 <button
                                   onClick={() => setItemToRemove(item)}
-                                  className="text-bento-grey/60 hover:text-red-600 p-1 rounded transition-colors"
+                                  className="text-bento-text/60 hover:text-red-600 p-1 rounded transition-colors"
                                   aria-label={`Remove ${item.name}`}
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -255,11 +227,11 @@ export const CartDrawer: React.FC = () => {
 
                               {/* Configuration Tags */}
                               <div className="mt-1 flex flex-wrap gap-1.5 text-[11px]">
-                                <span className="px-2 py-0.5 bg-bento-grey rounded-md text-white font-medium">
+                                <span className="px-2 py-0.5 bg-bento-grey rounded-md text-bento-text font-medium">
                                   {item.selectedSize?.label} ({item.selectedSize?.servings} serv.)
                                 </span>
                                 {item.selectedFlavor && (
-                                  <span className="px-2 py-0.5 bg-bento-grey rounded-md text-bento-grey">
+                                  <span className="px-2 py-0.5 bg-bento-grey rounded-md text-bento-text">
                                     {item.selectedFlavor}
                                   </span>
                                 )}
@@ -267,7 +239,7 @@ export const CartDrawer: React.FC = () => {
 
                               {/* Custom Message preview */}
                               {item.cakeMessage && (
-                                <div className="mt-1.5 text-[11px] text-bento-grey/90 italic flex items-center gap-1">
+                                <div className="mt-1.5 text-[11px] text-bento-text/90 italic flex items-center gap-1">
                                   <MessageSquareQuote className="w-3 h-3 text-bento-yellow flex-shrink-0" />
                                   <span className="truncate">“{item.cakeMessage}”</span>
                                 </div>
@@ -285,8 +257,8 @@ export const CartDrawer: React.FC = () => {
 
                               {/* Pickup date tag if customized */}
                               {item.pickupDate && (
-                                <div className="mt-1 text-[10px] text-bento-grey flex items-center gap-1">
-                                  <Calendar className="w-3 h-3 text-white/60" />
+                                <div className="mt-1 text-[10px] text-bento-text flex items-center gap-1">
+                                  <Calendar className="w-3 h-3 text-bento-text/60" />
                                   <span>
                                     {item.pickupDate} {item.pickupTimeSlot ? `• ${item.pickupTimeSlot}` : ''}
                                   </span>
@@ -296,39 +268,30 @@ export const CartDrawer: React.FC = () => {
                               {/* Price and Quantity Controls */}
                               <div className="mt-3 flex items-center justify-between pt-2">
                                 <div>
-                                  <span className="text-xs text-bento-grey block">
+                                  <span className="text-xs text-bento-text block">
                                     {formatCurrency(item.unitPrice)} each
                                   </span>
-                                  <span className="text-sm font-bold text-white">
+                                  <span className="text-sm font-bold text-bento-text">
                                     {formatCurrency(item.unitPrice * item.quantity)}
                                   </span>
                                 </div>
 
                                 <div className="flex items-center space-x-2">
-                                  <button
-                                    onClick={() => setEditingItem(item)}
-                                    className="p-1.5 text-xs text-bento-grey hover:text-white hover:bg-bento-grey/60 rounded-lg transition-colors"
-                                    title="Edit configuration"
-                                    aria-label={`Edit ${item.name}`}
-                                  >
-                                    <Edit2 className="w-3.5 h-3.5" />
-                                  </button>
-
                                   {/* Quantity pill */}
-                                  <div className="flex items-center bg-white/10 shadow-sm rounded-full overflow-hidden shadow-xs">
+                                  <div className="flex items-center bg-bento-text/10 shadow-sm rounded-full overflow-hidden shadow-xs">
                                     <button
                                       onClick={() => handleQuantityMinus(item)}
-                                      className="p-1.5 hover:bg-bento-grey text-white transition-colors"
+                                      className="p-1.5 hover:bg-bento-grey text-bento-text transition-colors"
                                       aria-label="Decrease quantity"
                                     >
-                                      <Minus className="w-3 h-3" />
+                                      <Trash2 className="w-3 h-3" />
                                     </button>
-                                    <span className="px-2.5 text-xs font-semibold text-white min-w-[20px] text-center">
+                                    <span className="px-2.5 text-xs font-semibold text-bento-text min-w-[20px] text-center">
                                       {item.quantity}
                                     </span>
                                     <button
                                       onClick={() => handleQuantityPlus(item)}
-                                      className="p-1.5 hover:bg-bento-grey text-white transition-colors"
+                                      className="p-1.5 hover:bg-bento-grey text-bento-text transition-colors"
                                       aria-label="Increase quantity"
                                     >
                                       <Plus className="w-3 h-3" />
@@ -345,12 +308,12 @@ export const CartDrawer: React.FC = () => {
 
                   {/* Drawer Footer / Summary */}
                   {items.length > 0 && (
-                    <div className="p-6 bg-bento-black  space-y-4 shadow-soft">
+                    <div className="p-6 bg-bento-bg  space-y-4 shadow-soft">
                       {/* Price breakdown */}
                       <div className="space-y-1.5 text-xs">
-                        <div className="flex justify-between text-bento-grey">
+                        <div className="flex justify-between text-bento-text">
                           <span>Subtotal</span>
-                          <span className="font-medium text-white">
+                          <span className="font-medium text-bento-text">
                             {formatCurrency(totals.subtotal)}
                           </span>
                         </div>
@@ -360,11 +323,11 @@ export const CartDrawer: React.FC = () => {
                             <span>-{formatCurrency(totals.discount)}</span>
                           </div>
                         )}
-                        <div className="flex justify-between text-bento-grey">
-                          <span>Estimated Tax ({Math.round(totals.taxRate * 100)}%)</span>
+                        <div className="flex justify-between text-bento-text">
+                          <span>GST ({Math.round(totals.taxRate * 100)}% Included)</span>
                           <span>{formatCurrency(totals.tax)}</span>
                         </div>
-                        <div className="flex justify-between text-sm font-bold text-white pt-2">
+                        <div className="flex justify-between text-sm font-bold text-bento-text pt-2">
                           <span>Estimated Total</span>
                           <span>{formatCurrency(totals.total)}</span>
                         </div>
@@ -374,20 +337,14 @@ export const CartDrawer: React.FC = () => {
                       <div className="space-y-2 pt-2">
                         <button
                           onClick={handleCheckout}
-                          className="w-full py-3.5 px-6 bg-bento-yellow text-black rounded-full font-medium text-sm hover:bg-yellow-400 transition-colors shadow-soft flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-bento-yellow"
+                          className="w-full py-3.5 px-6 bg-bento-yellow text-bento-text-inverse rounded-full font-medium text-sm hover:bg-bento-yellow/80 transition-colors shadow-soft flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-bento-yellow cursor-pointer"
                         >
-                          <span>Proceed to Checkout</span>
+                          <span>Proceed to Buy</span>
                           <ArrowRight className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={handleViewCart}
-                          className="w-full py-3 px-6 bg-bento-yellow text-black shadow-lg shadow-bento-yellow/20 rounded-full font-medium text-sm hover:bg-bento-grey/40 transition-colors focus:outline-none focus:ring-2 focus:ring-bento-yellow"
-                        >
-                          View Full Cart & Edit Details
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-center space-x-2 text-[11px] text-bento-grey font-light">
+                      <div className="flex items-center justify-center space-x-2 text-[11px] text-bento-text font-light">
                         <ShieldCheck className="w-3.5 h-3.5 text-bento-yellow" />
                         <span>Freshly baked upon confirmed pickup time</span>
                       </div>
@@ -399,14 +356,6 @@ export const CartDrawer: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
-
-      {/* Edit Item Modal */}
-      <ItemConfigModal
-        isOpen={Boolean(editingItem)}
-        item={editingItem}
-        onSave={handleSaveConfig}
-        onClose={() => setEditingItem(null)}
-      />
 
       {/* Remove Confirm Modal */}
       <RemoveConfirmModal
